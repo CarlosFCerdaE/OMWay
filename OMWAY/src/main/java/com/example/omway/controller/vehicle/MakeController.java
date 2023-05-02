@@ -30,7 +30,7 @@ public class MakeController {
     @PutMapping(value = "/update")
     public Make updateMake(@RequestBody Make make)
             throws Exception{
-        if(Make.getId()==null){
+        if(make.getId()==null){
             throw new Exception("Please type the Id value");
         }
         return makeService.save(make);
