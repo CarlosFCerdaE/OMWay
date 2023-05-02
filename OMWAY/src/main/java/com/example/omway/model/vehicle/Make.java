@@ -19,9 +19,8 @@ import java.util.List;
 })*/
 public class Make {
     @Id
-    @SequenceGenerator(name="make_seq",sequenceName = "make_seq",allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "make_seq")
-    private int id;
+    @GeneratedValue( strategy = GenerationType.IDENTITY)
+    private Integer id;
     private String name;
 
    /* @OneToMany(mappedBy = "make",cascade = CascadeType.ALL

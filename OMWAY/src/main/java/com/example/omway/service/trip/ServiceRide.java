@@ -2,6 +2,9 @@ package com.example.omway.service.trip;
 
 import com.example.omway.dto.trip.RideDto;
 import com.example.omway.model.trip.Ride;
+import com.example.omway.repository.omwUser.IRepositoryDriver;
+import com.example.omway.repository.omwUser.IRepositoryRider;
+import com.example.omway.repository.payment.IRepositoryPayment;
 import com.example.omway.repository.trip.IRepositoryRide;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,9 +41,7 @@ public class ServiceRide implements IServiceRide {
         r.setDriver(
                 repositoryDriver.findById(rideDto.getDriverId()).get()
         );
-        r.setPayment(
-                repositoryPayment.findById(rideDto.getPaymentId()).get()
-        );
+
 
         return repositoryRide.save(r);
     }

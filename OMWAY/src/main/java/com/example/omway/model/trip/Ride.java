@@ -2,6 +2,7 @@ package com.example.omway.model.trip;
 
 import com.example.omway.model.omwUser.Driver;
 import com.example.omway.model.omwUser.OMWayUser;
+import com.example.omway.model.omwUser.Rider;
 import com.example.omway.model.payment.Payment;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
@@ -23,8 +24,7 @@ import java.time.LocalDate;
 
 public class Ride {
     @Id
-    @SequenceGenerator(name="ride_seq",sequenceName = "ride_seq",allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "ride_seq")
+    @GeneratedValue( strategy = GenerationType.IDENTITY)
     private int id;
 
     private Time pickUpTime;
@@ -53,10 +53,7 @@ public class Ride {
     @JsonBackReference
     private Driver driver;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(foreignKey=@ForeignKey(name="FK_payment_ride_paymentid"))
-    @JsonBackReference
-    private Payment payment;
+
 
 
 }

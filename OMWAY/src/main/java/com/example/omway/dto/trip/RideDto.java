@@ -25,7 +25,7 @@ public class RideDto {
     private Double fare;
     private int rating;
     private String comment;
-    private int riderId;
-    private int driverId;
-    private int paymentId;
+    private String riderId;
+    private String driverId;
+    //private int paymentId;
 }
