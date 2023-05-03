@@ -18,6 +18,6 @@ public class ConfigFare {
     private double fare;
     private String name;
 
-    private boolean status;
+    private boolean state;
 
 }

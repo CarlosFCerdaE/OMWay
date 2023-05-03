@@ -1,6 +1,6 @@
 package com.example.omway.controller.omwUser;
 
-import com.example.omway.dto.OMWayUserDto;
+import com.example.omway.dto.omwUser.OMWayUserDto;
 import com.example.omway.model.omwUser.OMWayUser;
 import com.example.omway.model.omwUser.Rider;
 import com.example.omway.model.trip.Ride;
@@ -14,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/rider")
 public class ControllerRider {
+
     @Autowired
     private IServiceRider service;
 
