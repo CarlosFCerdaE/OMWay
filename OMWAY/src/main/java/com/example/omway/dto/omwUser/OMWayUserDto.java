@@ -1,4 +1,4 @@
-package com.example.omway.dto;
+package com.example.omway.dto.omwUser;
 
 import com.example.omway.model.trip.Ride;
 import com.example.omway.model.vehicle.Car;
@@ -21,7 +21,7 @@ public class OMWayUserDto {
     private String phone;
     private String email;
     private boolean state;
-    private List<Ride> riderRides;
+    private Integer riderRides;
 
     //Driver
     private LocalDate dlIssueDate;
@@ -29,7 +29,7 @@ public class OMWayUserDto {
     private int sumRating;
 
     private int numberRides;
-    private List<Car> driverCars;
+    private Integer driverCars;
 
-    private List<Ride> driverRides;
+    private Integer driverRides;
 }

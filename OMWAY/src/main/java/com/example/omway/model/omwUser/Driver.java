@@ -25,20 +25,20 @@ public class Driver extends OMWayUser {
     private int sumRating;
 
     private int numberRides;
-/*
+
     @OneToMany(mappedBy = "driver",cascade = CascadeType.ALL
             ,fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Car> driverCars;
 
 
- */
-    /*
+
+
     @OneToMany(mappedBy = "driver",cascade = CascadeType.ALL
             ,fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Ride> driverRides;
 
-     */
+
 
 }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class ServiceRider implements IServiceRider {
@@ -28,6 +29,12 @@ public class ServiceRider implements IServiceRider {
         //List<Ride> userRides = omwuserDto.getRiderRides();
         //List<Ride> datos=new ArrayList<>();
         Rider o = new Rider();
+        try{
+            o =  reporider.findById(rider.getCif()).get();
+        }
+        catch (NoSuchElementException e){
+            System.out.println("Non existent id");
+        }
         o.setCif(rider.getCif());
         o.setName(rider.getName());
         o.setPassword(rider.getPassword());
