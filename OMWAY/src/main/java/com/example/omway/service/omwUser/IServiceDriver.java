@@ -1,6 +1,6 @@
 package com.example.omway.service.omwUser;
 
-import com.example.omway.dto.OMWayUserDto;
+import com.example.omway.dto.omwUser.OMWayUserDto;
 import com.example.omway.model.omwUser.Driver;
 import com.example.omway.model.omwUser.OMWayUser;
 import org.springframework.stereotype.Service;

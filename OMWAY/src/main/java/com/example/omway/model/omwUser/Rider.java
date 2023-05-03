@@ -16,11 +16,11 @@ import java.util.List;
 //@DiscriminatorValue("driver")
 @Table(name="Rider",schema = "OMWUser")
 public class Rider extends OMWayUser{
-/*
+
     @OneToMany(mappedBy = "rider",cascade = CascadeType.ALL
             ,fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Ride> riderRides;
- */
+
 
 }

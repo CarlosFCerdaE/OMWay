@@ -1,22 +1,26 @@
 package com.example.omway.service.omwUser;
 
+import com.example.omway.dto.omwUser.OMWayUserDto;
 import com.example.omway.model.omwUser.Driver;
 import com.example.omway.model.payment.Payment;
 import com.example.omway.model.trip.Ride;
 import com.example.omway.model.vehicle.Car;
 import com.example.omway.model.vehicle.Model;
 import com.example.omway.repository.omwUser.IRepositoryDriver;
+import com.example.omway.repository.vehicle.IRepositoryCar;
 import com.example.omway.service.omwUser.IServiceDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class ServiceDriver implements IServiceDriver {
     @Autowired
     private IRepositoryDriver repodriver;
-
+    @Autowired
+    private IRepositoryCar repocar;
     @Override
     public List<Driver> getAll() {
         return repodriver.findAll();
@@ -24,11 +28,18 @@ public class ServiceDriver implements IServiceDriver {
 
     @Override
     public Driver save(Driver driver) {
-        //List<Car> driverCars =driver.getDriverCars();
+        Driver d =new Driver();
+        try{
+            d =  repodriver.findById(driver.getCif()).get();
+        }
+        catch (NoSuchElementException e){
+            System.out.println("Non existent cif");
+        }
+        //List<Car> driverCars=d.getDriverCars();
         //List<Car> datoscars=new ArrayList<>();
         //List<Ride> driverRides=driver.getDriverRides();
         //List<Ride> datosrides=new ArrayList<>();
-        Driver d =new Driver();
+
         d.setCif(driver.getCif());
         d.setName(driver.getName());
         d.setPassword(driver.getPassword());
@@ -39,8 +50,8 @@ public class ServiceDriver implements IServiceDriver {
         d.setDlExpirationDate(driver.getDlExpirationDate());
         d.setNumberRides(driver.getNumberRides());
         d.setSumRating(driver.getSumRating());
-        /*
-        d.setDriverCars(driver.getDriverCars());
+    /*
+        d.setDriverCars(driverCars);
         for(Car car:driverCars){
             Car c=new Car();
             //Model mo=new Model();
@@ -49,11 +60,11 @@ public class ServiceDriver implements IServiceDriver {
             c.setColor(car.getColor());
             c.setYear(car.getYear());
             c.setState(car.isState());
-            c.setModel(null);
+            c.setModel(repocar.findById());
             datoscars.add(c);
         }
         d.setDriverCars(datoscars);
-
+        /*
         d.setDriverRides(driver.getDriverRides());
         for(Ride ride:driverRides){
 
