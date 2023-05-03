@@ -2,6 +2,8 @@ package com.example.omway.model.payment;
 
 
 import com.example.omway.model.trip.Ride;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,18 +18,14 @@ public abstract class Payment {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private Integer id;
-   //private double baseFare;
-    //private double PerKmFare;
+    private Integer paymentId;
     private double total;
 
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
-
-    private boolean state;
-
-    @OneToOne(cascade = CascadeType.MERGE)
+    @OneToOne( optional = false)
     @JoinColumn(name = "rideId", referencedColumnName = "id")
+    @JsonManagedReference
     private Ride ride;
 
 }
