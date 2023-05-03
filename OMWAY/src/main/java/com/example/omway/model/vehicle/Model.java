@@ -20,10 +20,6 @@ public class Model {
     private Integer id;
 
     private String name;
-    /*@OneToMany(mappedBy = "model",cascade = CascadeType.ALL
-            ,fetch = FetchType.LAZY)
-    @JsonManagedReference
-    private List<Car> modelCars;*/
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(foreignKey=@ForeignKey(name="FK_make_model_makeid"))
     @JsonBackReference

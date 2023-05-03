@@ -12,30 +12,30 @@ import java.util.NoSuchElementException;
 public class ServiceMake implements IServiceMake {
 
     @Autowired
-    private IRepositoryMake IRepositoryMake;
+    private IRepositoryMake repositoryMake;
 
     @Override
     public List<Make> getAll() {
-        return IRepositoryMake.findAll();
+        return repositoryMake.findAll();
     }
 
     @Override
     public Make save(Make make) {
         Make m = new Make();
         try{
-            m = IRepositoryMake.findById(make.getId()).get();
+            m = repositoryMake.findById(make.getId()).get();
         }
         catch (NoSuchElementException e){
             System.out.println("Non existent id");
         }
         m.setName(make.getName());
-        return IRepositoryMake.save(m);
+        return repositoryMake.save(m);
 
 
     }
 
     @Override
     public void deleteById(Integer id) {
-        IRepositoryMake.deleteById(id);
+        repositoryMake.deleteById(id);
     }
 }

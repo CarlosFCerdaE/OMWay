@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.ui.Model;
 
 import java.util.List;
 
@@ -23,9 +22,9 @@ public class Make {
     private Integer id;
     private String name;
 
-   /* @OneToMany(mappedBy = "make",cascade = CascadeType.ALL
+   @OneToMany(mappedBy = "make",cascade = CascadeType.ALL
             ,fetch = FetchType.LAZY)
     @JsonManagedReference
-    private List<Model> makeModels;*/
+    private List<Model> makeModels;
 
 }
