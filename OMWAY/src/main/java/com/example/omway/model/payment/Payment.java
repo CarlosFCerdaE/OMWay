@@ -1,7 +1,7 @@
 package com.example.omway.model.payment;
 
 
-import com.example.omway.OMWUser.Ride;
+import com.example.omway.model.trip.Ride;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

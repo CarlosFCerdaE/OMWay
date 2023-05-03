@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/ConfigFare")
+@RequestMapping("/configFare")
 public class ControllerConfigFare {
     @Autowired
     private IServiceConfigFare serviceConfigFare;
