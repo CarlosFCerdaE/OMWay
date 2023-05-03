@@ -14,9 +14,9 @@ import java.util.List;
 @Table(name="Make",schema = "Vehicle")
 @AllArgsConstructor
 @NoArgsConstructor
-/*@NamedQueries({
+@NamedQueries({
         @NamedQuery(name="Make.all",query="select e from Make e")
-})*/
+})
 public class Make {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)

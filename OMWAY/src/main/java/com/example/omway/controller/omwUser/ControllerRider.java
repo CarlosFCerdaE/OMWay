@@ -1,4 +1,4 @@
-package com.example.omway.controller;
+package com.example.omway.controller.omwUser;
 
 import com.example.omway.dto.OMWayUserDto;
 import com.example.omway.model.omwUser.OMWayUser;

@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class Model {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     private String name;
     /*@OneToMany(mappedBy = "model",cascade = CascadeType.ALL

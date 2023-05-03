@@ -1,8 +1,7 @@
 package com.example.omway.controller.vehicle;
 
-import com.example.omway.service.vehicle.ServiceMake;
 import com.example.omway.model.vehicle.Make;
-import com.example.omway.service.vehicle.IMakeService;
+import com.example.omway.service.vehicle.IServiceMake;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,9 +11,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/make")
-public class MakeController {
+public class ControllerMake {
 
-    @Autowired private IMakeService makeService;
+    @Autowired
+    private IServiceMake makeService;
 
     @GetMapping("/all")
     public List<Make> getAll(){

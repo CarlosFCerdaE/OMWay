@@ -9,6 +9,8 @@ import com.example.omway.repository.trip.IRepositoryRide;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
+
 @Service
 public class ServiceRide implements IServiceRide {
 
@@ -18,12 +20,17 @@ public class ServiceRide implements IServiceRide {
     private IRepositoryRider repositoryRider;
     @Autowired
     private IRepositoryDriver repositoryDriver;
-    @Autowired
-    private IRepositoryPayment repositoryPayment;
 
     @Override
     public Ride save(RideDto rideDto) {
-        Ride r = repositoryRide.findById(rideDto.getId()).get();
+        Ride r = new Ride();
+        try{
+         r =  repositoryRide.findById(rideDto.getId()).get();
+        }
+        catch (NoSuchElementException e){
+            System.out.println("Non existent id");
+        }
+
         r.setPickUpTime(rideDto.getPickUpTime());
         r.setDropOffTime(rideDto.getDropOffTime());
         r.setPickUpLocation(rideDto.getPickUpLocation());
@@ -41,7 +48,6 @@ public class ServiceRide implements IServiceRide {
         r.setDriver(
                 repositoryDriver.findById(rideDto.getDriverId()).get()
         );
-
 
         return repositoryRide.save(r);
     }
