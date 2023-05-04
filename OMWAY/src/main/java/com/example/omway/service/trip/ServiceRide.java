@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class ServiceRide implements IServiceRide {
@@ -23,12 +24,11 @@ public class ServiceRide implements IServiceRide {
 
     @Override
     public Ride save(RideDto rideDto) {
+        Optional<Ride> r1 = repositoryRide.findById(rideDto.getId());
         Ride r = new Ride();
-        try{
-         r =  repositoryRide.findById(rideDto.getId()).get();
-        }
-        catch (NoSuchElementException e){
-            System.out.println("Non existent id");
+        if(r1.isPresent()){
+            r = r1.get();
+            System.out.println("Esta presente, procedemos a actualizar");
         }
 
         r.setPickUpTime(rideDto.getPickUpTime());

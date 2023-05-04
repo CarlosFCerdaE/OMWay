@@ -25,7 +25,7 @@ import java.time.LocalDate;
 public class Ride {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     private Time pickUpTime;
 

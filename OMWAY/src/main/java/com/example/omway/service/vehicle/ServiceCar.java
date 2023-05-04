@@ -1,8 +1,11 @@
 package com.example.omway.service.vehicle;
 
 
+import com.example.omway.dto.vehicle.CarDto;
+import com.example.omway.model.omwUser.Driver;
 import com.example.omway.model.vehicle.Car;
 import com.example.omway.model.vehicle.Model;
+import com.example.omway.repository.omwUser.IRepositoryDriver;
 import com.example.omway.repository.vehicle.IRepositoryCar;
 import com.example.omway.repository.vehicle.IRepositoryModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 
 @Service
@@ -20,23 +24,25 @@ public class ServiceCar implements IServiceCar {
     private IRepositoryCar repositoryCar;
     @Autowired
     private IRepositoryModel repositoryModel;
+    @Autowired
+    private IRepositoryDriver repositoryDriver;
     @Override
-    public Car save(@RequestBody Car car) {
-
+    public Car save(CarDto carDto) {
+        Optional<Car> c1 = repositoryCar.findById(carDto.getLicensePlate());
         Car c = new Car();
-        try{
-            c =  repositoryCar.findById(car.getLicensePlate()).get();
-        }
-        catch (NoSuchElementException e){
-            System.out.println("Non existent id");
+        if(c1.isPresent()){
+            c =  c1.get();
         }
 
-        c.setLicensePlate(car.getLicensePlate());
-        c.setYear(car.getYear());
-        c.setColor(car.getColor());
-        c.setState(car.isState());
-        Model model = repositoryModel.findById(car.getModel().getId()).get();
+        c.setLicensePlate(carDto.getLicensePlate());
+        c.setYear(carDto.getYear());
+        c.setColor(carDto.getColor());
+        c.setState(carDto.isState());
+        Driver driver = repositoryDriver.findById(carDto.getDriverId()).get();
+        c.setDriver(driver);
+        Model model = repositoryModel.findById(carDto.getModelId()).get();
         c.setModel(model);
+
         return repositoryCar.save(c);
 
 

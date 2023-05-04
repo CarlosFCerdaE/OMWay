@@ -11,13 +11,10 @@ import java.time.LocalDate;
 @Data
 public class RideDto {
     private Integer id;
-
     private Time pickUpTime;
-
     private Time dropOffTime;
     private String pickUpLocation;
     private String dropOffLocation;
-
     private Double distance;
     private LocalDate date;
     private String notes;
@@ -27,5 +24,4 @@ public class RideDto {
     private String comment;
     private String riderId;
     private String driverId;
-    //private int paymentId;
 }

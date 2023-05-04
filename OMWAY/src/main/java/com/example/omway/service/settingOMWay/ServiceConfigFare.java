@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class ServiceConfigFare implements IServiceConfigFare {
@@ -23,16 +24,16 @@ public class ServiceConfigFare implements IServiceConfigFare {
 
     @Override
     public ConfigFare save(ConfigFare configFare) {
-        ConfigFare configFare1 =new ConfigFare();
-        try{
-            configFare1 =  repositoryConfigFare.findById(configFare1.getId()).get();
+
+        Optional <ConfigFare> c1 =repositoryConfigFare.findById(configFare.getId());
+        ConfigFare c = new ConfigFare();
+        if(c1.isPresent()){
+            c = c1.get();
         }
-        catch (NoSuchElementException e){
-            System.out.println("Non existent id");
-        }
-        configFare1.setName(configFare.getName());
-        configFare1.setFare(configFare.getFare());
-        configFare1.setState(configFare.isState());
+
+        c.setName(configFare.getName());
+        c.setFare(configFare.getFare());
+        c.setState(configFare.isState());
         return repositoryConfigFare.save(configFare);
 
     }
