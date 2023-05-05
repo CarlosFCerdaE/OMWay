@@ -53,12 +53,8 @@ public class Ride {
     @JsonBackReference
     private Driver driver;
 
-    @OneToOne(mappedBy = "ride", cascade = CascadeType.ALL, optional = false)
+    @OneToOne(mappedBy = "ride")
     @JsonBackReference
     private Payment payment;
-
-
-
-
 
 }
