@@ -24,9 +24,12 @@ public class ServiceRide implements IServiceRide {
 
     @Override
     public Ride save(RideDto rideDto) {
+
         Optional<Ride> r1 = repositoryRide.findById(rideDto.getId());
+
         Ride r = new Ride();
-        if(r1.isPresent()){
+
+        if (r1.isPresent()){
             r = r1.get();
             System.out.println("Esta presente, procedemos a actualizar");
         }

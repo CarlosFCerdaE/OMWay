@@ -45,13 +45,18 @@ public class ServiceCash implements IServiceCash {
             c = c1.get();
         }
 
-        Ride r = repositoryRide.findById(cashDto.getRideId()).get();
+        Optional<Ride> ride = repositoryRide.findById(cashDto.getRideId());
+        Ride ride2 = new Ride();
+        if(ride.isPresent()){
+            ride2 = ride.get();
+        }
 
         ConfigFare baseFare =config.findByName("Base Fare");
         ConfigFare kmFare = config.findByName("Per Km Fare");
 
-        double totalRide = (baseFare.getFare() + (kmFare.getFare() * r.getDistance()));
+        double totalRide = (baseFare.getFare() + (kmFare.getFare() * ride2.getDistance()));
         c.setTotal(totalRide);
+        c.setRide(ride2);
 
         return iRepositoryCash.save(c);
 
