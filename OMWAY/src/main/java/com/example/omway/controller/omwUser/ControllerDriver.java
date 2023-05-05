@@ -1,10 +1,9 @@
 package com.example.omway.controller.omwUser;
 
 
+import com.example.omway.dto.omwUser.DriverDto;
 import com.example.omway.model.omwUser.Driver;
-import com.example.omway.model.omwUser.OMWayUser;
 import com.example.omway.service.omwUser.IServiceDriver;
-import com.example.omway.service.omwUser.ServiceDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,16 +21,16 @@ public class ControllerDriver {
     }
 
     @PostMapping("/save")
-    public Driver saveDriver(@RequestBody Driver driver){
-        return serviceDriver.save(driver);
+    public Driver saveDriver(@RequestBody DriverDto driverDto){
+        return serviceDriver.save(driverDto);
     }
 
     @PutMapping(value = "/update")
-    public Driver updateDriver(@RequestBody Driver driver) throws Exception{
-        if(driver.getCif()==null){
+    public Driver updateDriver(@RequestBody DriverDto driverDto) throws Exception{
+        if(driverDto.getDriverCif()==null){
             throw new Exception("Please type the cif value");
         }
-        return serviceDriver.save(driver);
+        return serviceDriver.save(driverDto);
     }
 
     @DeleteMapping(value = "/delete/{cif}")

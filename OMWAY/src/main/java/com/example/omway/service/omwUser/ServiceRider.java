@@ -1,5 +1,6 @@
 package com.example.omway.service.omwUser;
 
+import com.example.omway.dto.omwUser.RiderDto;
 import com.example.omway.model.omwUser.Rider;
 import com.example.omway.model.trip.Ride;
 import com.example.omway.repository.omwUser.IRepositoryDriver;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class ServiceRider implements IServiceRider {
@@ -25,50 +27,21 @@ public class ServiceRider implements IServiceRider {
     }
 
     @Override
-    public Rider save(Rider rider) {
-        //List<Ride> userRides = omwuserDto.getRiderRides();
-        //List<Ride> datos=new ArrayList<>();
-        Rider o = new Rider();
-        try{
-            o =  reporider.findById(rider.getCif()).get();
+    public Rider save(RiderDto riderDto) {
+
+        Optional <Rider> r1 = reporider.findById(riderDto.getRiderCif());
+        Rider r = new Rider();
+        if(r1.isPresent()) {
+            r = r1.get();
         }
-        catch (NoSuchElementException e){
-            System.out.println("Non existent id");
-        }
-        o.setCif(rider.getCif());
-        o.setName(rider.getName());
-        o.setPassword(rider.getPassword());
-        o.setPhone(rider.getPhone());
-        o.setEmail(rider.getEmail());
-        o.setState(rider.isState());
-        //o.setRiderRides();
-        /*
-        for(Ride rides:userRides){
+        r.setCif(riderDto.getRiderCif());
+        r.setName(riderDto.getName());
+        r.setPassword(riderDto.getPassword());
+        r.setPhone(riderDto.getPhone());
+        r.setEmail(riderDto.getEmail());
+        r.setState(riderDto.isState());
 
-            Ride r=new Ride();
-
-
-            r.setRider(o);
-            r.setPickUpLocation(rides.getPickUpLocation());
-            r.setDropOffLocation(rides.getDropOffLocation());
-            r.setPickUpTime(rides.getPickUpTime());
-            r.setDropOffTime(rides.getDropOffTime());
-            r.setDistance(rides.getDistance());
-            r.setNotes(rides.getNotes());
-            r.setDate(rides.getDate());
-            r.setState(rides.getState());
-            r.setFare(rides.getFare());
-            r.setRating(rides.getRating());
-            r.setComment(rides.getComment());
-            r.setDriver(repodriver.findById(omwuserDto.getDriverCif()).get());
-            r.setPayment(null);
-            datos.add(r);
-        }
-        o.setRiderRides(datos);
-*/
-
-
-        return reporider.save(o);
+        return reporider.save(r);
     }
 
 

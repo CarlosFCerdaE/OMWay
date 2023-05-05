@@ -27,7 +27,6 @@ public class Car {
     @JoinColumn(foreignKey=@ForeignKey(name="FK_driver_car_drivercif"))
     @JsonBackReference
     private Driver driver;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(foreignKey=@ForeignKey(name="FK_model_car_modelid"))
     @JsonBackReference

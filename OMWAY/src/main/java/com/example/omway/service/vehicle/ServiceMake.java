@@ -1,5 +1,6 @@
 package com.example.omway.service.vehicle;
 
+import com.example.omway.dto.vehicle.MakeDto;
 import com.example.omway.model.vehicle.Make;
 import com.example.omway.repository.vehicle.IRepositoryMake;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class ServiceMake implements IServiceMake {
@@ -20,15 +22,13 @@ public class ServiceMake implements IServiceMake {
     }
 
     @Override
-    public Make save(Make make) {
+    public Make save(MakeDto makeDto) {
+        Optional <Make> m1 = repositoryMake.findById(makeDto.getId());
         Make m = new Make();
-        try{
-            m = repositoryMake.findById(make.getId()).get();
+        if(m1.isPresent()){
+            m = m1.get();
         }
-        catch (NoSuchElementException e){
-            System.out.println("Non existent id");
-        }
-        m.setName(make.getName());
+        m.setName(makeDto.getName());
         return repositoryMake.save(m);
 
 

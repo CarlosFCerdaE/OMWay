@@ -1,5 +1,6 @@
 package com.example.omway.service.payment;
 
+import com.example.omway.dto.payment.CashDto;
 import com.example.omway.model.payment.Cash;
 import com.example.omway.model.payment.Payment;
 import com.example.omway.model.settingsOMWay.ConfigFare;
@@ -37,31 +38,22 @@ public class ServiceCash implements IServiceCash {
     private IRepositoryRide repositoryRide;
 
     @Override
-    public Cash save(Cash cash) {
-        Ride ride = new Ride();
-        double distance = 0;
-
-        try{
-            ride = repositoryRide.findById(cash.getRide().getId()).get();
-            distance = ride.getDistance();
-        }
-        catch (NoSuchElementException e){
-            System.out.println("Non existent id");
+    public Cash save(CashDto cashDto) {
+        Optional<Cash> c1 = iRepositoryCash.findById(cashDto.getPaymentId());
+        Cash c = new Cash();
+        if(c1.isPresent()){
+            c = c1.get();
         }
 
-        // distance = cash.getRide().getDistance();
-        ConfigFare baseFare = new ConfigFare();
-        baseFare = config.findByName("Base Fare");
-        double totalBaseFare = baseFare.getFare();
+        Ride r = repositoryRide.findById(cashDto.getRideId()).get();
 
-        ConfigFare kmFare = new ConfigFare();
-        kmFare = config.findByName("Per Km Fare");
-        double totalKmFare = kmFare.getFare();
+        ConfigFare baseFare =config.findByName("Base Fare");
+        ConfigFare kmFare = config.findByName("Per Km Fare");
 
-        double totalRide = (totalBaseFare + (totalKmFare * distance));
-        cash.setTotal(totalRide);
+        double totalRide = (baseFare.getFare() + (kmFare.getFare() * r.getDistance()));
+        c.setTotal(totalRide);
 
-        return iRepositoryCash.save(cash);
+        return iRepositoryCash.save(c);
 
     }
 

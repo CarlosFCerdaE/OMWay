@@ -1,5 +1,6 @@
 package com.example.omway.controller.vehicle;
 
+import com.example.omway.dto.vehicle.MakeDto;
 import com.example.omway.model.vehicle.Make;
 import com.example.omway.service.vehicle.IServiceMake;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,17 +24,17 @@ public class ControllerMake {
     }
 
     @PostMapping("/save")
-    public Make saveMake(@RequestBody Make make){
-        return makeService.save(make);
+    public Make saveMake(@RequestBody MakeDto makeDto){
+        return makeService.save(makeDto);
     }
 
     @PutMapping(value = "/update")
-    public Make updateMake(@RequestBody Make make)
+    public Make updateMake(@RequestBody MakeDto makeDto)
             throws Exception{
-        if(make.getId()==null){
+        if(makeDto.getId()==null){
             throw new Exception("Please type the Id value");
         }
-        return makeService.save(make);
+        return makeService.save(makeDto);
     }
 
     @DeleteMapping(value = "/delete/{Id}")

@@ -1,5 +1,6 @@
 package com.example.omway.service.omwUser;
 
+import com.example.omway.dto.omwUser.RiderDto;
 import com.example.omway.model.omwUser.OMWayUser;
 import com.example.omway.model.omwUser.Rider;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,7 @@ import java.util.Optional;
 public interface IServiceRider {
     public List<Rider> getAll();
 
-    public Rider save(Rider rider);
+    public Rider save(RiderDto riderDto);
 
     public void deleteByString(String cif);
 }

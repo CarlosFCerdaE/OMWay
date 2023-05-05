@@ -1,5 +1,6 @@
 package com.example.omway.service.vehicle;
 
+import com.example.omway.dto.vehicle.ModelDto;
 import com.example.omway.model.vehicle.Model;
 import com.example.omway.repository.vehicle.IRepositoryMake;
 import com.example.omway.repository.vehicle.IRepositoryModel;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class ServiceModel implements IServiceModel {
@@ -23,19 +25,18 @@ public class ServiceModel implements IServiceModel {
     }
 
     @Override
-    public Model save(@RequestBody Model model) {
+    public Model save(@RequestBody ModelDto modelDto) {
+
+        Optional <Model> m1 = repositoryModel.findById(modelDto.getId());
         Model m = new Model();
-        try{
-             m = repositoryModel.findById(model.getId()).get();
-        }
-        catch (NoSuchElementException e){
-            System.out.println("Non existent id");
+        if(m1.isPresent()){
+            m = m1.get();
         }
 
-        m.setId(model.getId());
-        m.setName(model.getName());
+        m.setId(modelDto.getId());
+        m.setName(modelDto.getName());
         m.setMake(
-            makeRepository.findById(model.getMake().getId()).get()
+            makeRepository.findById(modelDto.getMakeId()).get()
         );
         return repositoryModel.save(m);
 

@@ -1,9 +1,7 @@
 package com.example.omway.controller.omwUser;
 
-import com.example.omway.dto.omwUser.OMWayUserDto;
-import com.example.omway.model.omwUser.OMWayUser;
+import com.example.omway.dto.omwUser.RiderDto;
 import com.example.omway.model.omwUser.Rider;
-import com.example.omway.model.trip.Ride;
 import com.example.omway.service.omwUser.IServiceRider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -26,16 +24,16 @@ public class ControllerRider {
     }
 
     @PostMapping(value="/save",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Rider saveRider(@RequestBody Rider rider){
-        return service.save(rider);
+    public Rider saveRider(@RequestBody RiderDto riderDto){
+        return service.save(riderDto);
     }
 
     @PutMapping( "/update")
-    public Rider updateRider(@RequestBody Rider rider) throws Exception{
-        if(rider.getCif()==null){
+    public Rider updateRider(@RequestBody RiderDto riderDto) throws Exception{
+        if(riderDto.getRiderCif()==null){
             throw new Exception("Please type the cif value");
         }
-        return service.save(rider);
+        return service.save(riderDto);
     }
 
     @DeleteMapping(value = "/delete/{cif}")

@@ -31,9 +31,6 @@ public class Driver extends OMWayUser {
     @JsonManagedReference
     private List<Car> driverCars;
 
-
-
-
     @OneToMany(mappedBy = "driver",cascade = CascadeType.ALL
             ,fetch = FetchType.LAZY)
     @JsonManagedReference

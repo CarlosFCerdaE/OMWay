@@ -1,5 +1,6 @@
 package com.example.omway.controller.vehicle;
 
+import com.example.omway.dto.vehicle.ModelDto;
 import com.example.omway.model.vehicle.Make;
 import com.example.omway.model.vehicle.Model;
 import com.example.omway.service.vehicle.IServiceModel;
@@ -20,16 +21,16 @@ public class ControllerModel {
 
 
     @PostMapping("/save")
-    public Model save(@RequestBody Model model){
-        return serviceModel.save(model);
+    public Model save(@RequestBody ModelDto modelDto){
+        return serviceModel.save(modelDto);
     }
 
     @PutMapping(value = "/update")
-    public Model updateModel(@RequestBody Model model) throws Exception{
-        if(model.getId()==null){
+    public Model updateModel(@RequestBody ModelDto modelDto) throws Exception{
+        if(modelDto.getId()==null){
             throw new Exception("Please type the Id value");
         }
-        return serviceModel.save(model);
+        return serviceModel.save(modelDto);
     }
     @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable Integer modelId){

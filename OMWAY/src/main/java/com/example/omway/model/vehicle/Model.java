@@ -1,10 +1,13 @@
 package com.example.omway.model.vehicle;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -24,4 +27,9 @@ public class Model {
     @JoinColumn(foreignKey=@ForeignKey(name="FK_make_model_makeid"))
     @JsonBackReference
     private Make make;
+
+    @OneToMany(mappedBy = "model",cascade = CascadeType.ALL
+            ,fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<Car> modelCars;
 }
