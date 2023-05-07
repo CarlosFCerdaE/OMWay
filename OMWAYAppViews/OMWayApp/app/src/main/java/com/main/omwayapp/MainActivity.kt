@@ -1,8 +1,13 @@
 package com.main.omwayapp
 
+import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
+import android.location.LocationManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
@@ -16,6 +21,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleObserver
@@ -24,6 +30,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.maps.android.compose.MapType
 import com.main.omwayapp.ui.theme.OMWayAppTheme
 
 //Hola amigos, bienvenidos a la app del futuro $$$
@@ -31,6 +38,8 @@ data class Location(val coordinate: LatLng,
                     val title:String,
                     val description:String)
 
+//Unique id
+var PERMISSION_ID=25
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +58,8 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+
 
     @Composable
     fun OurGoogleMaps(location: Location,onReady:(GoogleMap)->Unit){
@@ -71,26 +82,11 @@ class MainActivity : ComponentActivity() {
                         position(location.coordinate).
                         title(location.title).
                         snippet(location.description))
+                    //googleMap.mapType=2
                 }
             }
         })
-        /*
-        //Lat y Long
-        val uam=LatLng(12.10877952,-86.2564972)
-        //Position of Lat y Long
-        val uamstate=MarkerState(position=uam)
-        //Style of map
-        val mapProp by remember{ mutableStateOf(MapProperties(mapType = MapType.SATELLITE))}
-        val uiProp by remember { mutableStateOf(MapUiSettings(compassEnabled = true, myLocationButtonEnabled = true))}
-        //Declaration of the map
-        GoogleMap(modifier=Modifier.fillMaxSize(),
-        properties = mapProp,
-            uiSettings = uiProp
-            ){
-            //Declaration of Marker
-            Marker(uamstate,title="University",snippet="UNIVERSIDAD AMERICANA")
-
-         */
+      
     }
 }
 @Composable
@@ -125,3 +121,32 @@ fun GreetingPreview() {
         Greeting("Android")
     }
 }
+
+/*private fun RequestPermission(){
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION),PERMISSION_ID
+        )
+    }
+    private fun CheckPermissions():Boolean{
+        if(
+            ActivityCompat.checkSelfPermission(this,android.Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED||
+            ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED
+        ){
+            return true
+        }
+        return false
+    }
+    private fun isLocationEnabled():Boolean{
+        var locationManager:LocationManager=getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+                locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }*/
