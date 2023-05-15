@@ -1,5 +1,6 @@
 package com.example.omway.service.omwUser;
 
+import com.example.omway.dto.omwUser.LoginResponseDto;
 import com.example.omway.dto.omwUser.RiderDto;
 import com.example.omway.model.omwUser.OMWayUser;
 import com.example.omway.model.omwUser.Rider;
@@ -15,4 +16,5 @@ public interface IServiceRider {
     public Rider save(RiderDto riderDto);
 
     public void deleteByString(String cif);
+    LoginResponseDto getRiderByCif(String cif,String password);
 }

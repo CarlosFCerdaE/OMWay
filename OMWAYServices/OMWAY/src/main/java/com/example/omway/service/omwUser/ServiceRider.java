@@ -1,5 +1,6 @@
 package com.example.omway.service.omwUser;
 
+import com.example.omway.dto.omwUser.LoginResponseDto;
 import com.example.omway.dto.omwUser.RiderDto;
 import com.example.omway.model.omwUser.Rider;
 import com.example.omway.model.trip.Ride;
@@ -49,5 +50,17 @@ public class ServiceRider implements IServiceRider {
     @Override
     public void deleteByString(String cif) {
         reporider.deleteById(cif);
+    }
+
+    @Override
+    public LoginResponseDto getRiderByCif(String cif, String password) {
+        Rider r = reporider.getRiderByCif(cif,password);
+        LoginResponseDto lr = new LoginResponseDto(false,"Not Connected");
+        if(r !=null){
+            lr = new LoginResponseDto(true,"User Connected");
+        }
+        return lr;
+
+
     }
 }

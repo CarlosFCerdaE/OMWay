@@ -1,9 +1,11 @@
 package com.example.omway.controller.omwUser;
 
+import com.example.omway.dto.omwUser.LoginResponseDto;
 import com.example.omway.dto.omwUser.RiderDto;
 import com.example.omway.model.omwUser.Rider;
 import com.example.omway.service.omwUser.IServiceRider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +25,11 @@ public class ControllerRider {
 
     }
 
+    @GetMapping("/login")
+    public LoginResponseDto getRiderByCif(@Param("cif") String cif, @Param("password") String password){
+        return service.getRiderByCif(cif,password);
+    }
+
     @PostMapping(value="/save",consumes = MediaType.APPLICATION_JSON_VALUE)
     public Rider saveRider(@RequestBody RiderDto riderDto){
         return service.save(riderDto);
@@ -40,6 +47,7 @@ public class ControllerRider {
     public void deleteRider(@PathVariable String cif){
         service.deleteByString(cif);
     }
+
 }
 
 

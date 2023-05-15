@@ -2,9 +2,11 @@ package com.example.omway.controller.omwUser;
 
 
 import com.example.omway.dto.omwUser.DriverDto;
+import com.example.omway.dto.omwUser.LoginResponseDto;
 import com.example.omway.model.omwUser.Driver;
 import com.example.omway.service.omwUser.IServiceDriver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +20,11 @@ public class ControllerDriver {
     public List<Driver> getAll(){
         return serviceDriver.getAll();
 
+    }
+
+    @GetMapping("/login")
+    public LoginResponseDto getDriverByCif(@Param("cif") String cif, @Param("password") String password){
+        return serviceDriver.getDriverByCif(cif,password);
     }
 
     @PostMapping("/save")
