@@ -4,12 +4,16 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.material3.BottomSheetScaffold
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -51,38 +55,42 @@ import com.main.omwayapp.ui.views.rider.ReaderApp
 
 
 import com.main.omwayapp.ui.views.rider.RiderView
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.ui.unit.sp
+
 
 //Hola amigos, bienvenidos a la app del futuro $$$
-data class Location(val coordinate: LatLng,
-                    val title:String,
-                    val description:String)
+
 
 //Unique id
 var PERMISSION_ID=25
 class MainActivity : ComponentActivity() {
 
 
+    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             OMWayAppTheme {
                 // A surface container using the 'background' color from the theme
+
+
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    /*Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
-                        val uam=Location(LatLng(12.10877952,-86.2564972),"UAM","Universidad Americana")
-                        OurGoogleMaps(uam){}
-                    }*/
+
                     //MyApp()
                     //DriverView()
                     //RiderView()
+                    //BttmSheet()
                     //MapView()
-
                     //ReaderApp()
 
+
                 }
+
+
             }
         }
     }
@@ -119,7 +127,7 @@ class MainActivity : ComponentActivity() {
             )
 
 
-            CustomButton(modifier = Modifier.width(100.dp), text = "Ok") {
+            CustomButton(modifier = Modifier.width(100.dp), text = "Ok", fontSize = 10.sp) {
                 
             }
         }
