@@ -80,7 +80,7 @@ class MainActivity : ComponentActivity() {
                     //DriverView()
                     //RiderView()
                     //BttmSheet()
-                    MapView()
+                    //MapView()
 
                 }
 
