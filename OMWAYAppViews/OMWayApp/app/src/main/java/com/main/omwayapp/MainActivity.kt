@@ -50,6 +50,10 @@ import com.main.omwayapp.ui.components.InputField
 import com.main.omwayapp.ui.theme.OMWayAppTheme
 import com.main.omwayapp.ui.views.driver.DriverView
 import com.main.omwayapp.ui.views.map.MapView
+
+import com.main.omwayapp.ui.views.rider.ReaderApp
+
+
 import com.main.omwayapp.ui.views.rider.RiderView
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.ui.unit.sp
@@ -81,6 +85,8 @@ class MainActivity : ComponentActivity() {
                     //RiderView()
                     //BttmSheet()
                     //MapView()
+                    //ReaderApp()
+
 
                 }
 
