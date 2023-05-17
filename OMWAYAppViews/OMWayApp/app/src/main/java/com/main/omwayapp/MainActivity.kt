@@ -46,7 +46,10 @@ import com.main.omwayapp.ui.components.InputField
 import com.main.omwayapp.ui.theme.OMWayAppTheme
 import com.main.omwayapp.ui.views.driver.DriverView
 import com.main.omwayapp.ui.views.map.MapView
+
 import com.main.omwayapp.ui.views.rider.ReaderApp
+
+
 import com.main.omwayapp.ui.views.rider.RiderView
 
 //Hola amigos, bienvenidos a la app del futuro $$$
@@ -76,7 +79,9 @@ class MainActivity : ComponentActivity() {
                     //DriverView()
                     //RiderView()
                     //MapView()
-                    ReaderApp()
+
+                    //ReaderApp()
+
                 }
             }
         }
