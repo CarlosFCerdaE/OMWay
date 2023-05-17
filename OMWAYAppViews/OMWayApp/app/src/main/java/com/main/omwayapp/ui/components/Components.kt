@@ -63,7 +63,7 @@ fun InputField(
         enabled = enabled,
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType, imeAction = imeAction),
         keyboardActions = onAction,
-        colors = TextFieldDefaults.textFieldColors(containerColor = colorFondo, textColor = colorTexto, focusedLabelColor = colorTexto, unfocusedLabelColor = colorTexto),
+        colors = TextFieldDefaults.textFieldColors(containerColor = colorFondo, /*textColor = colorTexto,*/ focusedLabelColor = colorTexto, unfocusedLabelColor = colorTexto),
         shape = RoundedCornerShape(10.dp)
     )
 
