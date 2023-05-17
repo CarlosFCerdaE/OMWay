@@ -52,6 +52,7 @@ import com.main.omwayapp.ui.views.driver.DriverView
 import com.main.omwayapp.ui.views.map.MapView
 import com.main.omwayapp.ui.views.rider.RiderView
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.ui.unit.sp
 
 
 //Hola amigos, bienvenidos a la app del futuro $$$
@@ -120,7 +121,7 @@ class MainActivity : ComponentActivity() {
             )
 
 
-            CustomButton(modifier = Modifier.width(100.dp), text = "Ok") {
+            CustomButton(modifier = Modifier.width(100.dp), text = "Ok", fontSize = 10.sp) {
                 
             }
         }

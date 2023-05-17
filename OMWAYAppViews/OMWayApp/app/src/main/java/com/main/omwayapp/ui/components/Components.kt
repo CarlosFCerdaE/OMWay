@@ -32,6 +32,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.main.omwayapp.ui.theme.Fondo
@@ -59,7 +60,7 @@ fun InputField(
         label ={ Text(text = labelId)},
         leadingIcon = {Icon(painter = icon, contentDescription = "Text Field Icon")},
         singleLine = isSingleLine,
-        textStyle = TextStyle(fontSize = 18.sp),
+        textStyle = TextStyle(fontSize = 18.sp, color = Color.White),
         enabled = enabled,
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType, imeAction = imeAction),
         keyboardActions = onAction,
@@ -78,6 +79,7 @@ fun CustomButton(
     colorFondo:Color = MentaImportante40,
     text: String,
     textColor : Color = Fondo,
+    fontSize:TextUnit,
     onClick:()->Unit
 ){
     Button(onClick = onClick,
@@ -89,7 +91,8 @@ fun CustomButton(
         contentPadding = PaddingValues(4.dp)
         ) {
             Text(text = text,
-                color = textColor
+                color = textColor,
+                fontSize = fontSize
                 )
     }
 
