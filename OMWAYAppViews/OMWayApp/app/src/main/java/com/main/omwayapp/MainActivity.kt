@@ -4,13 +4,14 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardActions
-
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -34,12 +35,20 @@ import androidx.compose.ui.unit.sp
 import com.main.omwayapp.ui.views.rider.ReaderApp
 
 
+
+import com.main.omwayapp.ui.views.rider.RiderView
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.ui.unit.sp
+
+
+
 //Hola amigos, bienvenidos a la app del futuro $$$
 
 
 //Unique id
 var PERMISSION_ID=25
 class MainActivity : ComponentActivity() {
+
 
 
 
@@ -62,6 +71,7 @@ class MainActivity : ComponentActivity() {
                     //BttmSheet()
                     //MapView()
                     //ReaderApp()
+
 
                 }
 

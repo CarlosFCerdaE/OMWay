@@ -32,7 +32,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.Dp
+
 import androidx.compose.ui.unit.DpSize
+
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -80,7 +82,8 @@ fun CustomButton(
     enabled: Boolean = true,
     colorFondo:Color = MentaImportante40,
     text: String,
-    textColor: Color = Fondo,
+
+    textColor : Color = Fondo,
     fontSize:TextUnit,
     onClick:()->Unit
 ){
