@@ -1,41 +1,43 @@
 package com.main.omwayapp.ui.components
 
-import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ButtonElevation
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Shapes
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.main.omwayapp.ui.theme.Fondo
+import com.main.omwayapp.ui.theme.IBMplexSans
 import com.main.omwayapp.ui.theme.MentaImportante40
 import com.main.omwayapp.ui.theme.TextoGeneral
 import com.main.omwayapp.ui.theme.TxtFields
@@ -78,14 +80,14 @@ fun CustomButton(
     enabled: Boolean = true,
     colorFondo:Color = MentaImportante40,
     text: String,
-    textColor : Color = Fondo,
+    textColor: Color = Fondo,
     fontSize:TextUnit,
     onClick:()->Unit
 ){
     Button(onClick = onClick,
     modifier = modifier,
         enabled = enabled,
-        shape = RoundedCornerShape(corner = CornerSize(15.dp)),
+        shape = RoundedCornerShape(corner = CornerSize(10.dp)),
         colors = ButtonDefaults.buttonColors(containerColor = colorFondo),
         elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp),
         contentPadding = PaddingValues(4.dp)
@@ -107,4 +109,52 @@ fun CustomDivider(
     Box(
         modifier = modifier.fillMaxWidth().height(height).background(color)
     )
+}
+
+@Composable
+fun CenteredImage(image: Painter, size: DpSize) {
+    Box(
+
+        contentAlignment = Alignment.TopCenter,
+        //modifier = Modifier.padding(20.dp).height(10.dp).width(10.dp),
+
+
+    ) {
+        Image(
+            painter = image,
+            contentDescription = "OMWayLogo",
+            modifier = Modifier
+                .size(size.width, size.height),
+            alignment = Alignment.Center
+        )
+
+    }
+}
+
+@Composable
+fun CustomButtonG(
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    colorFondo:Color = MentaImportante40,
+    text: String,
+    textColor: Color = Fondo,
+    fontSize:TextUnit,
+    fontFamily: FontFamily = IBMplexSans,
+    fontWeight: FontWeight = FontWeight.Bold,
+    onClick:()->Unit
+){
+    Button(onClick = onClick,
+        modifier = modifier,
+        enabled = enabled,
+        shape = RoundedCornerShape(corner = CornerSize(25.dp)),
+        colors = ButtonDefaults.buttonColors(containerColor = colorFondo),
+        elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp),
+        contentPadding = PaddingValues(4.dp)
+    ) {
+        Text(text = text,
+            color = textColor,
+            fontSize = fontSize
+        )
+    }
+
 }

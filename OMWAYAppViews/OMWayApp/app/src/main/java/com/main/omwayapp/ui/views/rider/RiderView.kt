@@ -10,7 +10,7 @@ import com.main.omwayapp.ui.navigation.ReaderNavigation
 
 @Composable
 fun RiderView(){
-    CustomButton(text = "Hello",fontSize = 10.sp) {
+    CustomButton(text = "Hello", fontSize = 10.sp) {
 
     }
 
