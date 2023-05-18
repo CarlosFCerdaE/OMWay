@@ -3,6 +3,7 @@ package com.main.omwayapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -39,7 +40,7 @@ import com.main.omwayapp.ui.views.rider.ReaderApp
 import com.main.omwayapp.ui.views.rider.RiderView
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.ui.unit.sp
-
+import com.main.omwayapp.apirest.model.LoginModel
 
 
 //Hola amigos, bienvenidos a la app del futuro $$$
@@ -48,17 +49,15 @@ import androidx.compose.ui.unit.sp
 //Unique id
 var PERMISSION_ID=25
 class MainActivity : ComponentActivity() {
-
-
-
+    private val loginModel : LoginModel by viewModels()
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContent {
             OMWayAppTheme {
                 // A surface container using the 'background' color from the theme
-
 
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -70,7 +69,7 @@ class MainActivity : ComponentActivity() {
                     //RiderView()
                     //BttmSheet()
                     //MapView()
-                    //ReaderApp()
+                    //ReaderApp(loginModel = loginModel)
 
 
                 }
