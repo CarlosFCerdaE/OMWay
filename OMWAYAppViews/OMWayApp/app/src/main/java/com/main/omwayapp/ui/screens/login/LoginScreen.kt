@@ -1,5 +1,6 @@
 package com.main.omwayapp.ui.screens.login
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -29,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.main.omwayapp.R
+import com.main.omwayapp.apirest.model.LoginModel
 import com.main.omwayapp.ui.components.CenteredImage
 import com.main.omwayapp.ui.components.CustomButton
 import com.main.omwayapp.ui.components.CustomButtonG
@@ -41,10 +43,16 @@ import com.main.omwayapp.ui.theme.TextoGeneral
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun RLoginScreen (navController: NavController ){
-    var name = remember {
-        mutableStateOf("")
+fun RLoginScreen (navController: NavController,loginModel: LoginModel){
+    var cif = remember {
+        mutableStateOf(loginModel.cif)
     }
+    var password = remember {
+        mutableStateOf(loginModel.password)
+    }
+
+    val context = LocalContext.current
+
     var keyBoardController = LocalSoftwareKeyboardController.current
     Surface(modifier = Modifier.fillMaxSize(), color = Fondo){
        
@@ -99,7 +107,7 @@ fun RLoginScreen (navController: NavController ){
                         .fillMaxWidth()
                         .padding(horizontal = 15.dp, vertical = 4.dp)
                         .align(Alignment.CenterHorizontally),
-                    valueState = name,
+                    valueState = loginModel.cif,
                     labelId = "Cif",
                     icon = painterResource(id = R.drawable.usuario),
                     enabled = true,
@@ -116,7 +124,7 @@ fun RLoginScreen (navController: NavController ){
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 15.dp, vertical= 4.dp),
-                    valueState = name,
+                    valueState = loginModel.password,
                     labelId = "Contraseña",
                     icon = painterResource(id = R.drawable.password),
                     enabled = true,
@@ -129,8 +137,8 @@ fun RLoginScreen (navController: NavController ){
                 Spacer(modifier = Modifier.height(25.dp))
 
                 CustomButtonG(modifier = Modifier.width(222.dp).height(51.dp), text = "LOGIN", fontSize = 20.sp) {
-
-
+                    val loginResponse = loginModel.onSummit()
+                    Toast.makeText(context,loginResponse.msg,Toast.LENGTH_LONG).show()
                 }
 
 
@@ -145,3 +153,4 @@ fun RLoginScreen (navController: NavController ){
     }
 
 }
+

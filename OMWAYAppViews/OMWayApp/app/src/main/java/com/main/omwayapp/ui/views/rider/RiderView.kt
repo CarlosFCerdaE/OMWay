@@ -2,6 +2,7 @@ package com.main.omwayapp.ui.views.rider
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.sp
+import com.main.omwayapp.apirest.model.LoginModel
 import com.main.omwayapp.ui.components.CustomButton
 
 import com.main.omwayapp.ui.navigation.ReaderNavigation
@@ -16,8 +17,8 @@ fun RiderView(){
 }
 
 @Composable
-fun ReaderApp(){
+fun ReaderApp(loginModel: LoginModel){
 
-    ReaderNavigation()
+    ReaderNavigation(loginModel = loginModel)
 
 }
