@@ -1,9 +1,11 @@
 package com.main.omwayapp
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -41,6 +43,7 @@ import com.main.omwayapp.ui.views.rider.RiderView
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.ui.unit.sp
 import com.main.omwayapp.apirest.model.LoginModel
+import com.main.omwayapp.ui.screens.driver.registerdriver.RegisterDriver
 
 
 //Hola amigos, bienvenidos a la app del futuro $$$
@@ -51,6 +54,7 @@ var PERMISSION_ID=25
 class MainActivity : ComponentActivity() {
     private val loginModel : LoginModel by viewModels()
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -67,9 +71,10 @@ class MainActivity : ComponentActivity() {
                     //MyApp()
                     //DriverView()
                     //RiderView()
+                    RegisterDriver()
                     //BttmSheet()
                     //MapView()
-                    ReaderApp(loginModel = loginModel)
+                    //ReaderApp(loginModel = loginModel)
 
 
                 }

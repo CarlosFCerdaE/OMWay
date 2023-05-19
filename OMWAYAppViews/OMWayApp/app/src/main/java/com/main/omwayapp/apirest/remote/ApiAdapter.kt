@@ -29,7 +29,7 @@ object ApiAdapter {
              return ""
          }
  */
-    val BASE_URL = "http://192.168.1.6:8080"
+    val BASE_URL = "http://192.168.100.93:8080"
     fun getInstance(): Retrofit {
         return Retrofit.Builder().baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
