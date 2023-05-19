@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/rider")
+@CrossOrigin("*")
 public class ControllerRider {
 
     @Autowired

@@ -1,5 +1,6 @@
 package com.main.omwayapp.apirest.model
 
+import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
@@ -17,9 +18,9 @@ class LoginModel : ViewModel() {
     private val _password = mutableStateOf("")
     val password: MutableState<String> get() = _password
 
-    fun onSummit() : LoginResponse {
+    fun onSummit(context: Context) : LoginResponse {
         Log.d("Valores","Valor cif:${cif.value}, valor Password: ${password.value}")
         val repository = RepositoryUser()
-        return repository.fetchData(cif.value,password.value);
+        return repository.fetchData(context,cif.value,password.value)
     }
 }

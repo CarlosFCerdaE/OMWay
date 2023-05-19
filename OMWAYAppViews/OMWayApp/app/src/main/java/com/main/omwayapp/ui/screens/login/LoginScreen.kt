@@ -137,8 +137,8 @@ fun RLoginScreen (navController: NavController,loginModel: LoginModel){
                 Spacer(modifier = Modifier.height(25.dp))
 
                 CustomButtonG(modifier = Modifier.width(222.dp).height(51.dp), text = "LOGIN", fontSize = 20.sp) {
-                    val loginResponse = loginModel.onSummit()
-                    Toast.makeText(context,loginResponse.msg,Toast.LENGTH_LONG).show()
+                    val loginResponse = loginModel.onSummit(context)
+
                 }
 
 

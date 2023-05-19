@@ -1,6 +1,8 @@
 package com.main.omwayapp.apirest.repository
 
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import com.main.omwayapp.apirest.remote.ApiAdapter
 import com.main.omwayapp.apirest.remote.ApiUser
 import com.main.omwayapp.apirest.response.LoginResponse
@@ -13,13 +15,19 @@ class RepositoryUser : CoroutineScope by MainScope() {
     val apiUser : ApiUser = ApiAdapter.getInstance()
         .create(ApiUser::class.java)
 
-    fun fetchData(cif: String, password: String): LoginResponse {
+    fun fetchData(context:Context, cif: String, password: String): LoginResponse {
         var  loginResponse : LoginResponse = LoginResponse()
         launch {
             try {
                 val response: Response<LoginResponse> = apiUser.getLogin(cif, password)
                 if (response.isSuccessful) {
                     loginResponse = response.body() as LoginResponse
+                    if(loginResponse.success){
+                        Toast.makeText(context,loginResponse.msg, Toast.LENGTH_LONG).show()
+                    }
+                    else{
+                        Toast.makeText(context,"Usuario no existe",Toast.LENGTH_LONG).show()
+                    }
                     Log.d("RESULTADO OK","RESULTADO OK,$loginResponse.msg")
                 } else {
                     loginResponse.msg = "Sin exito"

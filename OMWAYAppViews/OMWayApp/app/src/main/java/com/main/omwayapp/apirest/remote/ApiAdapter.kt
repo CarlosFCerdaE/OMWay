@@ -14,21 +14,22 @@ object ApiAdapter {
         applicationContext = context.applicationContext
     }
 
-    val BASE_URL: String
-        get() {
-            try {
-                val appInfo = applicationContext.packageManager.getApplicationInfo(
-                    applicationContext.packageName,
-                    PackageManager.GET_META_DATA
-                )
-                val metaData = appInfo.metaData
-                return metaData.getString("BASE_URL").toString()
-            } catch (e: PackageManager.NameNotFoundException) {
-                e.printStackTrace()
-            }
-            return ""
-        }
-
+    /* val BASE_URL: String
+         get() {
+             try {
+                 val appInfo = applicationContext.packageManager.getApplicationInfo(
+                     applicationContext.packageName,
+                     PackageManager.GET_META_DATA
+                 )
+                 val metaData = appInfo.metaData
+                 return metaData.getString("BASE_URL").toString()
+             } catch (e: PackageManager.NameNotFoundException) {
+                 e.printStackTrace()
+             }
+             return ""
+         }
+ */
+    val BASE_URL = "http://10.219.222.114:8080"
     fun getInstance(): Retrofit {
         return Retrofit.Builder().baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
