@@ -1,7 +1,9 @@
 package com.example.omway.service.omwUser;
 
 import com.example.omway.dto.omwUser.DriverDto;
+import com.example.omway.dto.omwUser.LoginResponseDto;
 import com.example.omway.model.omwUser.Driver;
+import com.example.omway.model.omwUser.Rider;
 import com.example.omway.model.trip.Ride;
 import com.example.omway.repository.omwUser.IRepositoryDriver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,5 +57,15 @@ public class ServiceDriver implements IServiceDriver {
     @Override
     public void deleteById(String cif) {
         repodriver.deleteById(cif);
+    }
+
+    @Override
+    public LoginResponseDto getDriverByCif(String cif, String password) {
+        Driver d = repodriver.getDriverByCif(cif,password);
+        LoginResponseDto lr = new LoginResponseDto(false,"Not Connected");
+        if(d !=null){
+            lr = new LoginResponseDto(true,"User Connected");
+        }
+        return lr;
     }
 }
