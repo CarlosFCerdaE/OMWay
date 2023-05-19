@@ -15,17 +15,17 @@ import java.util.List;
 public class ControllerMake {
 
     @Autowired
-    private IServiceMake makeService;
+    private IServiceMake serviceMake;
 
     @GetMapping("/all")
     public List<Make> getAll(){
-        return makeService.getAll();
+        return serviceMake.getAll();
 
     }
 
     @PostMapping("/save")
     public Make saveMake(@RequestBody MakeDto makeDto){
-        return makeService.save(makeDto);
+        return serviceMake.save(makeDto);
     }
 
     @PutMapping(value = "/update")
@@ -34,12 +34,12 @@ public class ControllerMake {
         if(makeDto.getId()==null){
             throw new Exception("Please type the Id value");
         }
-        return makeService.save(makeDto);
+        return serviceMake.save(makeDto);
     }
 
     @DeleteMapping(value = "/delete/{Id}")
     public void deleteMake(@PathVariable Integer Id){
-        makeService.deleteById(Id);
+        serviceMake.deleteById(Id);
     }
 }
 

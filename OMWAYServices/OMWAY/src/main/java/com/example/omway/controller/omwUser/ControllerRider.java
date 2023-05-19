@@ -17,23 +17,23 @@ import java.util.List;
 public class ControllerRider {
 
     @Autowired
-    private IServiceRider service;
+    private IServiceRider serviceRider;
 
 
     @GetMapping("/all")
     public List<Rider> getAll(){
-        return service.getAll();
+        return serviceRider.getAll();
 
     }
 
     @GetMapping("/login")
     public LoginResponseDto getRiderByCif(@Param("cif") String cif, @Param("password") String password){
-        return service.getRiderByCif(cif,password);
+        return serviceRider.getRiderByCif(cif,password);
     }
 
     @PostMapping(value="/save",consumes = MediaType.APPLICATION_JSON_VALUE)
     public Rider saveRider(@RequestBody RiderDto riderDto){
-        return service.save(riderDto);
+        return serviceRider.save(riderDto);
     }
 
     @PutMapping( "/update")
@@ -41,12 +41,12 @@ public class ControllerRider {
         if(riderDto.getRiderCif()==null){
             throw new Exception("Please type the cif value");
         }
-        return service.save(riderDto);
+        return serviceRider.save(riderDto);
     }
 
     @DeleteMapping(value = "/delete/{cif}")
     public void deleteRider(@PathVariable String cif){
-        service.deleteByString(cif);
+        serviceRider.deleteByString(cif);
     }
 
 }
