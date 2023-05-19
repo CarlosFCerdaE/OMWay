@@ -23,7 +23,7 @@ public class ControllerDriver {
 
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public LoginResponseDto getDriverByCif(@Param("cif") String cif, @Param("password") String password){
         return serviceDriver.getDriverByCif(cif,password);
     }
