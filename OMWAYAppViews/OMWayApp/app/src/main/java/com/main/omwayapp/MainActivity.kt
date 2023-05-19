@@ -69,7 +69,7 @@ class MainActivity : ComponentActivity() {
                     //RiderView()
                     //BttmSheet()
                     //MapView()
-                    //ReaderApp(loginModel = loginModel)
+                    ReaderApp(loginModel = loginModel)
 
 
                 }
