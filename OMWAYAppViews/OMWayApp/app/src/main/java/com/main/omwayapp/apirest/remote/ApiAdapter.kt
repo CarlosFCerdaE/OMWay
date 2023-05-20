@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 object ApiAdapter {
 
@@ -29,11 +30,17 @@ object ApiAdapter {
              return ""
          }
  */
-    val BASE_URL = "http://192.168.100.93:8080"
+    val BASE_URL = "http://192.168.1.6:8181"
+
     fun getInstance(): Retrofit {
+
+        val client = OkHttpClient.Builder()
+            .connectTimeout(10, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .build()
         return Retrofit.Builder().baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
-            .client(OkHttpClient())
+            .client(client)
             .build()
     }
 }

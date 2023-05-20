@@ -40,10 +40,11 @@ import com.main.omwayapp.ui.views.rider.ReaderApp
 
 
 import com.main.omwayapp.ui.views.rider.RiderView
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.ui.unit.sp
+import com.google.android.gms.maps.MapView
 import com.main.omwayapp.apirest.model.LoginModel
 import com.main.omwayapp.ui.screens.driver.registerdriver.RegisterDriver
+import com.main.omwayapp.ui.views.map.MapView
 
 
 //Hola amigos, bienvenidos a la app del futuro $$$
@@ -71,7 +72,7 @@ class MainActivity : ComponentActivity() {
                     //MyApp()
                     //DriverView()
                     //RiderView()
-                    RegisterDriver()
+                    //RegisterDriver()
                     //BttmSheet()
                     //MapView()
                     //ReaderApp(loginModel = loginModel)

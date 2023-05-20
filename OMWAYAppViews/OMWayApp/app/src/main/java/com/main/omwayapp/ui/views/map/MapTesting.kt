@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.LocalContentColor
-import androidx.compose.material3.BottomSheetScaffold
+
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
@@ -88,11 +88,7 @@ fun OurGoogleMaps(location: Location, onReady:(GoogleMap)->Unit){
     })
 
 }
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-fun TestMap(){
-    GoogleMap(modifier = Modifier.fillMaxSize())
-}
+
 
 
 
