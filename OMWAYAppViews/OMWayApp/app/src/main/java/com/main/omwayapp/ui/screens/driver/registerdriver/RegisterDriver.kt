@@ -201,7 +201,7 @@ fun DlExpiraationDatePicker(){
                 .size(width = 330.dp, height = 70.dp)
                 .clip(RoundedCornerShape(10.dp)),
             colors = TextFieldDefaults.textFieldColors(containerColor = colorResource(id = R.color.txt_fields),
-                focusedTextColor =  colorResource(id =R.color.texto_general), focusedLabelColor = colorResource(id =R.color.texto_general), unfocusedLabelColor = colorResource(id =R.color.texto_general)
+                textColor =  colorResource(id =R.color.texto_general), focusedLabelColor = colorResource(id =R.color.texto_general), unfocusedLabelColor = colorResource(id =R.color.texto_general)
             ),
             label = {
                 Text(text = "Fecha de vencimiento"/*,
@@ -320,7 +320,7 @@ fun MakeExposedDropdownMenuBox() {
                     .clip(RoundedCornerShape(10.dp)),
                 colors = TextFieldDefaults.textFieldColors
                     (containerColor = colorResource(id = R.color.txt_fields),
-                    focusedTextColor = colorResource(
+                    textColor = colorResource(
                         id = R.color.texto_general)
                 ),
                 textStyle=TextStyle(fontSize=12.sp,color=colorResource(
@@ -391,7 +391,7 @@ fun ModelExposedDropdownMenuBox() {
                     .clip(RoundedCornerShape(10.dp)),
                 colors = TextFieldDefaults.textFieldColors
                     (containerColor = colorResource(id = R.color.txt_fields),
-                    focusedTextColor = colorResource(
+                    textColor = colorResource(
                         id = R.color.texto_general)
                 ),
                 textStyle=TextStyle(fontSize=12.sp,color=colorResource(
