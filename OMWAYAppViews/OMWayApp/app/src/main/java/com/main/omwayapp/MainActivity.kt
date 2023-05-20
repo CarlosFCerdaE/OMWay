@@ -71,10 +71,10 @@ class MainActivity : ComponentActivity() {
                     //MyApp()
                     //DriverView()
                     //RiderView()
-                    RegisterDriver()
+                    //RegisterDriver()
                     //BttmSheet()
                     //MapView()
-                    //ReaderApp(loginModel = loginModel)
+                    ReaderApp(loginModel = loginModel)
 
 
                 }
