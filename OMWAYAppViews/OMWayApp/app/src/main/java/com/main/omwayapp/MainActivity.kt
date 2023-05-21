@@ -43,6 +43,7 @@ import com.main.omwayapp.ui.views.rider.RiderView
 import androidx.compose.ui.unit.sp
 import com.google.android.gms.maps.MapView
 import com.main.omwayapp.apirest.model.LoginModel
+import com.main.omwayapp.ui.screens.driver.menuTabDriver.MenuTabDriver
 import com.main.omwayapp.ui.screens.driver.registerdriver.RegisterDriver
 import com.main.omwayapp.ui.views.map.MapView
 
@@ -74,7 +75,8 @@ class MainActivity : ComponentActivity() {
                     //RiderView()
                     //RegisterDriver()
                     //BttmSheet()
-                    MapView()
+                    //MapView()
+                   // MenuTabDriver()
                     //ReaderApp(loginModel = loginModel)
 
 
