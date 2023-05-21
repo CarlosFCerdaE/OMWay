@@ -64,7 +64,7 @@ fun InputField(
         label ={ Text(text = labelId)},
         leadingIcon = {Icon(painter = icon, contentDescription = "Text Field Icon")},
         singleLine = isSingleLine,
-        textStyle = TextStyle(fontSize = 18.sp, color = Color.White),
+        textStyle = TextStyle(fontSize = 16.sp, color = Color.White),
         enabled = enabled,
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType, imeAction = imeAction),
         keyboardActions = onAction,

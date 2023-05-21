@@ -139,10 +139,11 @@ fun RegisterDriver(){
         MakeExposedDropdownMenuBox()
         ModelExposedDropdownMenuBox()
         CarYearTextField()
-        Spacer(modifier = Modifier.padding(10.dp))
+        Spacer(modifier = Modifier.padding(15.dp))
         CustomButton(modifier = Modifier.size(width=222.dp,height=51.dp),text = "Regístrate", fontSize = 20.sp) {
             
         }
+        Spacer(modifier = Modifier.padding(25.dp))
 
 
 
@@ -201,7 +202,7 @@ fun DlExpiraationDatePicker(){
                 .size(width = 330.dp, height = 70.dp)
                 .clip(RoundedCornerShape(10.dp)),
             colors = TextFieldDefaults.textFieldColors(containerColor = colorResource(id = R.color.txt_fields),
-                textColor =  colorResource(id =R.color.texto_general), focusedLabelColor = colorResource(id =R.color.texto_general), unfocusedLabelColor = colorResource(id =R.color.texto_general)
+                 focusedLabelColor = colorResource(id =R.color.texto_general), unfocusedLabelColor = colorResource(id =R.color.texto_general)
             ),
             label = {
                 Text(text = "Fecha de vencimiento"/*,
@@ -210,6 +211,8 @@ fun DlExpiraationDatePicker(){
                     color = colorResource(id = R.color.texto_general)*/
                 )
             },
+            textStyle=TextStyle(fontSize=13.sp,color=colorResource(
+                id = R.color.texto_general)),
             leadingIcon = {
                 IconButton(onClick = {/*TODO*/}){
                     Icon(painter = painterResource(id = R.drawable.calendario),
@@ -319,11 +322,9 @@ fun MakeExposedDropdownMenuBox() {
                     .size(width = 330.dp, height = 70.dp)
                     .clip(RoundedCornerShape(10.dp)),
                 colors = TextFieldDefaults.textFieldColors
-                    (containerColor = colorResource(id = R.color.txt_fields),
-                    textColor = colorResource(
-                        id = R.color.texto_general)
+                    (containerColor = colorResource(id = R.color.txt_fields)
                 ),
-                textStyle=TextStyle(fontSize=12.sp,color=colorResource(
+                textStyle=TextStyle(fontSize=16.sp,color=colorResource(
                     id = R.color.texto_general)),
                 label = {
                     Text(text = "Marca",
@@ -390,11 +391,9 @@ fun ModelExposedDropdownMenuBox() {
                     .size(width = 330.dp, height = 70.dp)
                     .clip(RoundedCornerShape(10.dp)),
                 colors = TextFieldDefaults.textFieldColors
-                    (containerColor = colorResource(id = R.color.txt_fields),
-                    textColor = colorResource(
-                        id = R.color.texto_general)
+                    (containerColor = colorResource(id = R.color.txt_fields)
                 ),
-                textStyle=TextStyle(fontSize=12.sp,color=colorResource(
+                textStyle=TextStyle(fontSize=16.sp,color=colorResource(
                     id = R.color.texto_general)),
                 label = {
                     Text(text = "Modelo",/*
