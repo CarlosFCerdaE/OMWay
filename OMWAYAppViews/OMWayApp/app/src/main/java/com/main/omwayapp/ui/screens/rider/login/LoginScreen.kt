@@ -1,4 +1,4 @@
-package com.main.omwayapp.ui.screens.login
+package com.main.omwayapp.ui.screens.rider.login
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
