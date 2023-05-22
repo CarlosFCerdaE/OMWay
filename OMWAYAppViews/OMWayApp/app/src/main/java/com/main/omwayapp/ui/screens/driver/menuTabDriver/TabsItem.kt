@@ -2,7 +2,9 @@ package com.main.omwayapp.ui.screens.driver.menuTabDriver
 
 import androidx.compose.runtime.Composable
 import com.main.omwayapp.ui.screens.driver.menuTabDriver.TabScreen.Home.HomeDriver
-import com.main.omwayapp.ui.screens.driver.menuTabDriver.TabScreen.Solicitudes.Solicitudes
+import com.main.omwayapp.ui.screens.driver.menuTabDriver.TabScreen.MisCarros.MisCarros
+import com.main.omwayapp.ui.screens.driver.menuTabDriver.TabScreen.MisViajes.MisViajesDriver
+
 
 typealias ScreenFun = @Composable () ->Unit
 sealed class TabsItem(
@@ -12,5 +14,8 @@ sealed class TabsItem(
 )
 {
     object itemHome: TabsItem("Home",{ HomeDriver() })
+    object itemMisViajes: TabsItem("Mis Viajes",{MisViajesDriver()})
+    object itemMisCarros: TabsItem("Mis Carros",{MisCarros()})
+
     //object itemSolicitudes: TabsItem("Solicitudes",{ Solicitudes() })
 }

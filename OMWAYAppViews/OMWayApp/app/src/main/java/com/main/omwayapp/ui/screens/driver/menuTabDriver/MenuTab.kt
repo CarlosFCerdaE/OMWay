@@ -17,6 +17,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.lerp
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -28,10 +29,14 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalPagerApi::class, ExperimentalMaterial3Api::class)
 @Composable()
+@Preview(showSystemUi=true)
 fun MenuTabDriver(){
 
     val tabs = listOf(
         TabsItem.itemHome,
+        TabsItem.itemMisViajes,
+        TabsItem.itemMisCarros
+
       //  TabsItem.itemSolicitudes
     )
     val pagerState = rememberPagerState()
