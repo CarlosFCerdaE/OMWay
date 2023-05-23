@@ -2,6 +2,7 @@ package com.main.omwayapp.ui.screens.driver.menuTabDriver.TabScreen.Home
 
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -57,8 +58,10 @@ fun HomeDriver(){
         .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
         CustomDivider( modifier = Modifier.height(21.dp),)
 
+        Spacer(modifier = Modifier.padding(2.dp))
         Column(modifier = Modifier.align(Alignment.Start))
         {
             Spacer(modifier = Modifier.padding(4.dp))
@@ -76,46 +79,32 @@ fun HomeDriver(){
 
         }
 
-        Column(){
+        Column(horizontalAlignment = Alignment.CenterHorizontally){
 
-            Row(modifier = Modifier.align(Alignment.Start))
+            Row(modifier = Modifier.padding(5.dp),
+                horizontalArrangement = Arrangement.Center)
             {
-                Box(modifier = Modifier
-                    .height(95.dp)
-                    .width(155.dp)
-                    .padding(4.dp)){
-                    TripSummary()
-                }
 
-                    Box(modifier = Modifier
-                        .height(95.dp)
-                        .width(155.dp)
-                        .padding(4.dp)){
-                        GananciasSummary()
-                    }
-
+                TripSummary()
+                GananciasSummary()
 
             }
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Box(
-                    modifier = Modifier
-                        .height(95.dp)
-                        .width(155.dp)
-                        .padding(4.dp)
-                ) {
-                    RatingDriver()
-                }
-            }
+
+            RatingDriver()
 
 
         }
+
+        Spacer(modifier = Modifier.padding(12.dp))
+
         DepositoText()
 
         Spacer(modifier = Modifier.padding(12.dp))
 
         Column(){
-            Row(modifier = Modifier.align(Alignment.Start)
-            .padding(10.dp))
+            Row(modifier = Modifier
+                .align(Alignment.Start)
+                .padding(10.dp))
             {
             Box(
                 modifier = Modifier
@@ -140,8 +129,9 @@ fun HomeDriver(){
         }
 
 
-        
+
     }
+
 
 }
 
@@ -149,17 +139,29 @@ fun HomeDriver(){
 @Composable
 fun BienvenidoText(){
 
-    Column(){
-        Text(
-            text = "Bienvenido, DriverName!",
-            fontSize = 20.sp,
-            fontFamily = FontFamily(Font(R.font.ibmplexsans_semibold)),
-            color = colorResource(id = R.color.texto_general),
-            modifier = Modifier
-                .align(Alignment.Start)
-                .padding(vertical = 10.dp, horizontal = 16.dp)
-        )
+    var text by remember { mutableStateOf("DriverName!") }
+    Row(){
+
+        Column(){
+            Text(
+                text = "Bienvenido," + text,
+                fontSize = 20.sp,
+                fontFamily = FontFamily(Font(R.font.ibmplexsans_semibold)),
+                color = colorResource(id = R.color.texto_general),
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(vertical = 10.dp, horizontal = 16.dp)
+            )
+        }
+        IconButton(onClick = {/*TODO*/}){
+            Icon(painter = painterResource(id = R.drawable.usuario_perfil),
+                contentDescription = "Usuario perfil",
+                tint = Color.White,
+                modifier = Modifier
+                    .size(190.dp))
+        }
     }
+
 
 }
 
@@ -171,9 +173,8 @@ fun TripSummary(){
 
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(10.dp),
-        horizontalAlignment = Alignment.Start
+            .padding(10.dp)//,
+
     ) {
 
       TextField(value = text, onValueChange = {text=it},
@@ -212,8 +213,8 @@ fun GananciasSummary(){
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(10.dp),
-        horizontalAlignment = Alignment.Start
+            .padding(10.dp)//,
+     //   horizontalAlignment = Alignment.Start
     ) {
 
         TextField(value = text, onValueChange = {text=it},
@@ -283,7 +284,7 @@ fun RatingDriver(){
                         contentDescription = "Rating",
                         tint = Color.Yellow,
                         modifier = Modifier
-                            .size(25.dp))
+                            .size(30.dp))
                 }
             }
         )
@@ -298,52 +299,32 @@ fun DepositoText() {
     var text by remember { mutableStateOf("240") }
     var textDeposito by remember { mutableStateOf("Del total de tus ganancias, debes depositar: C$") }
 
-    Row() {
-        Text(
-            text =  textDeposito,
-            fontSize = 20.sp,
-            fontFamily = FontFamily(Font(R.font.ibmplexsans_semibold)),
-            color = colorResource(id = R.color.texto_general),
+    textDeposito = textDeposito+text;
+
+    Column(){
+
+        TextField(
+            value = textDeposito, onValueChange = { textDeposito = it },
+            readOnly = true,
             modifier = Modifier
-                .padding(vertical = 10.dp, horizontal = 16.dp)
+                .size(width = 311.dp, height = 90.dp),
+            colors = TextFieldDefaults.textFieldColors
+                (
+                containerColor = colorResource(id = R.color.fondo)
+            ),
+            textStyle = TextStyle(
+                fontSize = 20.sp, color = colorResource(
+                    id = R.color.texto_general
+                ), fontFamily = FontFamily(Font(R.font.imbplexsans_medium)),
+                textAlign = TextAlign.Center
+            )
         )
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+    }
 
-            Box(
-                modifier = Modifier
-                    .height(10.dp)
-                    .width(12.dp)
-                    .padding(4.dp)
-            ){
-                TextField(
-                    value = text, onValueChange = { text = it },
-                    readOnly = true,
-                    modifier = Modifier
-                        .size(width = 12.dp, height = 10.dp)
-                        .clip(RoundedCornerShape(12.dp)),
-                    colors = TextFieldDefaults.textFieldColors
-                        (
-                        containerColor = colorResource(id = R.color.fondo)
-                    ),
-                    textStyle = TextStyle(
-                        fontSize = 24.sp, color = colorResource(
-                            id = R.color.menta_importante
-                        ), fontFamily = FontFamily(Font(R.font.imbplexsans_medium)),
-                        textAlign = TextAlign.Center
-                    )
-                )
-            }
-
-        }
 
 
     }
-}
+
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -358,7 +339,8 @@ fun AjustesBox(){
             .size(width = 150.dp, height = 85.dp)
             .background(colorResource(id = R.color.menta_importante))
             .clip(RoundedCornerShape(12.dp))
-            .padding(10.dp)
+            .padding(10.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
 
     ) {
         Column(modifier =  Modifier.align(Alignment.Start)){
@@ -387,7 +369,8 @@ fun ModoPasajeroBox(){
             .size(width = 150.dp, height = 85.dp)
             .background(colorResource(id = R.color.menta_importante))
             .clip(RoundedCornerShape(12.dp))
-            .padding(10.dp)
+            .padding(10.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
 
     ) {
         Column(modifier =  Modifier.align(Alignment.Start)){
@@ -401,7 +384,6 @@ fun ModoPasajeroBox(){
             contentDescription = "Modo Pasajero",
             modifier = Modifier
                 .size(35.dp))
-
     }
 
 }
