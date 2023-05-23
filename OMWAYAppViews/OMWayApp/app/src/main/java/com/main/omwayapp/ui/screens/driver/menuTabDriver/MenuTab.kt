@@ -44,8 +44,6 @@ fun MenuTabDriver(){
     Column(modifier =
     Modifier
         .background(color = colorResource(id = R.color.fondo))
-        .fillMaxSize()
-        .verticalScroll(rememberScrollState()),
     ){
 
         Tabs(tabs,pagerState)

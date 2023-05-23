@@ -80,7 +80,6 @@ class MainActivity : ComponentActivity() {
                     //BttmSheet()
                     //MapView()
                   //MenuTabDriver()
-                    HomeDriver()
                    // TermsAndConditions()
                    // Ajustes()
                     //ReaderApp(loginModel = loginModel)

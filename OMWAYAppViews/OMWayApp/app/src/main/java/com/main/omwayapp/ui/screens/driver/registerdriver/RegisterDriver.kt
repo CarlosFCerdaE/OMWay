@@ -139,7 +139,7 @@ fun RegisterDriver(){
         MakeExposedDropdownMenuBox()
         ModelExposedDropdownMenuBox()
         CarYearTextField()
-        Spacer(modifier = Modifier.padding(15.dp))
+        Spacer(modifier = Modifier.padding(25.dp))
         CustomButton(modifier = Modifier.size(width=222.dp,height=51.dp),text = "Regístrate", fontSize = 20.sp) {
             
         }
