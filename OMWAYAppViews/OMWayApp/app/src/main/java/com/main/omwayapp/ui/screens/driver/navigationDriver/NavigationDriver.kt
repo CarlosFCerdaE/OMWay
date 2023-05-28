@@ -9,6 +9,8 @@ import androidx.navigation.compose.rememberNavController
 import com.main.omwayapp.ui.navigation.ReaderScreens
 import com.main.omwayapp.ui.screens.driver.Ajustes.Ajustes
 import com.main.omwayapp.ui.screens.driver.menuTabDriver.MenuTabDriver
+import com.main.omwayapp.ui.screens.driver.menuTabDriver.TabScreen.mycars.agregarCarros
+import com.main.omwayapp.ui.screens.driver.menuTabDriver.TabScreen.mycars.editarCarros
 import com.main.omwayapp.ui.screens.driver.registerdriver.RegisterDriver
 import com.main.omwayapp.ui.screens.driver.termsAndConditions.TermsAndConditions
 
@@ -28,6 +30,12 @@ fun NavigationDriver(){
         }
         composable(route= DriverScreens.Ajustes.route){
             Ajustes(navController)
+        }
+        composable(route = DriverScreens.EditarCarro.route){
+            editarCarros(navController)
+        }
+        composable(route = DriverScreens.AgregarCarro.route){
+            agregarCarros(navController)
         }
     }
 }

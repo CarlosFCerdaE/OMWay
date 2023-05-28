@@ -7,11 +7,9 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardActions
@@ -35,26 +33,10 @@ import com.main.omwayapp.ui.components.InputField
 import com.main.omwayapp.ui.theme.OMWayAppTheme
 
 import androidx.compose.ui.unit.sp
-import com.main.omwayapp.ui.views.rider.ReaderApp
 
 
-
-import com.main.omwayapp.ui.views.rider.RiderView
-import androidx.compose.ui.unit.sp
-import cardSolicitudDriver
-import com.google.android.gms.maps.MapView
 import com.main.omwayapp.apirest.model.LoginModel
-import com.main.omwayapp.ui.screens.driver.Ajustes.Ajustes
-import com.main.omwayapp.ui.screens.driver.menuTabDriver.MenuTabDriver
-import com.main.omwayapp.ui.screens.driver.menuTabDriver.TabScreen.Home.HomeDriver
-import com.main.omwayapp.ui.screens.driver.mycars.agregarCarros
-import com.main.omwayapp.ui.screens.driver.mycars.editarCarros
-import com.main.omwayapp.ui.screens.driver.mycars.listMisCarros
-import com.main.omwayapp.ui.screens.driver.mytrips.cardMytrips
 import com.main.omwayapp.ui.screens.driver.navigationDriver.NavigationDriver
-import com.main.omwayapp.ui.screens.driver.registerdriver.RegisterDriver
-import com.main.omwayapp.ui.screens.driver.termsAndConditions.TermsAndConditions
-import com.main.omwayapp.ui.views.map.MapView
 
 
 //Hola amigos, bienvenidos a la app del futuro $$$
@@ -94,7 +76,7 @@ class MainActivity : ComponentActivity() {
                     //listMisCarros()
                     //agregarCarros()
                     //editarCarros()
-                    cardMytrips()
+                    //cardMytrips()
 
 
                 }

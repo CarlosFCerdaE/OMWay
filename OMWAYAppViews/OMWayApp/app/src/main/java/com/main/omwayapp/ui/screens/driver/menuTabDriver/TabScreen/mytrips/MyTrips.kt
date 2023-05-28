@@ -1,4 +1,4 @@
-package com.main.omwayapp.ui.screens.driver.mytrips
+package com.main.omwayapp.ui.screens.driver.menuTabDriver.TabScreen.mytrips
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -41,25 +41,6 @@ fun cardMytrips(){
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = "Active",
-            fontSize = 17.sp,
-            fontFamily = FontFamily(Font(R.font.inter_bold)),
-            color = colorResource(id = R.color.texto_general),
-            modifier = Modifier
-                .align(Alignment.Start)
-                .padding(vertical = 5.dp, horizontal = 165.dp)
-        )
-
-        val checkedState = remember {
-            mutableStateOf(true)
-        }
-        Switch(
-            checked = checkedState.value,
-            onCheckedChange = { checkedState.value = it },
-            colors = SwitchDefaults.colors(Color.Green)
-        )
-
         CustomDivider( modifier = Modifier.height(21.dp),)
         Spacer(modifier = Modifier.height(15.dp))
         Text(text = "Pendientes",

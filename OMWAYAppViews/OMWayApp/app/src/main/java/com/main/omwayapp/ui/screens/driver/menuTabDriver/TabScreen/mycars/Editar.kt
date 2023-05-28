@@ -1,4 +1,4 @@
-package com.main.omwayapp.ui.screens.driver.mycars
+package com.main.omwayapp.ui.screens.driver.menuTabDriver.TabScreen.mycars
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -40,6 +40,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.main.omwayapp.R
 import com.main.omwayapp.ui.components.CustomButton
 import com.main.omwayapp.ui.components.InputField
@@ -48,9 +49,9 @@ import com.main.omwayapp.ui.screens.driver.registerdriver.ColorTextField
 import com.main.omwayapp.ui.screens.driver.registerdriver.MakeExposedDropdownMenuBox
 import com.main.omwayapp.ui.screens.driver.registerdriver.ModelExposedDropdownMenuBox
 
-@Preview(showSystemUi = true)
+//@Preview(showSystemUi = true)
 @Composable
-fun editarCarros(){
+fun editarCarros(navController: NavController){
     Column(
         modifier = Modifier
             .background(color = colorResource(id = R.color.fondo))
