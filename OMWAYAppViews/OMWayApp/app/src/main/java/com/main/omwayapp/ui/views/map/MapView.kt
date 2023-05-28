@@ -102,14 +102,14 @@ fun MapView() {
     val scaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = sheetState
     )
-
+/*
     // Declaring and initializing a calendar
     val mCalendar = Calendar.getInstance()
     val mHour = mCalendar[Calendar.HOUR_OF_DAY]
     val mMinute = mCalendar[Calendar.MINUTE]
 
     // Value for storing time as a string
-    val mTime = remember { mutableStateOf("") }
+    val mTime = remember { mutableStateOf("Tiempo") }
 
     // Creating a TimePicker dialog
     val mTimePickerDialog = TimePickerDialog(
@@ -118,7 +118,27 @@ fun MapView() {
             mTime.value = "$mHour:$mMinute"
         }, mHour, mMinute, false
     )
+*/
+    val mCalendar = Calendar.getInstance()
+    val mHour = mCalendar[Calendar.HOUR_OF_DAY]
+    val mMinute = mCalendar[Calendar.MINUTE]
 
+// Value for storing time as a string
+    val mTime = remember { mutableStateOf("Tiempo") }
+
+// Creating a TimePicker dialog
+    val mTimePickerDialog = TimePickerDialog(
+        mContext,
+        { _, mHour: Int, mMinute: Int ->
+            val amPm: String = if (mHour < 12) "AM" else "PM"
+            val hour12: Int = if (mHour == 0) 12 else if (mHour > 12) mHour - 12 else mHour
+            val minuteFormatted: String = String.format("%02d", mMinute)
+            mTime.value = "$hour12:$minuteFormatted $amPm"
+        },
+        mHour,
+        mMinute,
+        false // Enable 12-hour format
+    )
     BottomSheetScaffold(
         scaffoldState = scaffoldState,
         sheetContent = {
@@ -177,7 +197,7 @@ fun MapView() {
                                 Column(modifier = Modifier.fillMaxSize(),
                                     verticalArrangement=Arrangement.Center,
                                     horizontalAlignment = Alignment.Start) {
-                                    Text(text = "Tiempo", fontSize = 17.sp, modifier = Modifier.padding(11.dp))
+                                    Text(text = "${mTime.value}", fontSize = 17.sp, modifier = Modifier.padding(11.dp))
 
 
 
@@ -270,12 +290,8 @@ fun MapView() {
                                 Column(modifier = Modifier.fillMaxSize(),
                                     verticalArrangement=Arrangement.Center,
                                     horizontalAlignment = Alignment.Start) {
-                                    if(mTime.equals("")){
-                                        Text(text = "Tiempo", fontSize = 17.sp, modifier = Modifier.padding(11.dp))
-                                    }
-                                    else{
-                                        Text(text = "${mTime.value}", fontSize = 17.sp, modifier = Modifier.padding(11.dp))
-                                    }
+
+                                    Text(text = "${mTime.value}", fontSize = 17.sp, modifier = Modifier.padding(11.dp))
 
 
 

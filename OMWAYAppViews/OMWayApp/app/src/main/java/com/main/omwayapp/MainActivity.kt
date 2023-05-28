@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.sp
 
 import com.main.omwayapp.apirest.model.LoginModel
 import com.main.omwayapp.ui.screens.driver.navigationDriver.NavigationDriver
+import com.main.omwayapp.ui.views.map.MapView
 
 
 //Hola amigos, bienvenidos a la app del futuro $$$
@@ -66,9 +67,9 @@ class MainActivity : ComponentActivity() {
                     //RiderView()
                    // RegisterDriver()
                     //BttmSheet()
-                    //MapView()
+                    MapView()
                   //MenuTabDriver()
-                    NavigationDriver()
+                    //NavigationDriver()
                    // TermsAndConditions()
                    // Ajustes()
                     //ReaderApp(loginModel = loginModel)
