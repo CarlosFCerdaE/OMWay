@@ -3,8 +3,8 @@ package com.main.omwayapp.ui.screens.driver.menuTabDriver
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import com.main.omwayapp.ui.screens.driver.menuTabDriver.TabScreen.Home.HomeDriver
-import com.main.omwayapp.ui.screens.driver.menuTabDriver.TabScreen.MisCarros.MisCarros
-import com.main.omwayapp.ui.screens.driver.menuTabDriver.TabScreen.MisViajes.MisViajesDriver
+import com.main.omwayapp.ui.screens.driver.menuTabDriver.TabScreen.mycars.MisCarros
+import com.main.omwayapp.ui.screens.driver.menuTabDriver.TabScreen.mytrips.cardMytrips
 import com.main.omwayapp.ui.screens.driver.navigationDriver.DriverScreens
 
 
@@ -16,8 +16,8 @@ sealed class TabsItem(
 )
 {
     object itemHome: TabsItem("Home",{ navController -> HomeDriver(navController) })
-   // object itemMisViajes: TabsItem("Mis Viajes",{MisViajesDriver()})
-  //  object itemMisCarros: TabsItem("Mis Carros",{MisCarros()})
+    object itemMisViajes: TabsItem("Mis Viajes",{ cardMytrips()})
+    object itemMisCarros: TabsItem("Mis Carros",{navController -> MisCarros(navController)})
 
     //object itemSolicitudes: TabsItem("Solicitudes",{ Solicitudes() })
 }

@@ -34,48 +34,14 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.main.omwayapp.R
 import com.main.omwayapp.ui.components.CustomDivider
-
-@Preview(showSystemUi = true)
-@Composable
-fun listMisCarros2(){
-    Column(
-        modifier = Modifier
-            .background(color = colorResource(id = R.color.fondo))
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = "Active",
-            fontSize = 17.sp,
-            fontFamily = FontFamily(Font(R.font.inter_bold)),
-            color = colorResource(id = R.color.texto_general),
-            modifier = Modifier
-                .align(Alignment.Start)
-                .padding(vertical = 5.dp, horizontal = 165.dp)
-        )
-
-        val checkedState = remember {
-            mutableStateOf(true)
-        }
-        Switch(
-            checked = checkedState.value,
-            onCheckedChange = { checkedState.value = it },
-            colors = SwitchDefaults.colors(Color.Green)
-        )
-
-        CustomDivider( modifier = Modifier.height(21.dp),)
-        Spacer(modifier = Modifier.height(15.dp))
-        MyUI(coloricono = colorResource(id = R.color.texto_general))
-
-    }
-
-}
+import com.main.omwayapp.ui.screens.driver.navigationDriver.DriverScreens
 
 @Composable
 fun MyUI(
+    navController: NavController,
     coloricono: Color
 ) {
     val listItems = arrayOf("Editar", "Eliminar")
@@ -112,8 +78,11 @@ fun MyUI(
             listItems.forEachIndexed { itemIndex, itemValue ->
                 DropdownMenuItem(
                     onClick = {
-                        Toast.makeText(contextForToast, itemValue, Toast.LENGTH_SHORT)
-                            .show()
+                        /*Toast.makeText(contextForToast, itemValue, Toast.LENGTH_SHORT)
+                            .show()*/
+                        if(itemValue=="Editar"){
+                            navController.navigate(route = DriverScreens.EditarCarro.route)
+                        }
                         expanded = false
                     },
                     enabled = (itemIndex != disabledItem)
