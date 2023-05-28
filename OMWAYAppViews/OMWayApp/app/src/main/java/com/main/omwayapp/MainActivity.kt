@@ -41,11 +41,16 @@ import com.main.omwayapp.ui.views.rider.ReaderApp
 
 import com.main.omwayapp.ui.views.rider.RiderView
 import androidx.compose.ui.unit.sp
+import cardSolicitudDriver
 import com.google.android.gms.maps.MapView
 import com.main.omwayapp.apirest.model.LoginModel
 import com.main.omwayapp.ui.screens.driver.Ajustes.Ajustes
 import com.main.omwayapp.ui.screens.driver.menuTabDriver.MenuTabDriver
 import com.main.omwayapp.ui.screens.driver.menuTabDriver.TabScreen.Home.HomeDriver
+import com.main.omwayapp.ui.screens.driver.mycars.agregarCarros
+import com.main.omwayapp.ui.screens.driver.mycars.editarCarros
+import com.main.omwayapp.ui.screens.driver.mycars.listMisCarros
+import com.main.omwayapp.ui.screens.driver.mytrips.cardMytrips
 import com.main.omwayapp.ui.screens.driver.registerdriver.RegisterDriver
 import com.main.omwayapp.ui.screens.driver.termsAndConditions.TermsAndConditions
 import com.main.omwayapp.ui.views.map.MapView
@@ -83,6 +88,11 @@ class MainActivity : ComponentActivity() {
                    // TermsAndConditions()
                    // Ajustes()
                     //ReaderApp(loginModel = loginModel)
+                    //cardSolicitudDriver()
+                    //listMisCarros()
+                    //agregarCarros()
+                    //editarCarros()
+                    cardMytrips()
 
 
                 }
