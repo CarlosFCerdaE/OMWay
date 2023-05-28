@@ -2,6 +2,7 @@ package com.main.omwayapp.ui.screens.driver.menuTabDriver.TabScreen.Home
 
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,14 +14,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.TextField
@@ -40,16 +38,17 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.main.omwayapp.R
 import com.main.omwayapp.ui.components.CustomDivider
+import com.main.omwayapp.ui.screens.driver.navigationDriver.DriverScreens
 
 
 @Composable
-@Preview(showSystemUi = true)
-fun HomeDriver(){
+//@Preview(showSystemUi = true)
+fun HomeDriver(navController: NavController? = null) {
 
     Column(modifier =
     Modifier
@@ -113,7 +112,9 @@ fun HomeDriver(){
                     .padding(4.dp)
                     .clip(RoundedCornerShape(12.dp))
             ) {
-                AjustesBox()
+                if (navController != null) {
+                    AjustesBox(navController)
+                }
             }
 
             Box(
@@ -329,7 +330,7 @@ fun DepositoText() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AjustesBox(){
+fun AjustesBox(navController: NavController){
     
     var text by remember { mutableStateOf("5.0") }
 
@@ -339,7 +340,8 @@ fun AjustesBox(){
             .size(width = 150.dp, height = 85.dp)
             .background(colorResource(id = R.color.menta_importante))
             .clip(RoundedCornerShape(12.dp))
-            .padding(10.dp),
+            .padding(10.dp)
+            .clickable { navController.navigate(route = DriverScreens.Ajustes.route) },
         horizontalAlignment = Alignment.CenterHorizontally
 
     ) {

@@ -51,6 +51,7 @@ import com.main.omwayapp.ui.screens.driver.mycars.agregarCarros
 import com.main.omwayapp.ui.screens.driver.mycars.editarCarros
 import com.main.omwayapp.ui.screens.driver.mycars.listMisCarros
 import com.main.omwayapp.ui.screens.driver.mytrips.cardMytrips
+import com.main.omwayapp.ui.screens.driver.navigationDriver.NavigationDriver
 import com.main.omwayapp.ui.screens.driver.registerdriver.RegisterDriver
 import com.main.omwayapp.ui.screens.driver.termsAndConditions.TermsAndConditions
 import com.main.omwayapp.ui.views.map.MapView
@@ -85,6 +86,7 @@ class MainActivity : ComponentActivity() {
                     //BttmSheet()
                     //MapView()
                   //MenuTabDriver()
+                    NavigationDriver()
                    // TermsAndConditions()
                    // Ajustes()
                     //ReaderApp(loginModel = loginModel)
