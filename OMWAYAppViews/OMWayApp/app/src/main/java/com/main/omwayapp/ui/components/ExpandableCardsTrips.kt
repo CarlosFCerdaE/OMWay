@@ -43,7 +43,7 @@ import com.main.omwayapp.R
 @OptIn(ExperimentalMaterial3Api::class)
 @ExperimentalMaterialApi
 @Composable
-fun ExpandableCardDriver(
+fun ExpandableCardTrips(
     nomRider: String,
     tarifa: String,
     hora: String,
@@ -194,22 +194,187 @@ fun ExpandableCardDriver(
                 Spacer(modifier = Modifier
                     .height(20.dp)
                 )
-                Row(modifier = Modifier .align(Alignment.CenterHorizontally)) {
-                    CustomButton(modifier = Modifier.size(width=120.dp,height=30.dp),
-                        text = "Aceptar",
-                        textColor = colorResource(id = R.color.aceptarsolicitud),
-                        fontSize = 16.sp){}
-                    Spacer(modifier = Modifier
-                        .width(20.dp)
+
+            }
+        }
+    }
+}
+
+@ExperimentalMaterialApi
+@Composable
+fun ExpandableCardTripsDone(
+    nomRider: String,
+    tarifa: String,
+    hora: String,
+    puntoA: String,
+    puntoB: String,
+    distanciaRec: String,
+    distancia: String,
+    tiempo: String,
+    tiempotardado: String
+) {
+    var expandedState by remember {
+        mutableStateOf(false)
+    }
+    val rotationState by animateFloatAsState(
+        targetValue = if (expandedState) 180f else 0f
+    )
+
+    Card(
+        modifier = Modifier
+            .width(330.dp)
+            .padding(5.dp)
+            .animateContentSize(
+                animationSpec = tween(
+                    durationMillis = 300,
+                    easing = LinearOutSlowInEasing
+                )
+            )
+        ,
+        shape = RoundedCornerShape(10.dp),
+        enabled = true,
+        onClick = {
+            Log.d("Estado","Estado:${expandedState}")
+            expandedState = !expandedState
+        }
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(color = colorResource(id = R.color.bg_terminosCondiciones)),
+            horizontalAlignment = Alignment.Start
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                IconButton(onClick = {/*TODO*/ }) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.usuario),
+                        contentDescription = "Usuario",
+                        tint= colorResource(id = R.color.texto_opacidad),
+                        modifier = Modifier
+                            .size(24.dp)
                     )
-                    CustomButton(modifier = Modifier.size(width=120.dp,height=30.dp),
-                        text = "Rechazar",
-                        textColor = colorResource(id = R.color.rechazarsolicitud),
-                        fontSize = 16.sp){}
+                }
+                Column(
+                    modifier = Modifier
+                        .weight(4f)
+                ) {
+                    Text(
+                        text = nomRider,
+                        color = colorResource(id = R.color.texto_general),
+                        fontSize = 16.sp
+                    )
+                    Text(
+                        text = tarifa,
+                        color = colorResource(id = R.color.texto_general),
+                        fontSize = 16.sp
+
+                    )
+                    Text(
+                        text = hora,
+                        color = colorResource(id = R.color.texto_general),
+                        fontSize = 16.sp
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                }
+                Column() {
+                    IconButton(
+                        modifier = Modifier
+                            .alpha(ContentAlpha.medium)
+
+                            .rotate(rotationState),
+                        onClick = {
+                            expandedState = !expandedState
+                        }) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowDropDown,
+                            contentDescription = "Drop Down Arrow",
+                            tint = colorResource(id = R.color.texto_opacidad)
+                        )
+                    }
+                }
+            }
+
+            if (expandedState) {
+                Log.d("Estado", "DentroIF")
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    IconButton(onClick = {/*TODO*/ }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.punto_a),
+                            contentDescription = "PuntoA",
+                            modifier = Modifier
+                                .size(24.dp),
+                            tint = colorResource(id = R.color.texto_general)
+                        )
+                    }
+                    Column(modifier = Modifier) {
+                        Text(
+                            text = "Punto A",
+                            color = colorResource(id = R.color.texto_general),
+                            fontSize = 16.sp
+                        )
+                        Text(
+                            text = puntoA,
+                            color = colorResource(id = R.color.texto_general),
+                            fontSize = 16.sp
+                        )
+
+                    }
+                }
+                Spacer(modifier = Modifier.height(10.dp))
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    IconButton(onClick = {/*TODO*/ }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.punto_b),
+                            contentDescription = "PuntoB",
+                            modifier = Modifier
+                                .size(24.dp),
+                            tint = colorResource(id = R.color.texto_general)
+                        )
+                    }
+                    Column(modifier = Modifier) {
+                        Text(
+                            text = "Punto B",
+                            color = colorResource(id = R.color.texto_general),
+                            fontSize = 16.sp
+                        )
+                        Text(
+                            text = puntoB,
+                            color = colorResource(id = R.color.texto_general),
+                            fontSize = 16.sp
+                        )
+
+                    }
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+                Column(modifier = Modifier .align(Alignment.CenterHorizontally)) {
+
+                    Row {
+                        Text(text = distanciaRec,
+                            color = colorResource(id = R.color.texto_general),
+                            fontSize = 16.sp,
+                        )
+                        Text(text = distancia,
+                            color = colorResource(id = R.color.menta_importante),
+                            fontSize = 16.sp,
+                        )
+                        Spacer(modifier = Modifier
+                            .width(30.dp)
+                        )
+                        Text(text = tiempo,
+                            color = colorResource(id = R.color.texto_general),
+                            fontSize = 16.sp,
+                        )
+                        Text(text = tiempotardado,
+                            color = colorResource(id = R.color.menta_importante),
+                            fontSize = 16.sp,
+                        )
+                    }
                 }
                 Spacer(modifier = Modifier
                     .height(20.dp)
                 )
+
             }
         }
     }

@@ -22,14 +22,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.main.omwayapp.R
 import com.main.omwayapp.ui.components.CustomButton
 import com.main.omwayapp.ui.components.CustomDivider
+import com.main.omwayapp.ui.screens.driver.navigationDriver.DriverScreens
 import com.main.omwayapp.ui.screens.driver.registerdriver.CenteredImage
 
 @Composable
-@Preview(showSystemUi=true)
-fun TermsAndConditions(){
+//@Preview(showSystemUi=true)
+fun TermsAndConditions(navController: NavController){
 
     Column(modifier =
     Modifier
@@ -82,7 +84,7 @@ fun TermsAndConditions(){
 
         Spacer(modifier = Modifier.padding(20.dp))
 
-        CustomButton(modifier = Modifier.size(width=222.dp,height=51.dp),text = "Acepto", fontSize = 20.sp) {}
+        CustomButton(modifier = Modifier.size(width=222.dp,height=51.dp),text = "Acepto", fontSize = 20.sp, onClick = {navController.navigate(route= DriverScreens.MenuTabDriver.route)})
 
         Spacer(modifier = Modifier.padding(20.dp))
 
