@@ -1,6 +1,7 @@
 package com.main.omwayapp.ui.views.map
 
 
+import android.app.TimePickerDialog
 import android.os.Bundle
 import android.widget.TextView
 
@@ -83,6 +84,8 @@ import com.main.omwayapp.ui.components.InputField
 import com.main.omwayapp.ui.model.Location
 //import kotlinx.coroutines.flow.internal.NoOpContinuation.context
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
+import java.util.Calendar
+
 //import kotlin.coroutines.jvm.internal.CompletedContinuation.context
 
 
@@ -90,6 +93,8 @@ import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 @OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun MapView() {
+    val mContext = LocalContext.current
+
     val uam=Location(LatLng(12.10877952,-86.2564972),"UAM","Universidad Americana")
     val sheetState = rememberBottomSheetState(
         initialValue = BottomSheetValue.Collapsed
@@ -97,6 +102,23 @@ fun MapView() {
     val scaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = sheetState
     )
+
+    // Declaring and initializing a calendar
+    val mCalendar = Calendar.getInstance()
+    val mHour = mCalendar[Calendar.HOUR_OF_DAY]
+    val mMinute = mCalendar[Calendar.MINUTE]
+
+    // Value for storing time as a string
+    val mTime = remember { mutableStateOf("") }
+
+    // Creating a TimePicker dialog
+    val mTimePickerDialog = TimePickerDialog(
+        mContext,
+        {_, mHour : Int, mMinute: Int ->
+            mTime.value = "$mHour:$mMinute"
+        }, mHour, mMinute, false
+    )
+
     BottomSheetScaffold(
         scaffoldState = scaffoldState,
         sheetContent = {
@@ -149,6 +171,7 @@ fun MapView() {
                                     Toast
                                         .makeText(context, "Introducir Tiempo", Toast.LENGTH_SHORT)
                                         .show()
+                                    mTimePickerDialog.show()
                                 }){
 
                                 Column(modifier = Modifier.fillMaxSize(),
@@ -241,12 +264,19 @@ fun MapView() {
                                     Toast
                                         .makeText(context, "Introducir Tiempo", Toast.LENGTH_SHORT)
                                         .show()
+                                    mTimePickerDialog.show()
                                 }){
 
                                 Column(modifier = Modifier.fillMaxSize(),
                                     verticalArrangement=Arrangement.Center,
                                     horizontalAlignment = Alignment.Start) {
-                                    Text(text = "Tiempo", fontSize = 17.sp, modifier = Modifier.padding(11.dp))
+                                    if(mTime.equals("")){
+                                        Text(text = "Tiempo", fontSize = 17.sp, modifier = Modifier.padding(11.dp))
+                                    }
+                                    else{
+                                        Text(text = "${mTime.value}", fontSize = 17.sp, modifier = Modifier.padding(11.dp))
+                                    }
+
 
 
 
