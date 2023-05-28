@@ -31,14 +31,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.main.omwayapp.R
 import com.main.omwayapp.ui.components.CustomDivider
 import com.main.omwayapp.ui.components.InputField
 import com.main.omwayapp.ui.screens.driver.registerdriver.CenteredImage
 
 @Composable
-@Preview(showSystemUi=true)
-fun Ajustes(){
+//@Preview(showSystemUi=true)
+fun Ajustes(navController: NavController){
 
     Column(modifier =
     Modifier

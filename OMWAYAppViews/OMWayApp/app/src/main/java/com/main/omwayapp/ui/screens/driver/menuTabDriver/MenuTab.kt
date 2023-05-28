@@ -20,6 +20,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.lerp
+import androidx.navigation.NavController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState
@@ -29,13 +30,13 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalPagerApi::class, ExperimentalMaterial3Api::class)
 @Composable()
-@Preview(showSystemUi=true)
-fun MenuTabDriver(){
+//@Preview(showSystemUi=true)
+fun MenuTabDriver(navController: NavController){
 
     val tabs = listOf(
-        TabsItem.itemHome,
-        TabsItem.itemMisViajes,
-        TabsItem.itemMisCarros
+        TabsItem.itemHome
+      //TabsItem.itemMisViajes,
+        // TabsItem.itemMisCarros
 
       //  TabsItem.itemSolicitudes
     )
@@ -47,7 +48,7 @@ fun MenuTabDriver(){
     ){
 
         Tabs(tabs,pagerState)
-        TabsContent(tabs,pagerState)
+        TabsContent(tabs,pagerState,navController)
     }
 }
 
@@ -79,11 +80,10 @@ fun Tabs(tabs:List<TabsItem>, pagerState: PagerState){
 }
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-private fun TabsContent(tabs:List<TabsItem>,pagerState:PagerState){
+private fun TabsContent(tabs:List<TabsItem>,pagerState:PagerState,navController: NavController){
 
-    HorizontalPager(state=pagerState,count = tabs.size){
-            page-> tabs[page].screen()
-
+    HorizontalPager(state = pagerState, count = tabs.size) { page ->
+        tabs[page].screen(navController)
     }
 }
 
@@ -131,6 +131,7 @@ private fun Modifier.pagerTabIndicatorOffset(
             )
         }
     }
+
 }
 
 

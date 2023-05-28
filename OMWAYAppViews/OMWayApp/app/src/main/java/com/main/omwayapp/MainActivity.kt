@@ -46,6 +46,7 @@ import com.main.omwayapp.apirest.model.LoginModel
 import com.main.omwayapp.ui.screens.driver.Ajustes.Ajustes
 import com.main.omwayapp.ui.screens.driver.menuTabDriver.MenuTabDriver
 import com.main.omwayapp.ui.screens.driver.menuTabDriver.TabScreen.Home.HomeDriver
+import com.main.omwayapp.ui.screens.driver.navigationDriver.NavigationDriver
 import com.main.omwayapp.ui.screens.driver.registerdriver.RegisterDriver
 import com.main.omwayapp.ui.screens.driver.termsAndConditions.TermsAndConditions
 import com.main.omwayapp.ui.views.map.MapView
@@ -80,6 +81,7 @@ class MainActivity : ComponentActivity() {
                     //BttmSheet()
                     //MapView()
                   //MenuTabDriver()
+                    NavigationDriver()
                    // TermsAndConditions()
                    // Ajustes()
                     //ReaderApp(loginModel = loginModel)
