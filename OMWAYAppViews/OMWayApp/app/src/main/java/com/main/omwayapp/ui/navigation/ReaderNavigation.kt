@@ -24,5 +24,6 @@ fun ReaderNavigation (loginModel: LoginModel) {
         composable(ReaderScreens.LoginScreen.name){
             RLoginScreen(navController = navController ,loginModel = loginModel)
         }
+
     }
 }

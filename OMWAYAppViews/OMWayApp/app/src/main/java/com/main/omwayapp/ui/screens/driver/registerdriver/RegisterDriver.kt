@@ -54,17 +54,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.main.omwayapp.R
 import com.main.omwayapp.ui.components.CustomButton
 import com.main.omwayapp.ui.components.CustomDivider
 import com.main.omwayapp.ui.components.InputField
+import com.main.omwayapp.ui.screens.driver.navigationDriver.DriverScreens
 
 import java.util.Calendar
 
 
-@Preview(showSystemUi = true)
+//@Preview(showSystemUi = true)
 @Composable
-fun RegisterDriver(){
+fun RegisterDriver(navController: NavController){
 
     Column(modifier =
     Modifier
@@ -120,7 +122,8 @@ fun RegisterDriver(){
                 CustomButton(modifier = Modifier
                     .size(width = 108.dp, height = 34.dp)
                     .align(Alignment.CenterVertically)
-                    .padding(horizontal = 5.dp), text = "Agregar", fontSize = 14.sp){}
+                    .padding(horizontal = 5.dp), text = "Agregar", fontSize = 14.sp
+                ){}
             }
 
 
@@ -140,9 +143,7 @@ fun RegisterDriver(){
         ModelExposedDropdownMenuBox()
         CarYearTextField()
         Spacer(modifier = Modifier.padding(25.dp))
-        CustomButton(modifier = Modifier.size(width=222.dp,height=51.dp),text = "Regístrate", fontSize = 20.sp) {
-            
-        }
+        CustomButton(modifier = Modifier.size(width=222.dp,height=51.dp),text = "Regístrate", fontSize = 20.sp, onClick = {navController.navigate(route= DriverScreens.TAC.route)})
         Spacer(modifier = Modifier.padding(25.dp))
 
 
