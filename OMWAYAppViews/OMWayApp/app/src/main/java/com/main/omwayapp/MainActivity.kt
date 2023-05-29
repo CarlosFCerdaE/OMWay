@@ -37,6 +37,9 @@ import androidx.compose.ui.unit.sp
 
 import com.main.omwayapp.apirest.model.LoginModel
 import com.main.omwayapp.ui.screens.driver.navigationDriver.NavigationDriver
+import com.main.omwayapp.ui.views.driver.Charge
+import com.main.omwayapp.ui.views.driver.OnRoute
+import com.main.omwayapp.ui.views.driver.Started
 import com.main.omwayapp.ui.views.map.MapView
 
 
@@ -67,7 +70,7 @@ class MainActivity : ComponentActivity() {
                     //RiderView()
                    // RegisterDriver()
                     //BttmSheet()
-                    MapView()
+                    //MapView()
                   //MenuTabDriver()
                     //NavigationDriver()
                    // TermsAndConditions()
@@ -78,6 +81,9 @@ class MainActivity : ComponentActivity() {
                     //agregarCarros()
                     //editarCarros()
                     //cardMytrips()
+                    //OnRoute()
+                    //Started()
+                    //Charge()
 
 
                 }

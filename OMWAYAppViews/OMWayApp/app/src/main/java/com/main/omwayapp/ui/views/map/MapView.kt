@@ -1,18 +1,19 @@
 package com.main.omwayapp.ui.views.map
 
 
-import android.app.TimePickerDialog
 import android.os.Bundle
 import android.widget.TextView
 
 import android.widget.Toast
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 //import androidx.compose.foundation.layout.ColumnScopeInstance.align
 import androidx.compose.foundation.layout.fillMaxSize
@@ -63,6 +64,7 @@ import androidx.compose.ui.graphics.Color.Companion.Cyan
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -84,8 +86,6 @@ import com.main.omwayapp.ui.components.InputField
 import com.main.omwayapp.ui.model.Location
 //import kotlinx.coroutines.flow.internal.NoOpContinuation.context
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
-import java.util.Calendar
-
 //import kotlin.coroutines.jvm.internal.CompletedContinuation.context
 
 
@@ -93,8 +93,6 @@ import java.util.Calendar
 @OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun MapView() {
-    val mContext = LocalContext.current
-
     val uam=Location(LatLng(12.10877952,-86.2564972),"UAM","Universidad Americana")
     val sheetState = rememberBottomSheetState(
         initialValue = BottomSheetValue.Collapsed
@@ -102,239 +100,299 @@ fun MapView() {
     val scaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = sheetState
     )
-/*
-    // Declaring and initializing a calendar
-    val mCalendar = Calendar.getInstance()
-    val mHour = mCalendar[Calendar.HOUR_OF_DAY]
-    val mMinute = mCalendar[Calendar.MINUTE]
-
-    // Value for storing time as a string
-    val mTime = remember { mutableStateOf("Tiempo") }
-
-    // Creating a TimePicker dialog
-    val mTimePickerDialog = TimePickerDialog(
-        mContext,
-        {_, mHour : Int, mMinute: Int ->
-            mTime.value = "$mHour:$mMinute"
-        }, mHour, mMinute, false
-    )
-*/
-    val mCalendar = Calendar.getInstance()
-    val mHour = mCalendar[Calendar.HOUR_OF_DAY]
-    val mMinute = mCalendar[Calendar.MINUTE]
-
-// Value for storing time as a string
-    val mTime = remember { mutableStateOf("Tiempo") }
-
-// Creating a TimePicker dialog
-    val mTimePickerDialog = TimePickerDialog(
-        mContext,
-        { _, mHour: Int, mMinute: Int ->
-            val amPm: String = if (mHour < 12) "AM" else "PM"
-            val hour12: Int = if (mHour == 0) 12 else if (mHour > 12) mHour - 12 else mHour
-            val minuteFormatted: String = String.format("%02d", mMinute)
-            mTime.value = "$hour12:$minuteFormatted $amPm"
-        },
-        mHour,
-        mMinute,
-        false // Enable 12-hour format
-    )
     BottomSheetScaffold(
         scaffoldState = scaffoldState,
         sheetContent = {
 
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(350.dp)
-                ) {
-                    val context = LocalContext.current
-                    //SI ESTA CERRADA
-                    if(sheetState.isCollapsed) {
-                        Column(modifier = Modifier.fillMaxSize(),
-                            verticalArrangement=Arrangement.Top,
-                            horizontalAlignment = Alignment.CenterHorizontally) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(350.dp)
+            ) {
+                val context = LocalContext.current
+                //SI ESTA CERRADA
+                if(sheetState.isCollapsed) {
+                    Column(modifier = Modifier.fillMaxSize(),
+                        verticalArrangement=Arrangement.Top,
+                        horizontalAlignment = Alignment.CenterHorizontally) {
 
-                            Spacer(modifier = Modifier.height(30.dp))
-                            // A donde vas
-                            Box(modifier = Modifier
-                                .height(50.dp)
-                                .width(300.dp)
-                                .padding(4.dp)
-                                .clip(RoundedCornerShape(10.dp))
-                                .background(color = Color.LightGray)
-                                .clickable {
-                                    Toast
-                                        .makeText(context, "Introducir Ubicacion", Toast.LENGTH_SHORT)
-                                        .show()
-                                }){
+                        Spacer(modifier = Modifier.height(30.dp))
+                        // A donde vas
+                        Box(modifier = Modifier
+                            .height(55.dp)
+                            .width(300.dp)
+                            .padding(4.dp)
+                            .clip(RoundedCornerShape(10.dp))
+                            .background(color = colorResource(id = R.color.txt_fields))
+                            .clickable {
+                                Toast
+                                    .makeText(
+                                        context,
+                                        "Introducir Ubicacion",
+                                        Toast.LENGTH_SHORT
+                                    )
+                                    .show()
+                            }){
 
-                                Column(modifier = Modifier.fillMaxSize(),
-                                    verticalArrangement=Arrangement.Center,
-                                    horizontalAlignment = Alignment.Start) {
-                                    Text(text = "¿A dónde vas?", fontSize = 17.sp,modifier = Modifier.padding(11.dp))
-
-
-
-                                }
-
-                            }
-                            Spacer(modifier = Modifier.height(20.dp))
-                            //Tiempo
-                            Box(modifier = Modifier
-                                .height(50.dp)
-                                .width(300.dp)
-                                .padding(4.dp)
-                                .clip(RoundedCornerShape(10.dp))
-                                .background(color = Color.LightGray)
-                                .clickable {
-                                    Toast
-                                        .makeText(context, "Introducir Tiempo", Toast.LENGTH_SHORT)
-                                        .show()
-                                    mTimePickerDialog.show()
-                                }){
-
-                                Column(modifier = Modifier.fillMaxSize(),
-                                    verticalArrangement=Arrangement.Center,
-                                    horizontalAlignment = Alignment.Start) {
-                                    Text(text = "${mTime.value}", fontSize = 17.sp, modifier = Modifier.padding(11.dp))
-
-
-
-                                }
-
-                            }
-                            Spacer(modifier = Modifier.height(20.dp))
-                            //Notas
-                            Box(modifier = Modifier
-                                .height(50.dp)
-                                .width(300.dp)
-                                .padding(4.dp)
-                                .clip(RoundedCornerShape(10.dp))
-                                .background(color = Color.LightGray)
-                                .clickable {
-                                    Toast
-                                        .makeText(context, "Introducir Notas", Toast.LENGTH_SHORT)
-                                        .show()
-                                }){
-
-                                Column(modifier = Modifier.fillMaxSize(),
-                                    verticalArrangement=Arrangement.Center,
-                                    horizontalAlignment = Alignment.Start) {
-                                    Text(text = "Notas", fontSize = 17.sp, modifier = Modifier.padding(11.dp))
-
-
-
-                                }
-
-                            }
-
-                            Spacer(modifier = Modifier.height(20.dp))
-                            //Boton
-                            CustomButton(text = "Pedir Ahora", modifier = Modifier.width(200.dp), fontSize = 20.sp) {
-
-                            }
-                        }
-                        //SI SE ABRE
-                    }else{
-                        Column(modifier = Modifier.fillMaxSize(),
-                            verticalArrangement=Arrangement.Top,
-                            horizontalAlignment = Alignment.CenterHorizontally) {
-
-                            Spacer(modifier = Modifier.height(20.dp))
-                            //Precio
-                            Column(modifier = Modifier.fillMaxWidth(),
+                            Column(modifier = Modifier.fillMaxSize(),
                                 verticalArrangement=Arrangement.Center,
                                 horizontalAlignment = Alignment.Start) {
-                                Text(text = "            Precio C$:", fontSize = 18.sp, modifier = Modifier.padding(5.dp),color=Color.White,)
-                            }
-                            Spacer(modifier = Modifier.height(15.dp))
-                            // A donde vas
-                            Box(modifier = Modifier
-                                .height(50.dp)
-                                .width(300.dp)
-                                .padding(4.dp)
-                                .clip(RoundedCornerShape(10.dp))
-                                .background(color = Color.LightGray)
-                                .clickable {
-                                    Toast
-                                        .makeText(context, "Introducir Ubicacion", Toast.LENGTH_SHORT)
-                                        .show()
-                                }){
-
-                                Column(modifier = Modifier.fillMaxSize(),
-                                    verticalArrangement=Arrangement.Center,
-                                    horizontalAlignment = Alignment.Start) {
-                                    Text(text = "¿A dónde vas?", fontSize = 17.sp,modifier = Modifier.padding(11.dp))
-
-
-
+                                Row() {
+                                    Image(
+                                        painter = painterResource(id = R.drawable.punto_a),
+                                        contentDescription = "Point A",
+                                        modifier = Modifier
+                                            .padding(12.dp)
+                                            .width(30.dp)
+                                            .height(30.dp)
+                                    )
+                                    Text(text = "¿A dónde vas?", fontSize = 17.sp,modifier = Modifier.padding(11.dp),color= colorResource(
+                                        id = R.color.texto_opacidad))
                                 }
 
-                            }
-                            Spacer(modifier = Modifier.height(20.dp))
-                            //Tiempo
-                            Box(modifier = Modifier
-                                .height(50.dp)
-                                .width(300.dp)
-                                .padding(4.dp)
-                                .clip(RoundedCornerShape(10.dp))
-                                .background(color = Color.LightGray)
-                                .clickable {
-                                    Toast
-                                        .makeText(context, "Introducir Tiempo", Toast.LENGTH_SHORT)
-                                        .show()
-                                    mTimePickerDialog.show()
-                                }){
-
-                                Column(modifier = Modifier.fillMaxSize(),
-                                    verticalArrangement=Arrangement.Center,
-                                    horizontalAlignment = Alignment.Start) {
-
-                                    Text(text = "${mTime.value}", fontSize = 17.sp, modifier = Modifier.padding(11.dp))
 
 
-
-
-                                }
 
                             }
-                            Spacer(modifier = Modifier.height(20.dp))
-                            //Notas
-                            Box(modifier = Modifier
-                                .height(50.dp)
-                                .width(300.dp)
-                                .padding(4.dp)
-                                .clip(RoundedCornerShape(10.dp))
-                                .background(color = Color.LightGray)
-                                .clickable {
-                                    Toast
-                                        .makeText(context, "Introducir Notas", Toast.LENGTH_SHORT)
-                                        .show()
-                                }){
 
-                                Column(modifier = Modifier.fillMaxSize(),
-                                    verticalArrangement=Arrangement.Center,
-                                    horizontalAlignment = Alignment.Start) {
-                                    Text(text = "Notas", fontSize = 17.sp, modifier = Modifier.padding(11.dp))
+                        }
+                        Spacer(modifier = Modifier.height(20.dp))
+                        //Tiempo
+                        Box(modifier = Modifier
+                            .height(50.dp)
+                            .width(300.dp)
+                            .padding(4.dp)
+                            .clip(RoundedCornerShape(10.dp))
+                            .background(color = colorResource(id = R.color.txt_fields))
+                            .clickable {
+                                Toast
+                                    .makeText(context, "Introducir Tiempo", Toast.LENGTH_SHORT)
+                                    .show()
+                            }){
 
-
+                            Column(modifier = Modifier.fillMaxSize(),
+                                verticalArrangement=Arrangement.Center,
+                                horizontalAlignment = Alignment.Start) {
+                                Row() {
+                                    Image(
+                                        painter = painterResource(id = R.drawable.reloj),
+                                        contentDescription = "Point A",
+                                        modifier = Modifier
+                                            .padding(12.dp)
+                                            .width(30.dp)
+                                            .height(30.dp)
+                                    )
+                                    Text(
+                                        text = "Tiempo",
+                                        fontSize = 17.sp,
+                                        modifier = Modifier.padding(11.dp),
+                                        color = colorResource(
+                                            id = R.color.texto_opacidad
+                                        )
+                                    )
 
                                 }
 
                             }
 
-                            Spacer(modifier = Modifier.height(20.dp))
-                            //Boton
-                            CustomButton(text = "Pedir Ahora", modifier = Modifier.width(200.dp), fontSize = 20.sp) {
+                        }
+                        Spacer(modifier = Modifier.height(20.dp))
+                        //Notas
+                        Box(modifier = Modifier
+                            .height(50.dp)
+                            .width(300.dp)
+                            .padding(4.dp)
+                            .clip(RoundedCornerShape(10.dp))
+                            .background(color = colorResource(id = R.color.txt_fields))
+                            .clickable {
+                                Toast
+                                    .makeText(context, "Introducir Notas", Toast.LENGTH_SHORT)
+                                    .show()
+                            }){
 
+                            Column(modifier = Modifier.fillMaxSize(),
+                                verticalArrangement=Arrangement.Center,
+                                horizontalAlignment = Alignment.Start) {
+                                Row() {
+                                    Image(
+                                        painter = painterResource(id = R.drawable.notas),
+                                        contentDescription = "Tiempo",
+                                        modifier = Modifier
+                                            .padding(12.dp)
+                                            .width(30.dp)
+                                            .height(30.dp)
+                                    )
+                                    Text(
+                                        text = "Notas",
+                                        fontSize = 17.sp,
+                                        modifier = Modifier.padding(11.dp),
+                                        color = colorResource(
+                                            id = R.color.texto_opacidad
+                                        )
+                                    )
+
+
+                                }
                             }
+
+                        }
+
+                        Spacer(modifier = Modifier.height(20.dp))
+                        //Boton
+                        CustomButton(text = "Pedir Ahora", modifier = Modifier.width(200.dp), fontSize = 20.sp) {
+
                         }
                     }
+                    //SI SE ABRE
+                }else{
+                    Column(modifier = Modifier.fillMaxSize(),
+                        verticalArrangement=Arrangement.Top,
+                        horizontalAlignment = Alignment.CenterHorizontally) {
+
+                        Spacer(modifier = Modifier.height(20.dp))
+                        //Precio
+                        Column(modifier = Modifier.fillMaxWidth(),
+                            verticalArrangement=Arrangement.Center,
+                            horizontalAlignment = Alignment.Start) {
+                            Text(text = "            Precio C$:", fontSize = 18.sp, modifier = Modifier.padding(5.dp),color=Color.White,)
+                        }
+                        Spacer(modifier = Modifier.height(15.dp))
+                        // A donde vas
+                        Box(modifier = Modifier
+                            .height(50.dp)
+                            .width(300.dp)
+                            .padding(4.dp)
+                            .clip(RoundedCornerShape(10.dp))
+                            .background(color = colorResource(id = R.color.txt_fields))
+                            .clickable {
+                                Toast
+                                    .makeText(
+                                        context,
+                                        "Introducir Ubicacion",
+                                        Toast.LENGTH_SHORT
+                                    )
+                                    .show()
+                            }){
+
+                            Column(modifier = Modifier.fillMaxSize(),
+                                verticalArrangement=Arrangement.Center,
+                                horizontalAlignment = Alignment.Start) {
+                                Row() {
+                                    Image(
+                                        painter = painterResource(id = R.drawable.punto_a),
+                                        contentDescription = "Point A",
+                                        modifier = Modifier
+                                            .padding(12.dp)
+                                            .width(30.dp)
+                                            .height(30.dp)
+                                    )
+                                    Text(
+                                        text = "¿A dónde vas?",
+                                        fontSize = 17.sp,
+                                        modifier = Modifier.padding(11.dp),
+                                        color = colorResource(
+                                            id = R.color.texto_opacidad
+                                        )
+                                    )
+                                }
+
+
+
+                            }
+
+                        }
+                        Spacer(modifier = Modifier.height(20.dp))
+                        //Tiempo
+                        Box(modifier = Modifier
+                            .height(50.dp)
+                            .width(300.dp)
+                            .padding(4.dp)
+                            .clip(RoundedCornerShape(10.dp))
+                            .background(color = colorResource(id = R.color.txt_fields))
+                            .clickable {
+                                Toast
+                                    .makeText(context, "Introducir Tiempo", Toast.LENGTH_SHORT)
+                                    .show()
+                            }){
+
+                            Column(modifier = Modifier.fillMaxSize(),
+                                verticalArrangement=Arrangement.Center,
+                                horizontalAlignment = Alignment.Start) {
+                                Row() {
+                                    Image(
+                                        painter = painterResource(id = R.drawable.reloj),
+                                        contentDescription = "Tiempo",
+                                        modifier = Modifier
+                                            .padding(12.dp)
+                                            .width(30.dp)
+                                            .height(30.dp)
+                                    )
+                                    Text(
+                                        text = "Tiempo",
+                                        fontSize = 17.sp,
+                                        modifier = Modifier.padding(11.dp),
+                                        color = colorResource(
+                                            id = R.color.texto_opacidad
+                                        )
+                                    )
+
+
+                                }
+                            }
+
+                        }
+                        Spacer(modifier = Modifier.height(20.dp))
+                        //Notas
+                        Box(modifier = Modifier
+                            .height(50.dp)
+                            .width(300.dp)
+                            .padding(4.dp)
+                            .clip(RoundedCornerShape(10.dp))
+                            .background(color = colorResource(id = R.color.txt_fields))
+                            .clickable {
+                                Toast
+                                    .makeText(context, "Introducir Notas", Toast.LENGTH_SHORT)
+                                    .show()
+                            }){
+
+                            Column(modifier = Modifier.fillMaxSize(),
+                                verticalArrangement=Arrangement.Center,
+                                horizontalAlignment = Alignment.Start) {
+                                Row() {
+                                    Image(
+                                        painter = painterResource(id = R.drawable.notas),
+                                        contentDescription = "Tiempo",
+                                        modifier = Modifier
+                                            .padding(12.dp)
+                                            .width(30.dp)
+                                            .height(30.dp)
+                                    )
+                                    Text(
+                                        text = "Notas",
+                                        fontSize = 17.sp,
+                                        modifier = Modifier.padding(11.dp),
+                                        color = colorResource(
+                                            id = R.color.texto_opacidad
+                                        )
+                                    )
+
+
+                                }
+                            }
+
+                        }
+
+                        Spacer(modifier = Modifier.height(20.dp))
+                        //Boton
+                        CustomButton(text = "Pedir Ahora", modifier = Modifier.width(200.dp), fontSize = 20.sp) {
+
+                        }
+                    }
+                }
 
             }
 
-        }, sheetBackgroundColor = Color.DarkGray, sheetPeekHeight = 95.dp
+        }, sheetBackgroundColor = colorResource(id = R.color.fondo), sheetPeekHeight = 95.dp
     ) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             //TestMap()
