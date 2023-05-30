@@ -7,5 +7,7 @@ sealed class DriverScreens(val route: String){
     object TAC: DriverScreens("TermsAndConditions")
     object MenuTabDriver: DriverScreens("MenuTabDriver")
     object Ajustes: DriverScreens("Ajustes")
+    object EditarCarro: DriverScreens("editarCarros")
+    object AgregarCarro: DriverScreens("agregarCarros")
 
 }
