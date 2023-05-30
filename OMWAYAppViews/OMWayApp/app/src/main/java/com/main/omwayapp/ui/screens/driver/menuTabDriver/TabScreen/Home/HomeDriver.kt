@@ -298,7 +298,7 @@ fun RatingDriver(){
 fun DepositoText() {
 
     var text by remember { mutableStateOf("240") }
-    var textDeposito by remember { mutableStateOf("Del total de tus ganancias, debes depositar: C$") }
+    var textDeposito by remember { mutableStateOf("Debes depositar: C$") }
 
     textDeposito = textDeposito+text;
 
