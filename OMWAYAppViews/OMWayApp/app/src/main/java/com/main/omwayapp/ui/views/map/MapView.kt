@@ -111,7 +111,7 @@ fun TopBarMapView(){
     androidx.compose.material.Scaffold(backgroundColor = colorResource(id = R.color.fondo),scaffoldState=scaffoldState,topBar = {
         AppBarMapView (onNavigationIconClick = { scope.launch { scaffoldState.drawerState.open() } })
 
-    },drawerContent = {
+    },drawerGesturesEnabled = scaffoldState.drawerState.isOpen,drawerContent = {
         DrawerHeader()
         DrawerBody(items = listOf(
             MenuItem(id = "misviajes", title = "Mis Viajes", contentDescrip = "Go to", R.drawable.misviajes),
