@@ -40,6 +40,7 @@ import com.main.omwayapp.ui.screens.driver.Cobro.CobroRider
 import com.main.omwayapp.ui.screens.driver.navigationDriver.NavigationDriver
 import com.main.omwayapp.ui.screens.rider.finalizadoRider.FinalizadoRider
 import com.main.omwayapp.ui.views.map.MapView
+import com.main.omwayapp.ui.views.map.TopBarMapView
 
 
 //Hola amigos, bienvenidos a la app del futuro $$$
@@ -68,7 +69,7 @@ class MainActivity : ComponentActivity() {
                     //RiderView()
                    // RegisterDriver()
                     //BttmSheet()
-                  //  MapView()
+                    TopBarMapView()
                   //MenuTabDriver()
                    // NavigationDriver()
                   // FinalizadoRider()
