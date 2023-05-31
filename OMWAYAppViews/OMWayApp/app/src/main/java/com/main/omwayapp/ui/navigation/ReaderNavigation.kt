@@ -13,7 +13,7 @@ import androidx.compose.runtime.setValue
 import androidx.fragment.app.viewModels
 
 @Composable
-fun ReaderNavigation (loginModel: LoginModel) {
+fun ReaderNavigation () {
 
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = ReaderScreens.SplashScreen.name ){
@@ -22,7 +22,7 @@ fun ReaderNavigation (loginModel: LoginModel) {
         }
 
         composable(ReaderScreens.LoginScreen.name){
-            RLoginScreen(navController = navController ,loginModel = loginModel)
+            RLoginScreen(navController = navController)
         }
 
     }

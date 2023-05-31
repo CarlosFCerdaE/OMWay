@@ -7,5 +7,5 @@ import retrofit2.http.Query
 
 interface ApiUser {
     @POST("/api/rider/login")
-    suspend fun getLogin(@Query("cif") name: String, @Query("password") password :String): Response<LoginResponse>
+    suspend fun getLogin(@Query("cif") cif: String, @Query("password") password :String): Response<LoginResponse>
 }

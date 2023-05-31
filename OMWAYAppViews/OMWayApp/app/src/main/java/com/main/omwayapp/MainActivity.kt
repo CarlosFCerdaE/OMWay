@@ -41,6 +41,7 @@ import com.main.omwayapp.ui.screens.driver.navigationDriver.NavigationDriver
 import com.main.omwayapp.ui.screens.rider.finalizadoRider.FinalizadoRider
 import com.main.omwayapp.ui.views.map.MapView
 import com.main.omwayapp.ui.views.map.TopBarMapView
+import com.main.omwayapp.ui.views.rider.ReaderApp
 
 
 //Hola amigos, bienvenidos a la app del futuro $$$
@@ -49,8 +50,6 @@ import com.main.omwayapp.ui.views.map.TopBarMapView
 //Unique id
 var PERMISSION_ID=25
 class MainActivity : ComponentActivity() {
-    private val loginModel : LoginModel by viewModels()
-
     @RequiresApi(Build.VERSION_CODES.O)
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,13 +68,13 @@ class MainActivity : ComponentActivity() {
                     //RiderView()
                    // RegisterDriver()
                     //BttmSheet()
-                    TopBarMapView()
+                    //TopBarMapView()
                   //MenuTabDriver()
                    // NavigationDriver()
                   // FinalizadoRider()
                    // TermsAndConditions()
                    // Ajustes()
-                    //ReaderApp(loginModel = loginModel)
+                    //ReaderApp()
                     //cardSolicitudDriver()
                     //listMisCarros()
                     //agregarCarros()

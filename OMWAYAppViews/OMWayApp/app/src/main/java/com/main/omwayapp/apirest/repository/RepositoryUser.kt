@@ -15,29 +15,17 @@ class RepositoryUser : CoroutineScope by MainScope() {
     val apiUser : ApiUser = ApiAdapter.getInstance()
         .create(ApiUser::class.java)
 
-    fun fetchData(context:Context, cif: String, password: String): LoginResponse {
+    suspend fun fetchData(cif: String, password: String): Result<LoginResponse> {
         var  loginResponse : LoginResponse = LoginResponse()
-        launch {
-            try {
-                val response: Response<LoginResponse> = apiUser.getLogin(cif, password)
-                if (response.isSuccessful) {
-                    loginResponse = response.body() as LoginResponse
-                    if(loginResponse.success){
-                        Toast.makeText(context,loginResponse.msg, Toast.LENGTH_LONG).show()
-                    }
-                    else{
-                        Toast.makeText(context,"Usuario no existe",Toast.LENGTH_LONG).show()
-                    }
-                    Log.d("RESULTADO OK","RESULTADO OK,$loginResponse.msg")
-                } else {
-                    loginResponse.msg = "Sin exito"
-                    loginResponse.success=false
-                    Log.d("RESULTADO OK","RESULTADO OK,$loginResponse.msg")
-                }
-            } catch (e: Exception) {
-                Log.d("ERRORCUSTOM", "$e.message")
-            }
+        return try{
+            val response: Response<LoginResponse> = apiUser.getLogin(cif, password)
+            loginResponse = response.body() as LoginResponse
+            Log.d("RESULTADO OK","RESULTADO OK, $loginResponse.msg")
+            Result.success(loginResponse)
+
+        } catch (e: Exception) {
+            Log.d("ERRORCUSTOM", "$e.message")
+            Result.failure(e)
         }
-        return loginResponse;
     }
 }

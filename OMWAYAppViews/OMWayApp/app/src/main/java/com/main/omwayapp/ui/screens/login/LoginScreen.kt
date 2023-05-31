@@ -1,7 +1,9 @@
 package com.main.omwayapp.ui.screens.login
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,11 +12,17 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -28,10 +36,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.main.omwayapp.R
 import com.main.omwayapp.apirest.model.LoginModel
 import com.main.omwayapp.ui.components.CenteredImage
+import com.main.omwayapp.ui.components.CustomAlertDialog
 import com.main.omwayapp.ui.components.CustomButton
 import com.main.omwayapp.ui.components.CustomButtonG
 import com.main.omwayapp.ui.components.CustomDivider
@@ -41,20 +51,40 @@ import com.main.omwayapp.ui.theme.IBMplexSans
 import com.main.omwayapp.ui.theme.TextOpacidad
 import com.main.omwayapp.ui.theme.TextoGeneral
 
+
+@Composable
+fun Circular(){
+    CircularProgressIndicator()
+}
+
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun RLoginScreen (navController: NavController,loginModel: LoginModel){
-    var cif = remember {
-        mutableStateOf(loginModel.cif)
-    }
-    var password = remember {
-        mutableStateOf(loginModel.password)
-    }
-
-    val context = LocalContext.current
-
+fun RLoginScreen (navController: NavController){
+    val loginModel:LoginModel = viewModel()
+    val state by loginModel._state.collectAsState()
+    val isLoading = remember {mutableStateOf(false)}
+    val isSuccess = remember{ mutableStateOf(false)}
+    var cif = remember {mutableStateOf(loginModel.cif)}
+    var password = remember {mutableStateOf(loginModel.password)}
+    var show by rememberSaveable{mutableStateOf(false)}
     var keyBoardController = LocalSoftwareKeyboardController.current
+
+    LaunchedEffect(state){
+        isLoading.value = state._loading
+        Log.d("LOADING",isLoading.toString())
+        isSuccess.value = state.loginResponse.success
+        Log.d("SUCCESS",isSuccess.toString())
+    }
+
+    if(isSuccess.value){
+        CustomAlertDialog(title = "Bienvenido" , msg = "Bienvenio a OMWay") {
+            //navController.navigate(route = )
+        }
+    }
+
     Surface(modifier = Modifier.fillMaxSize(), color = Fondo){
+
+
        
         Column(horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top) {
@@ -123,7 +153,7 @@ fun RLoginScreen (navController: NavController,loginModel: LoginModel){
                 InputField(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 15.dp, vertical= 4.dp),
+                        .padding(horizontal = 15.dp, vertical = 4.dp),
                     valueState = loginModel.password,
                     labelId = "Contraseña",
                     icon = painterResource(id = R.drawable.password),
@@ -136,21 +166,18 @@ fun RLoginScreen (navController: NavController,loginModel: LoginModel){
                 )
                 Spacer(modifier = Modifier.height(25.dp))
 
-                CustomButtonG(modifier = Modifier.width(222.dp).height(51.dp), text = "LOGIN", fontSize = 20.sp) {
-                    val loginResponse = loginModel.onSummit(context)
-
+                if(isLoading.value){
+                    CircularProgressIndicator()
                 }
 
+                CustomButtonG(modifier = Modifier
+                    .width(222.dp)
+                    .height(51.dp), text = "LOGIN", fontSize = 20.sp) {
+                    loginModel.onSummit()
 
-
-
-
+                }
             }
-
-
-
         }
     }
-
 }
 

@@ -237,8 +237,8 @@ fun TxtFieldR() {
 
 }
 @Composable
-fun ReaderApp(loginModel: LoginModel) {
+fun ReaderApp() {
 
-    ReaderNavigation(loginModel = loginModel)
+    ReaderNavigation()
 
 }
