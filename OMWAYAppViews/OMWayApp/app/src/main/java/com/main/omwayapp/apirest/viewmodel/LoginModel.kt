@@ -1,11 +1,6 @@
-package com.main.omwayapp.apirest.model
+package com.main.omwayapp.apirest.viewmodel
 
-import android.content.Context
-import android.util.Log
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

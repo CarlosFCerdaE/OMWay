@@ -37,9 +37,9 @@ public class ControllerMake {
         return serviceMake.save(makeDto);
     }
 
-    @DeleteMapping(value = "/delete/{Id}")
-    public void deleteMake(@PathVariable Integer Id){
-        serviceMake.deleteById(Id);
+    @DeleteMapping(value = "/delete/{id}")
+    public void deleteMake(@PathVariable Integer id){
+        serviceMake.deleteById(id);
     }
 }
 

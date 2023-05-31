@@ -1,9 +1,7 @@
 package com.main.omwayapp.ui.screens.login
 
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,23 +24,20 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.main.omwayapp.R
-import com.main.omwayapp.apirest.model.LoginModel
+import com.main.omwayapp.apirest.viewmodel.LoginModel
 import com.main.omwayapp.ui.components.CenteredImage
 import com.main.omwayapp.ui.components.CustomAlertDialog
-import com.main.omwayapp.ui.components.CustomButton
 import com.main.omwayapp.ui.components.CustomButtonG
 import com.main.omwayapp.ui.components.CustomDivider
 import com.main.omwayapp.ui.components.InputField
@@ -60,7 +55,7 @@ fun Circular(){
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun RLoginScreen (navController: NavController){
-    val loginModel:LoginModel = viewModel()
+    val loginModel: LoginModel = viewModel()
     val state by loginModel._state.collectAsState()
     val isLoading = remember {mutableStateOf(false)}
     val isSuccess = remember{ mutableStateOf(false)}

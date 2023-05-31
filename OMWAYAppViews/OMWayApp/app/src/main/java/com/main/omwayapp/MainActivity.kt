@@ -4,7 +4,6 @@ import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -33,15 +32,6 @@ import com.main.omwayapp.ui.components.InputField
 import com.main.omwayapp.ui.theme.OMWayAppTheme
 
 import androidx.compose.ui.unit.sp
-
-
-import com.main.omwayapp.apirest.model.LoginModel
-import com.main.omwayapp.ui.screens.driver.Cobro.CobroRider
-import com.main.omwayapp.ui.screens.driver.navigationDriver.NavigationDriver
-import com.main.omwayapp.ui.screens.rider.finalizadoRider.FinalizadoRider
-import com.main.omwayapp.ui.views.map.MapView
-import com.main.omwayapp.ui.views.map.TopBarMapView
-import com.main.omwayapp.ui.views.rider.ReaderApp
 
 
 //Hola amigos, bienvenidos a la app del futuro $$$
