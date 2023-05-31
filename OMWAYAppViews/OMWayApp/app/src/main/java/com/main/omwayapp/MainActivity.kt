@@ -36,7 +36,9 @@ import androidx.compose.ui.unit.sp
 
 
 import com.main.omwayapp.apirest.model.LoginModel
+import com.main.omwayapp.ui.screens.driver.Cobro.CobroRider
 import com.main.omwayapp.ui.screens.driver.navigationDriver.NavigationDriver
+import com.main.omwayapp.ui.screens.rider.finalizadoRider.FinalizadoRider
 import com.main.omwayapp.ui.views.map.MapView
 
 
@@ -61,15 +63,15 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-
                     //MyApp()
                     //DriverView()
                     //RiderView()
                    // RegisterDriver()
                     //BttmSheet()
-                    MapView()
+                  //  MapView()
                   //MenuTabDriver()
-                    //NavigationDriver()
+                   // NavigationDriver()
+                  // FinalizadoRider()
                    // TermsAndConditions()
                    // Ajustes()
                     //ReaderApp(loginModel = loginModel)
@@ -78,7 +80,7 @@ class MainActivity : ComponentActivity() {
                     //agregarCarros()
                     //editarCarros()
                     //cardMytrips()
-
+                    //CobroRider()
 
                 }
 
@@ -117,7 +119,6 @@ class MainActivity : ComponentActivity() {
                     keyBoardController?.hide()
                 }
             )
-
 
             CustomButton(modifier = Modifier.width(100.dp), text = "Ok", fontSize = 10.sp) {
                 

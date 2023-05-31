@@ -66,8 +66,8 @@ fun MenuTabDriver(navController: NavController){
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Active",
-                fontSize = 17.sp,
+                text = "Activo",
+                fontSize = 14.sp,
                 fontFamily = FontFamily(Font(R.font.inter_bold)),
                 color = colorResource(id = R.color.texto_general),
                 modifier = Modifier
