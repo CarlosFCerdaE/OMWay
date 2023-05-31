@@ -1,9 +1,12 @@
 package com.main.omwayapp.ui.views.map
 
 
+import android.annotation.SuppressLint
 import android.app.TimePickerDialog
+import android.os.Build
 
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -12,6 +15,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 //import androidx.compose.foundation.layout.ColumnScopeInstance.align
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,16 +26,30 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.BottomSheetScaffold
 import androidx.compose.material.BottomSheetValue
+import androidx.compose.material.DrawerValue
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.rememberBottomSheetScaffoldState
 import androidx.compose.material.rememberBottomSheetState
+import androidx.compose.material.rememberDrawerState
+import androidx.compose.material.rememberScaffoldState
 
 //import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonColors
+import androidx.compose.material3.ModalDrawerSheet
+import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 //import androidx.compose.material3.rememberBottomSheetScaffoldState
@@ -42,6 +60,7 @@ import androidx.compose.runtime.getValue
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 
@@ -49,6 +68,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -62,11 +82,16 @@ import com.main.omwayapp.ui.components.CustomButton
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import com.google.android.gms.maps.model.LatLng
 import com.main.omwayapp.R
 //import com.main.omwayapp.Location
 import com.main.omwayapp.ui.components.InputField
 import com.main.omwayapp.ui.model.Location
+import com.main.omwayapp.ui.views.driver.BottmSheetDriver
+import com.main.omwayapp.ui.views.driver.tbt
+import kotlinx.coroutines.launch
 //import kotlinx.coroutines.flow.internal.NoOpContinuation.context
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 import java.util.Calendar
@@ -74,6 +99,141 @@ import java.util.Calendar
 //import kotlin.coroutines.jvm.internal.CompletedContinuation.context
 
 
+
+@RequiresApi(Build.VERSION_CODES.Q)
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "UnusedMaterialScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TopBarMapView(){
+    val scaffoldState= rememberScaffoldState()
+    val scope= rememberCoroutineScope()
+
+    androidx.compose.material.Scaffold(backgroundColor = colorResource(id = R.color.fondo),scaffoldState=scaffoldState,topBar = {
+        AppBarMapView (onNavigationIconClick = { scope.launch { scaffoldState.drawerState.open() } })
+
+    },drawerContent = {
+        DrawerHeader()
+        DrawerBody(items = listOf(
+            MenuItem(id = "misviajes", title = "Mis Viajes", contentDescrip = "Go to", R.drawable.misviajes),
+            MenuItem(id = "ajustes", title = "Ajustes", contentDescrip = "Go to",R.drawable.ajustes),
+            MenuItem(id = "driver", title = "Driver", contentDescrip = "Go to",R.drawable.carro),
+        ), onItemClick = {
+            //Aqui iria lo de Navig
+            println("Clicked")
+        }, )
+    }) {
+        MapView()
+    }
+
+
+}
+@RequiresApi(Build.VERSION_CODES.Q)
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AppBarMapView(onNavigationIconClick:()->Unit){
+
+    TopAppBar(backgroundColor = colorResource(id = R.color.fondo), contentColor = Color.White,
+        title = {
+            Text(text = "")
+        },
+        navigationIcon = {
+            androidx.compose.material.IconButton(onClick = onNavigationIconClick ) {
+                Icon(imageVector = Icons.Default.Menu, contentDescription = "Toogle Drawer")
+
+            }
+        }
+    )
+
+    /*
+        Scaffold(
+            topBar = {
+                TopAppBar(backgroundColor = colorResource(id = R.color.fondo), contentColor = Color.White,
+                    title = {
+                        Text(text = "")
+                    },
+                    navigationIcon = {
+                        IconButton(onClick = { } ) {
+                            Icon(Icons.Filled.Menu, contentDescription = "Menu",modifier=Modifier.clickable {  })
+
+                        }
+                    }
+                )
+            }) {
+            MapView()
+        }
+        /*
+     */
+        Scaffold(topBar = { TopAppBar(
+            elevation = 2.dp, backgroundColor = colorResource(id = R.color.fondo)) {
+            Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.SpaceBetween) {
+                Text(text = tbt,color= colorResource(id = R.color.menta_importante), fontSize = 20.sp, fontWeight = FontWeight.Bold )
+
+            }
+
+        }
+        }, ) {
+            MapView()
+        }
+
+        */
+
+}
+
+@Composable
+fun DrawerHeader(){
+    Box(modifier = Modifier
+        .fillMaxWidth()
+        .height(120.dp)
+        .clip(RoundedCornerShape(5.dp))
+        .background(colorResource(id = R.color.menta_importante))){
+        Column(modifier=Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally ) {
+            Row(modifier = Modifier.fillMaxSize(),
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.CenterVertically) {
+                // Image(painter = , contentDescription = )
+                Spacer(modifier = Modifier.width(20.dp))
+                Image(
+                    painter = painterResource(id = R.drawable.usuario_perfil),
+                    contentDescription = "Tiempo",
+                    modifier = Modifier
+                        .padding(12.dp)
+                        .width(60.dp)
+                        .height(60.dp))
+                Spacer(modifier = Modifier.width(20.dp))
+                Text(text = "Profile", fontSize = 20.sp,color=Color.Black, fontFamily = FontFamily.SansSerif, fontWeight =FontWeight.Bold )
+            }
+        }
+
+    }
+}
+
+@Composable
+fun DrawerBody(items:List<MenuItem>, modifier: Modifier= Modifier
+    .background(color = Color.Black)
+    .fillMaxSize(), itemTextStyle:TextStyle= TextStyle(fontSize = 16.sp), onItemClick:(MenuItem)->Unit){
+    LazyColumn(modifier){
+        items(items){item->
+            Row(
+                modifier= Modifier
+                    .fillMaxWidth()
+                    .clickable { onItemClick(item) }
+                    .padding(16.dp)
+            ){
+                Image(painter=painterResource(id = item.icon), contentDescription = item.contentDescrip,modifier= Modifier
+                    .height(40.dp)
+                    .width(40.dp)
+                    .padding(5.dp))
+                Spacer(modifier = Modifier.width(16.dp))
+                Text(text = item.title, color = Color.White, fontSize = 20.sp)
+            }
+
+        }
+
+    }
+}
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
 @Composable
@@ -253,7 +413,8 @@ fun MapView() {
                                 }
                             })
                         /*
-                        Box(modifier = Modifier
+
+                        (modifier = Modifier
                             .height(50.dp)
                             .width(300.dp)
                             .padding(4.dp)
@@ -633,15 +794,6 @@ fun MapView() {
             OurGoogleMaps(uam) {}
         }
 
-
-        /*
-
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
-            val uam=Location(LatLng(12.10877952,-86.2564972),"UAM","Universidad Americana")
-            OurGoogleMaps(uam){}
-        }
-
-         */
 
     }
 }
