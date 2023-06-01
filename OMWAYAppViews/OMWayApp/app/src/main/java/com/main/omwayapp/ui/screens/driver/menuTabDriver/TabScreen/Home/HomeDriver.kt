@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.main.omwayapp.R
 import com.main.omwayapp.ui.components.CustomDivider
+import com.main.omwayapp.ui.navigation.ReaderScreens
 import com.main.omwayapp.ui.screens.driver.navigationDriver.DriverScreens
 
 
@@ -341,7 +342,7 @@ fun AjustesBox(navController: NavController){
             .background(colorResource(id = R.color.menta_importante))
             .clip(RoundedCornerShape(12.dp))
             .padding(10.dp)
-            .clickable { navController.navigate(route = DriverScreens.Ajustes.route) },
+            .clickable { navController.navigate(route = ReaderScreens.Ajustes.name) },
         horizontalAlignment = Alignment.CenterHorizontally
 
     ) {
