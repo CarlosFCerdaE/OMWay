@@ -22,67 +22,36 @@ import java.util.Optional;
 @Service
 public class ServiceCash implements IServiceCash {
 
-
     @Autowired
-    private IRepositoryConfigFare config;
-
-
+    private IRepositoryCash repositoryCash;
     @Autowired
-    private IRepositoryCash iRepositoryCash;
-
-
-    @Autowired
-    private IRepositoryPayment iRepositoryPayment;
+    private IRepositoryPayment repositoryPayment;
 
     @Autowired
     private IRepositoryRide repositoryRide;
 
+   @Override
+    public Cash getCashById(Integer id) {
+        Optional<Payment> p1 = repositoryPayment.findById(id);
+        if (p1.isPresent() && p1.get() instanceof Cash) {
+            return (Cash) p1.get();
+        } else {
+            throw new ResourceNotFoundException("Payment was not found");
+        }
+    }
+
     @Override
     public Cash save(CashDto cashDto) {
-        Optional<Cash> c1 = iRepositoryCash.findById(cashDto.getPaymentId());
+        Optional<Cash> c1 = repositoryCash.findById(cashDto.getPaymentId());
         Cash c = new Cash();
         if(c1.isPresent()){
             c = c1.get();
         }
 
-        Optional<Ride> ride = repositoryRide.findById(cashDto.getRideId());
-        Ride ride2 = new Ride();
-        if(ride.isPresent()){
-            ride2 = ride.get();
-        }
+        Ride r = repositoryRide.findById(cashDto.getRideId()).get();
+        c.setRide(r);
+        return repositoryCash.save(c);
 
-        ConfigFare baseFare =config.findByName("Base Fare");
-        ConfigFare kmFare = config.findByName("Per Km Fare");
-
-        double totalRide = (baseFare.getFare() + (kmFare.getFare() * ride2.getDistance()));
-        c.setTotal(totalRide);
-        c.setRide(ride2);
-
-        return iRepositoryCash.save(c);
-
-    }
-
-    @Override
-    public List<Cash> getAllCashPayment() {
-
-        List<Payment> paymentsList = iRepositoryPayment.findAll();
-        List<Cash> cashList = new ArrayList<>();
-        for (Payment payment : paymentsList) {
-            if (payment instanceof Cash) {
-                cashList.add((Cash) payment);
-            }
-        }
-        return cashList;
-    }
-
-    @Override
-    public Cash getCashById(Integer id) {
-        Optional<Payment> Payment = iRepositoryPayment.findById(id);
-        if (Payment.isPresent() && Payment.get() instanceof Cash) {
-            return (Cash) Payment.get();
-        } else {
-            throw new ResourceNotFoundException("Payment was not found");
-        }
     }
 }
 

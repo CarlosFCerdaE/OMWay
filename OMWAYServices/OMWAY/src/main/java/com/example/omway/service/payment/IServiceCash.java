@@ -10,7 +10,6 @@ import java.util.List;
 public interface IServiceCash {
 
     public Cash save(CashDto cashDto);
-    public List<Cash> getAllCashPayment();
     public Cash getCashById(Integer id);
 
 

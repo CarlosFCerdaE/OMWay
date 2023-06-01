@@ -19,8 +19,6 @@ import java.util.List;
 @Table(name="Driver",schema = "OMWUser")
 
 public class Driver extends OMWayUser {
-
-    private LocalDate dlIssueDate;
     private LocalDate dlExpirationDate;
     private int sumRating;
 

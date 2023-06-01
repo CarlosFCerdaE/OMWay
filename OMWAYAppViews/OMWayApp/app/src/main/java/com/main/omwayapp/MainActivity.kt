@@ -4,7 +4,6 @@ import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -33,13 +32,7 @@ import com.main.omwayapp.ui.components.InputField
 import com.main.omwayapp.ui.theme.OMWayAppTheme
 
 import androidx.compose.ui.unit.sp
-
-
-import com.main.omwayapp.apirest.model.LoginModel
-import com.main.omwayapp.ui.screens.driver.Cobro.CobroRider
-import com.main.omwayapp.ui.screens.driver.navigationDriver.NavigationDriver
-import com.main.omwayapp.ui.screens.rider.finalizadoRider.FinalizadoRider
-import com.main.omwayapp.ui.views.map.MapView
+import com.main.omwayapp.ui.views.rider.ReaderApp
 
 
 //Hola amigos, bienvenidos a la app del futuro $$$
@@ -48,8 +41,6 @@ import com.main.omwayapp.ui.views.map.MapView
 //Unique id
 var PERMISSION_ID=25
 class MainActivity : ComponentActivity() {
-    private val loginModel : LoginModel by viewModels()
-
     @RequiresApi(Build.VERSION_CODES.O)
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,13 +59,13 @@ class MainActivity : ComponentActivity() {
                     //RiderView()
                    // RegisterDriver()
                     //BttmSheet()
-                  //  MapView()
+                    //TopBarMapView()
                   //MenuTabDriver()
                    // NavigationDriver()
                   // FinalizadoRider()
                    // TermsAndConditions()
                    // Ajustes()
-                    //ReaderApp(loginModel = loginModel)
+                    ReaderApp()
                     //cardSolicitudDriver()
                     //listMisCarros()
                     //agregarCarros()

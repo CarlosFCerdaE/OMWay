@@ -14,6 +14,5 @@ public class DriverDto {
     private boolean state;
 
     //Driver
-    private LocalDate dlIssueDate;
     private LocalDate dlExpirationDate;
 }

@@ -16,27 +16,19 @@ public class ControllerCash {
     @Autowired
     private IServiceCash serviceCash;
 
-
-
-    @GetMapping("/all")
-    public List<Cash> getAll(){
-        return serviceCash.getAllCashPayment();
-
-    }
-
     @GetMapping("/{id}")
     public Cash getCashById(@PathVariable Integer id) {
         return serviceCash.getCashById(id);
     }
 
     @PostMapping("/save")
-    public Payment save(@RequestBody CashDto cashDto){
+    public Cash save(@RequestBody CashDto cashDto){
 
         return serviceCash.save(cashDto);
     }
 
     @PutMapping("/update")
-    public Payment update(@RequestBody CashDto cashDto)throws Exception{
+    public Cash update(@RequestBody CashDto cashDto)throws Exception{
         if(cashDto.getPaymentId()==null){
             throw new Exception("Please, send Id value");
         }

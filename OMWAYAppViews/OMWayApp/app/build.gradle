@@ -5,6 +5,7 @@ plugins {
 
     id 'kotlin-android'
     id 'kotlin-parcelize'
+    id 'org.jetbrains.kotlin.plugin.serialization' version "1.8.21"
     id 'kotlin-kapt'
     
 
@@ -131,5 +132,7 @@ dependencies {
     implementation 'com.google.accompanist:accompanist-pager:0.21.0-beta'
     implementation 'com.google.accompanist:accompanist-pager-indicators:0.21.0-beta'
 
+    //Serialization
+    implementation"org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0"
 
 }
