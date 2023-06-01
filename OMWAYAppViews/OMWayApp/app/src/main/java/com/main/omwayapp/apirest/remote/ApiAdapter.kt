@@ -1,11 +1,9 @@
 package com.main.omwayapp.apirest.remote
 
 import android.content.Context
-import android.content.pm.PackageManager
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
 
 object ApiAdapter {
 

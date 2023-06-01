@@ -1,3 +1,5 @@
 package com.main.omwayapp.apirest.response
 
-data class ConfigFareResponse(val configFareItem:List<ConfigFareResponse>)
+import com.main.omwayapp.apirest.model.ConfigFareItem
+
+data class ConfigFareResponse(val configFareItem:List<ConfigFareItem>)

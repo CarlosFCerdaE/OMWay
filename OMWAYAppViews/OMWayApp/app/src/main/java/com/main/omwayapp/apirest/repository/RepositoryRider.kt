@@ -1,7 +1,6 @@
 package com.main.omwayapp.apirest.repository
 
 import android.util.Log
-import com.main.omwayapp.apirest.model.DriverItem
 import com.main.omwayapp.apirest.model.RiderItem
 import com.main.omwayapp.apirest.remote.ApiAdapter
 import com.main.omwayapp.apirest.remote.ApiRider

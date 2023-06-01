@@ -24,18 +24,20 @@ public class ServiceCash implements IServiceCash {
 
     @Autowired
     private IRepositoryCash repositoryCash;
+    @Autowired
+    private IRepositoryPayment repositoryPayment;
 
     @Autowired
     private IRepositoryRide repositoryRide;
 
-    @Override
+   @Override
     public Cash getCashById(Integer id) {
-        Optional<Cash> c1 = repositoryCash.findById(id);
-        Cash c = new Cash();
-        if (c1.isPresent()) {
-            c = c1.get();
+        Optional<Payment> p1 = repositoryPayment.findById(id);
+        if (p1.isPresent() && p1.get() instanceof Cash) {
+            return (Cash) p1.get();
+        } else {
+            throw new ResourceNotFoundException("Payment was not found");
         }
-        return c;
     }
 
     @Override

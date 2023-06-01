@@ -1,14 +1,11 @@
 package com.main.omwayapp.apirest.repository
 
-import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import com.main.omwayapp.apirest.remote.ApiAdapter
 import com.main.omwayapp.apirest.remote.ApiUser
 import com.main.omwayapp.apirest.response.LoginResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class RepositoryUser : CoroutineScope by MainScope() {

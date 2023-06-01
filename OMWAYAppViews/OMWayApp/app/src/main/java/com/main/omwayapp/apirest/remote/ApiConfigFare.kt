@@ -1,6 +1,5 @@
 package com.main.omwayapp.apirest.remote
 
-import com.main.omwayapp.apirest.model.CarItem
 import com.main.omwayapp.apirest.model.ConfigFareItem
 import retrofit2.http.Body
 import retrofit2.http.DELETE

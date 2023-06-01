@@ -1,6 +1,5 @@
 package com.main.omwayapp.apirest.remote
 
-import com.main.omwayapp.apirest.model.DriverItem
 import com.main.omwayapp.apirest.model.RiderItem
 import retrofit2.http.Body
 import retrofit2.http.DELETE
