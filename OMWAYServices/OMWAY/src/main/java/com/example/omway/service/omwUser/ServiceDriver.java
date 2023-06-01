@@ -44,7 +44,6 @@ public class ServiceDriver implements IServiceDriver {
         d.setPhone(driverDto.getPhone());
         d.setEmail(driverDto.getEmail());
         d.setState(driverDto.isState());
-        d.setDlIssueDate(driverDto.getDlIssueDate());
         d.setDlExpirationDate(driverDto.getDlExpirationDate());
 
         List<Ride> driverRides = d.getDriverRides();
