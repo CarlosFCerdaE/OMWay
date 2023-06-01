@@ -1,5 +1,6 @@
 package com.main.omwayapp.apirest.remote
 
+import com.main.omwayapp.apirest.dto.MakeDto
 import com.main.omwayapp.apirest.model.MakeItem
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -14,10 +15,10 @@ interface ApiMake {
     suspend fun getAll():List<MakeItem>
 
     @POST("api/make/save")
-    suspend fun save(@Body item: MakeItem): MakeItem
+    suspend fun save(@Body item: MakeDto): MakeDto
 
     @PUT("api/make/update")
-    suspend fun update(@Body item: MakeItem): MakeItem
+    suspend fun update(@Body item: MakeDto): MakeDto
 
     @DELETE("api/make/delete/{id}")
     suspend fun delete(@Path("id") id:Int) : Boolean

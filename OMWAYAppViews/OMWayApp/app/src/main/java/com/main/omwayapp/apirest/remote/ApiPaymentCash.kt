@@ -1,5 +1,6 @@
 package com.main.omwayapp.apirest.remote
 
+import com.main.omwayapp.apirest.dto.PaymentCashDto
 import com.main.omwayapp.apirest.model.PaymentCashItem
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -15,8 +16,8 @@ interface ApiPaymentCash {
     suspend fun getCashById(@Path("id")id:Int):PaymentCashItem
 
     @POST("api/cash/save")
-    suspend fun save(@Body item: PaymentCashItem): PaymentCashItem
+    suspend fun save(@Body item: PaymentCashDto): PaymentCashDto
 
     @PUT("api/cash/update")
-    suspend fun update(@Body item: PaymentCashItem): PaymentCashItem
+    suspend fun update(@Body item: PaymentCashDto): PaymentCashDto
 }

@@ -1,6 +1,7 @@
 package com.main.omwayapp.apirest.repository
 
 import android.util.Log
+import com.main.omwayapp.apirest.dto.DriverDto
 import com.main.omwayapp.apirest.model.DriverItem
 import com.main.omwayapp.apirest.remote.ApiAdapter
 import com.main.omwayapp.apirest.remote.ApiDriver
@@ -22,11 +23,11 @@ class RepositoryDriver {
         return apiDriver.findByCif(cif)
     }
 
-    suspend fun save(driverItem: DriverItem): DriverItem {
-        return apiDriver.save(driverItem)
+    suspend fun save(driverDto: DriverDto): DriverDto {
+        return apiDriver.save(driverDto)
     }
-    suspend fun update(driverItem: DriverItem): DriverItem {
-        return apiDriver.update(driverItem)
+    suspend fun update(driverDto: DriverDto): DriverDto {
+        return apiDriver.update(driverDto)
     }
     suspend fun delete(cif:String):Boolean{
         return apiDriver.delete(cif)

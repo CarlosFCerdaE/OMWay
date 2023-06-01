@@ -1,5 +1,6 @@
 package com.main.omwayapp.apirest.remote
 
+import com.main.omwayapp.apirest.dto.DriverDto
 import com.main.omwayapp.apirest.model.DriverItem
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -15,10 +16,10 @@ interface ApiDriver {
     suspend fun findByCif(@Path("cif")cif:String):DriverItem
 
     @POST("api/driver/save")
-    suspend fun save(@Body item: DriverItem): DriverItem
+    suspend fun save(@Body item: DriverDto): DriverDto
 
     @PUT("api/driver/update")
-    suspend fun update(@Body item: DriverItem): DriverItem
+    suspend fun update(@Body item: DriverDto): DriverDto
 
     @DELETE("api/driver/delete/{cif}")
     suspend fun delete(@Path("cif") cif:String) : Boolean

@@ -1,5 +1,6 @@
 package com.main.omwayapp.apirest.remote
 
+import com.main.omwayapp.apirest.dto.RiderDto
 import com.main.omwayapp.apirest.model.RiderItem
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -16,10 +17,10 @@ interface ApiRider {
     suspend fun findByCif(@Path("cif")cif:String):RiderItem
 
     @POST("api/rider/save")
-    suspend fun save(@Body item: RiderItem): RiderItem
+    suspend fun save(@Body item: RiderDto): RiderDto
 
     @PUT("api/rider/update")
-    suspend fun update(@Body item: RiderItem): RiderItem
+    suspend fun update(@Body item: RiderDto): RiderDto
 
     @DELETE("api/rider/delete/{cif}")
     suspend fun delete(@Path("cif") cif:String)

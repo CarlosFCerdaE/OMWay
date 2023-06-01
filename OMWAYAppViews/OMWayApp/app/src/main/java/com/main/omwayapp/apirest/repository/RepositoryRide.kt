@@ -1,5 +1,6 @@
 package com.main.omwayapp.apirest.repository
 
+import com.main.omwayapp.apirest.dto.RideDto
 import com.main.omwayapp.apirest.model.RideItem
 import com.main.omwayapp.apirest.remote.ApiAdapter
 import com.main.omwayapp.apirest.remote.ApiRide
@@ -8,10 +9,10 @@ class RepositoryRide {
     private val apiRide: ApiRide = ApiAdapter.getInstance()
         .create(ApiRide::class.java)
 
-    suspend fun save(rideItem: RideItem): RideItem {
-        return apiRide.save(rideItem)
+    suspend fun save(rideDto: RideDto): RideDto {
+        return apiRide.save(rideDto)
     }
-    suspend fun update(rideItem: RideItem): RideItem {
-        return apiRide.update(rideItem)
+    suspend fun update(rideDto: RideDto): RideDto {
+        return apiRide.update(rideDto)
     }
 }

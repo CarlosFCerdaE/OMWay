@@ -1,5 +1,6 @@
 package com.main.omwayapp.apirest.repository
 
+import com.main.omwayapp.apirest.dto.PaymentCashDto
 import com.main.omwayapp.apirest.model.PaymentCashItem
 import com.main.omwayapp.apirest.remote.ApiAdapter
 import com.main.omwayapp.apirest.remote.ApiPaymentCash
@@ -12,10 +13,10 @@ class RepositoryPaymentCash {
         return apiPaymentCash.getCashById(id)
     }
 
-    suspend fun save(paymentCashItem: PaymentCashItem): PaymentCashItem {
-        return apiPaymentCash.save(paymentCashItem)
+    suspend fun save(paymentCashDto: PaymentCashDto): PaymentCashDto {
+        return apiPaymentCash.save(paymentCashDto)
     }
-    suspend fun update(paymentCashItem: PaymentCashItem): PaymentCashItem {
-        return apiPaymentCash.update(paymentCashItem)
+    suspend fun update(paymentCashDto: PaymentCashDto): PaymentCashDto {
+        return apiPaymentCash.update(paymentCashDto)
     }
 }

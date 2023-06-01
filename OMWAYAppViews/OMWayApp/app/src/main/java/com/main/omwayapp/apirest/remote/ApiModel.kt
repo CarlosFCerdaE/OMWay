@@ -1,5 +1,6 @@
 package com.main.omwayapp.apirest.remote
 
+import com.main.omwayapp.apirest.dto.ModelDto
 import com.main.omwayapp.apirest.model.ModelItem
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -13,10 +14,10 @@ interface ApiModel {
     suspend fun getAll():List<ModelItem>
 
     @POST("api/model/save")
-    suspend fun save(@Body item: ModelItem): ModelItem
+    suspend fun save(@Body item: ModelDto): ModelDto
 
     @PUT("api/model/update")
-    suspend fun update(@Body item: ModelItem): ModelItem
+    suspend fun update(@Body item: ModelDto): ModelDto
 
     @DELETE("api/model/delete/{id}")
     suspend fun delete(@Path("id") id:Int) : Boolean

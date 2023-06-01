@@ -1,6 +1,7 @@
 package com.main.omwayapp.apirest.repository
 
 import android.util.Log
+import com.main.omwayapp.apirest.dto.ModelDto
 import com.main.omwayapp.apirest.model.ModelItem
 import com.main.omwayapp.apirest.remote.ApiAdapter
 import com.main.omwayapp.apirest.remote.ApiModel
@@ -18,11 +19,11 @@ class RepositoryModel {
         return emptyList<ModelItem>()
     }
 
-    suspend fun save(modelItem: ModelItem): ModelItem {
-        return apiModel.save(modelItem)
+    suspend fun save(modelDto: ModelDto): ModelDto {
+        return apiModel.save(modelDto)
     }
-    suspend fun update(modelItem: ModelItem): ModelItem {
-        return apiModel.update(modelItem)
+    suspend fun update(modelDto: ModelDto): ModelDto {
+        return apiModel.update(modelDto)
     }
     suspend fun delete(id:Int):Boolean{
         return apiModel.delete(id)
