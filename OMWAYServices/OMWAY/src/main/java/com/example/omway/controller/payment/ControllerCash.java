@@ -16,14 +16,6 @@ public class ControllerCash {
     @Autowired
     private IServiceCash serviceCash;
 
-
-
-    @GetMapping("/all")
-    public List<Cash> getAll(){
-        return serviceCash.getAllCashPayment();
-
-    }
-
     @GetMapping("/{id}")
     public Cash getCashById(@PathVariable Integer id) {
         return serviceCash.getCashById(id);

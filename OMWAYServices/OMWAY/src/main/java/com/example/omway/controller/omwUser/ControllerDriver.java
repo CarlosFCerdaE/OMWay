@@ -22,6 +22,8 @@ public class ControllerDriver {
         return serviceDriver.getAll();
 
     }
+    @GetMapping("/{cif}")
+    public Driver findDriverByCif(@PathVariable String cif){return serviceDriver.findDriverByCif(cif);}
 
     @PostMapping("/login")
     public LoginResponseDto getDriverByCif(@Param("cif") String cif, @Param("password") String password){

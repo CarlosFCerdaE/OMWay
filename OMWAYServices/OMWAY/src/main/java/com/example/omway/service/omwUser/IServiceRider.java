@@ -12,6 +12,7 @@ import java.util.Optional;
 @Service
 public interface IServiceRider {
     public List<Rider> getAll();
+    Rider findRiderByCif(String cif);
 
     public Rider save(RiderDto riderDto);
 

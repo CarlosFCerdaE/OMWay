@@ -32,6 +32,7 @@ import com.main.omwayapp.ui.components.InputField
 import com.main.omwayapp.ui.theme.OMWayAppTheme
 
 import androidx.compose.ui.unit.sp
+import com.main.omwayapp.ui.views.rider.ReaderApp
 
 
 //Hola amigos, bienvenidos a la app del futuro $$$
@@ -64,7 +65,7 @@ class MainActivity : ComponentActivity() {
                   // FinalizadoRider()
                    // TermsAndConditions()
                    // Ajustes()
-                    //ReaderApp()
+                    ReaderApp()
                     //cardSolicitudDriver()
                     //listMisCarros()
                     //agregarCarros()

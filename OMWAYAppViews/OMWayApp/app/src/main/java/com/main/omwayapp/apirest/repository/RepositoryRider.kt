@@ -1,6 +1,7 @@
 package com.main.omwayapp.apirest.repository
 
 import android.util.Log
+import com.main.omwayapp.apirest.model.DriverItem
 import com.main.omwayapp.apirest.model.RiderItem
 import com.main.omwayapp.apirest.remote.ApiAdapter
 import com.main.omwayapp.apirest.remote.ApiRider
@@ -17,6 +18,9 @@ class RepositoryRider {
         }
         return emptyList<RiderItem>()
     }
+    suspend fun findByCif(cif:String): RiderItem {
+        return apiRider.findByCif(cif)
+    }
 
     suspend fun save(configFareItem: RiderItem): RiderItem {
         return apiRider.save(configFareItem)
@@ -24,7 +28,7 @@ class RepositoryRider {
     suspend fun update(configFareItem: RiderItem): RiderItem {
         return apiRider.update(configFareItem)
     }
-    suspend fun delete(cif:String):Boolean{
+    suspend fun delete(cif:String){
         return apiRider.delete(cif)
     }
 }

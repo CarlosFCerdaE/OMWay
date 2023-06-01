@@ -11,6 +11,8 @@ import retrofit2.http.Path
 interface ApiDriver {
     @GET("api/driver/all")
     suspend fun getAll():List<DriverItem>
+    @GET("api/driver/{cif}")
+    suspend fun findByCif(@Path("cif")cif:String):DriverItem
 
     @POST("api/driver/save")
     suspend fun save(@Body item: DriverItem): DriverItem

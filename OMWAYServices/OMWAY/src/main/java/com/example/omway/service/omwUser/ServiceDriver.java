@@ -3,7 +3,6 @@ package com.example.omway.service.omwUser;
 import com.example.omway.dto.omwUser.DriverDto;
 import com.example.omway.dto.omwUser.LoginResponseDto;
 import com.example.omway.model.omwUser.Driver;
-import com.example.omway.model.omwUser.Rider;
 import com.example.omway.model.trip.Ride;
 import com.example.omway.repository.omwUser.IRepositoryDriver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +14,25 @@ import java.util.Optional;
 @Service
 public class ServiceDriver implements IServiceDriver {
     @Autowired
-    private IRepositoryDriver repodriver;
+    private IRepositoryDriver repositoryDriver;
     @Override
     public List<Driver> getAll() {
-        return repodriver.findAll();
+        return repositoryDriver.findAll();
+    }
+
+    @Override
+    public Driver findDriverByCif(String cif) {
+        Optional<Driver> d1 = repositoryDriver.findById(cif);
+        Driver d = new Driver();
+        if (d1.isPresent()) {
+            d = d1.get();
+        }
+        return d;
     }
 
     @Override
     public Driver save(DriverDto driverDto) {
-        Optional<Driver> d1 = repodriver.findById(driverDto.getDriverCif());
+        Optional<Driver> d1 = repositoryDriver.findById(driverDto.getDriverCif());
         Driver d = new Driver();
         if (d1.isPresent()){
             d = d1.get();
@@ -50,18 +59,18 @@ public class ServiceDriver implements IServiceDriver {
         d.setNumberRides(numberOfRides);
         d.setSumRating(sum);
 
-        return repodriver.save(d);
+        return repositoryDriver.save(d);
     }
 
 
     @Override
     public void deleteById(String cif) {
-        repodriver.deleteById(cif);
+        repositoryDriver.deleteById(cif);
     }
 
     @Override
     public LoginResponseDto getDriverByCif(String cif, String password) {
-        Driver d = repodriver.getDriverByCif(cif,password);
+        Driver d = repositoryDriver.getDriverByCif(cif,password);
         LoginResponseDto lr = new LoginResponseDto(false,"Not Connected");
         if(d !=null){
             lr = new LoginResponseDto(true,"User Connected");

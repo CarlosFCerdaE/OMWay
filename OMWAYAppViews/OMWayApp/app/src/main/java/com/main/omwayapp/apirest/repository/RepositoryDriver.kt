@@ -18,6 +18,9 @@ class RepositoryDriver {
         }
         return emptyList<DriverItem>()
     }
+    suspend fun findByCif(cif:String):DriverItem{
+        return apiDriver.findByCif(cif)
+    }
 
     suspend fun save(driverItem: DriverItem): DriverItem {
         return apiDriver.save(driverItem)

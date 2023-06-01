@@ -25,6 +25,8 @@ public class ControllerRider {
         return serviceRider.getAll();
 
     }
+    @GetMapping("/{cif}")
+    public Rider findRiderByCif(@PathVariable String cif){return serviceRider.findRiderByCif(cif);}
 
     @PostMapping("/login")
     public LoginResponseDto getRiderByCif(@Param("cif") String cif, @Param("password") String password){

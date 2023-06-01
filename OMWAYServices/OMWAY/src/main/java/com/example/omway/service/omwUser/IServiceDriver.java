@@ -10,6 +10,7 @@ import java.util.List;
 @Service
 public interface IServiceDriver {
     public List<Driver> getAll();
+    Driver findDriverByCif(String cif);
 
     public Driver save(DriverDto driverDto);
 

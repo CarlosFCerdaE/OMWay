@@ -13,6 +13,9 @@ interface ApiRider {
     @GET("api/rider/all")
     suspend fun getAll():List<RiderItem>
 
+    @GET("api/rider/{cif}")
+    suspend fun findByCif(@Path("cif")cif:String):RiderItem
+
     @POST("api/rider/save")
     suspend fun save(@Body item: RiderItem): RiderItem
 
@@ -20,5 +23,5 @@ interface ApiRider {
     suspend fun update(@Body item: RiderItem): RiderItem
 
     @DELETE("api/rider/delete/{cif}")
-    suspend fun delete(@Path("cif") cif:String) : Boolean
+    suspend fun delete(@Path("cif") cif:String)
 }
