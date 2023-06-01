@@ -32,6 +32,9 @@ import com.main.omwayapp.ui.components.InputField
 import com.main.omwayapp.ui.theme.OMWayAppTheme
 
 import androidx.compose.ui.unit.sp
+import com.main.omwayapp.ui.screens.driver.menuTabDriver.TabScreen.mytrips.cardMytrips
+import com.main.omwayapp.ui.screens.driver.navigationDriver.NavigationDriver
+import com.main.omwayapp.ui.screens.rider.misViajesRider.cardMytripsRider
 import com.main.omwayapp.ui.views.rider.ReaderApp
 
 
@@ -61,17 +64,18 @@ class MainActivity : ComponentActivity() {
                     //BttmSheet()
                     //TopBarMapView()
                   //MenuTabDriver()
-                   // NavigationDriver()
+                   //NavigationDriver()
                   // FinalizadoRider()
                    // TermsAndConditions()
                    // Ajustes()
-                    ReaderApp()
+                    //ReaderApp()
                     //cardSolicitudDriver()
                     //listMisCarros()
                     //agregarCarros()
                     //editarCarros()
                     //cardMytrips()
                     //CobroRider()
+                    cardMytripsRider()
 
                 }
 
