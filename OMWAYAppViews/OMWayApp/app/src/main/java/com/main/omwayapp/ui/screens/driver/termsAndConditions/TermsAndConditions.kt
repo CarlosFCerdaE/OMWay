@@ -26,6 +26,8 @@ import androidx.navigation.NavController
 import com.main.omwayapp.R
 import com.main.omwayapp.ui.components.CustomButton
 import com.main.omwayapp.ui.components.CustomDivider
+import com.main.omwayapp.ui.navigation.ReaderNavigation
+import com.main.omwayapp.ui.navigation.ReaderScreens
 import com.main.omwayapp.ui.screens.driver.navigationDriver.DriverScreens
 import com.main.omwayapp.ui.screens.driver.registerdriver.CenteredImage
 
@@ -55,7 +57,7 @@ fun TermsAndConditions(navController: NavController){
         Column(modifier =
         Modifier
             .background(color = colorResource(id = R.color.txt_fields))
-            .size(width=352.dp, height = 629.dp)
+            .size(width = 352.dp, height = 629.dp)
             .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -84,7 +86,7 @@ fun TermsAndConditions(navController: NavController){
 
         Spacer(modifier = Modifier.padding(20.dp))
 
-        CustomButton(modifier = Modifier.size(width=222.dp,height=51.dp),text = "Acepto", fontSize = 20.sp, onClick = {navController.navigate(route= DriverScreens.MenuTabDriver.route)})
+        CustomButton(modifier = Modifier.size(width=222.dp,height=51.dp),text = "Acepto", fontSize = 20.sp, onClick = {navController.navigate(route= ReaderScreens.MenuTabDriver.name)})
 
         Spacer(modifier = Modifier.padding(20.dp))
 

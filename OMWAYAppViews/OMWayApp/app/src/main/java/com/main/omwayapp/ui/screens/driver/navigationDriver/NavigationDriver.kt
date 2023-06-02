@@ -16,6 +16,7 @@ import com.main.omwayapp.ui.screens.driver.termsAndConditions.TermsAndConditions
 
 @Composable
 fun NavigationDriver(){
+
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = DriverScreens.RegisterDriver.route ){
