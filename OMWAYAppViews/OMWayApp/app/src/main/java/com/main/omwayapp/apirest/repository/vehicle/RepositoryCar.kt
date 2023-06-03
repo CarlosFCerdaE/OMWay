@@ -14,7 +14,7 @@ class RepositoryCar {
     suspend fun update(carDto: CarDto): CarDto {
         return apiCar.update(carDto)
     }
-    suspend fun delete(id:String):Boolean{
+    suspend fun delete(id:String){
         return apiCar.delete(id)
     }
 }

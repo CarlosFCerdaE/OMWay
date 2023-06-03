@@ -64,6 +64,11 @@ fun RLoginScreen (navController: NavController){
     var show by rememberSaveable{mutableStateOf(false)}
     var keyBoardController = LocalSoftwareKeyboardController.current
 
+
+
+
+
+
     LaunchedEffect(state){
         isLoading.value = state._loading
         Log.d("LOADING",isLoading.toString())

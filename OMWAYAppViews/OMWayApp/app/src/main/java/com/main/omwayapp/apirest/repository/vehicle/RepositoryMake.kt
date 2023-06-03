@@ -25,7 +25,7 @@ class RepositoryMake {
     suspend fun update(makeDto: MakeDto): MakeDto {
         return apiMake.update(makeDto)
     }
-    suspend fun delete(id:Int):Boolean{
+    suspend fun delete(id:Int){
         return apiMake.delete(id)
     }
 }

@@ -15,5 +15,5 @@ interface ApiCar {
     suspend fun update(@Body item: CarDto): CarDto
 
     @DELETE("api/car/delete/{id}")
-    suspend fun delete(@Path("id") id:String) : Boolean
+    suspend fun delete(@Path("id") id:String)
 }

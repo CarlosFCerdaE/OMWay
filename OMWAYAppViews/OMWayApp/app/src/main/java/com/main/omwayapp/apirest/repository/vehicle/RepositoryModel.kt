@@ -25,7 +25,7 @@ class RepositoryModel {
     suspend fun update(modelDto: ModelDto): ModelDto {
         return apiModel.update(modelDto)
     }
-    suspend fun delete(id:Int):Boolean{
+    suspend fun delete(id:Int){
         return apiModel.delete(id)
     }
 }
