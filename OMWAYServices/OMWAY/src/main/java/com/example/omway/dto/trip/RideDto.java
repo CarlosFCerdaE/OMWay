@@ -24,4 +24,5 @@ public class RideDto {
     private String comment;
     private String riderId;
     private String driverId;
+    private String carId;
 }

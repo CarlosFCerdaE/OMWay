@@ -1,6 +1,7 @@
 package com.example.omway.model.vehicle;
 
 import com.example.omway.model.omwUser.Driver;
+import com.example.omway.model.trip.Ride;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -31,4 +32,8 @@ public class Car {
     @JoinColumn(foreignKey=@ForeignKey(name="FK_model_car_modelid"))
     @JsonBackReference
     private Model model;
+
+    @OneToOne(mappedBy = "car")
+    @JsonBackReference
+    private Ride ride;
 }

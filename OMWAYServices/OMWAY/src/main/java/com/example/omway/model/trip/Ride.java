@@ -4,7 +4,9 @@ import com.example.omway.model.omwUser.Driver;
 import com.example.omway.model.omwUser.OMWayUser;
 import com.example.omway.model.omwUser.Rider;
 import com.example.omway.model.payment.Payment;
+import com.example.omway.model.vehicle.Car;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -56,5 +58,10 @@ public class Ride {
     @OneToOne(mappedBy = "ride")
     @JsonBackReference
     private Payment payment;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "carId", referencedColumnName = "licensePlate")
+    @JsonManagedReference
+    private Car car;
 
 }
