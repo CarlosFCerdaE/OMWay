@@ -55,6 +55,7 @@ import com.main.omwayapp.R
 import com.main.omwayapp.ui.components.CustomButton
 import com.main.omwayapp.ui.components.CustomDivider
 import com.main.omwayapp.ui.components.InputField
+import com.main.omwayapp.ui.navigation.ReaderScreens
 import com.main.omwayapp.ui.screens.driver.navigationDriver.DriverScreens
 
 import java.util.Calendar
@@ -149,7 +150,7 @@ fun RegisterDriver(navController: NavController){
         ModelTextField()
         CarYearTextField()
         Spacer(modifier = Modifier.padding(25.dp))
-        CustomButton(modifier = Modifier.size(width=222.dp,height=51.dp),text = "Regístrate", fontSize = 20.sp, onClick = {navController.navigate(route= DriverScreens.TAC.route)})
+        CustomButton(modifier = Modifier.size(width=222.dp,height=51.dp),text = "Regístrate", fontSize = 20.sp, onClick = {navController.navigate(route= ReaderScreens.TermsAndConditions.name)})
         Spacer(modifier = Modifier.padding(25.dp))
 
 
@@ -375,7 +376,8 @@ fun ModelTextField() {
     var text = remember {
         mutableStateOf("")
     }
-    var keyBoardController = LocalSoftwareKeyboardController.current
+
+    val keyBoardController = LocalSoftwareKeyboardController.current
 
         Column(
             modifier = Modifier

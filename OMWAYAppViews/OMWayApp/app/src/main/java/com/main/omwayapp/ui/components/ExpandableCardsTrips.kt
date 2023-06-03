@@ -35,6 +35,8 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -49,7 +51,7 @@ fun ExpandableCardTrips(
     hora: String,
     puntoA: String,
     puntoB: String,
-    distanciaEst: String,
+    distanciaEst: String
 ) {
     var expandedState by remember {
         mutableStateOf(false)
@@ -370,6 +372,205 @@ fun ExpandableCardTripsDone(
                             fontSize = 16.sp,
                         )
                     }
+                }
+                Spacer(modifier = Modifier
+                    .height(20.dp)
+                )
+
+            }
+        }
+    }
+}
+
+
+@ExperimentalMaterialApi
+@Composable
+fun ExpandableCardTripsDoneRider(
+    nomRider: String,
+    tarifa: String,
+    hora: String,
+    puntoA: String,
+    puntoB: String,
+    distanciaRec: String,
+    distancia: String,
+    tiempo: String,
+    tiempotardado: String,
+    detallesCarro: String,
+    placa: String
+) {
+    var expandedState by remember {
+        mutableStateOf(false)
+    }
+    val rotationState by animateFloatAsState(
+        targetValue = if (expandedState) 180f else 0f
+    )
+
+    Card(
+        modifier = Modifier
+            .width(330.dp)
+            .padding(5.dp)
+            .animateContentSize(
+                animationSpec = tween(
+                    durationMillis = 300,
+                    easing = LinearOutSlowInEasing
+                )
+            )
+        ,
+        shape = RoundedCornerShape(10.dp),
+        enabled = true,
+        onClick = {
+            Log.d("Estado","Estado:${expandedState}")
+            expandedState = !expandedState
+        }
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(color = colorResource(id = R.color.bg_terminosCondiciones)),
+            horizontalAlignment = Alignment.Start
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                IconButton(onClick = {/*TODO*/ }) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.usuario),
+                        contentDescription = "Usuario",
+                        tint= colorResource(id = R.color.texto_opacidad),
+                        modifier = Modifier
+                            .size(24.dp)
+                    )
+                }
+                Column(
+                    modifier = Modifier
+                        .weight(4f)
+                ) {
+                    Text(
+                        text = tarifa,
+                        color = colorResource(id = R.color.texto_general),
+                        fontSize = 16.sp
+
+                    )
+                    Text(
+                        text = hora,
+                        color = colorResource(id = R.color.texto_general),
+                        fontSize = 16.sp
+                    )
+                    Spacer(modifier = Modifier.height(15.dp))
+
+                }
+                Column() {
+                    IconButton(
+                        modifier = Modifier
+                            .alpha(ContentAlpha.medium)
+
+                            .rotate(rotationState),
+                        onClick = {
+                            expandedState = !expandedState
+                        }) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowDropDown,
+                            contentDescription = "Drop Down Arrow",
+                            tint = colorResource(id = R.color.texto_opacidad)
+                        )
+                    }
+                }
+            }
+
+            if (expandedState) {
+                Log.d("Estado", "DentroIF")
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    IconButton(onClick = {/*TODO*/ }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.punto_a),
+                            contentDescription = "PuntoA",
+                            modifier = Modifier
+                                .size(24.dp),
+                            tint = colorResource(id = R.color.texto_general)
+                        )
+                    }
+                    Column(modifier = Modifier) {
+                        Text(
+                            text = "Punto A",
+                            color = colorResource(id = R.color.texto_general),
+                            fontSize = 16.sp
+                        )
+                        Text(
+                            text = puntoA,
+                            color = colorResource(id = R.color.texto_general),
+                            fontSize = 16.sp
+                        )
+
+                    }
+                }
+                Spacer(modifier = Modifier.height(10.dp))
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    IconButton(onClick = {/*TODO*/ }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.punto_b),
+                            contentDescription = "PuntoB",
+                            modifier = Modifier
+                                .size(24.dp),
+                            tint = colorResource(id = R.color.texto_general)
+                        )
+                    }
+                    Column(modifier = Modifier) {
+                        Text(
+                            text = "Punto B",
+                            color = colorResource(id = R.color.texto_general),
+                            fontSize = 16.sp
+                        )
+                        Text(
+                            text = puntoB,
+                            color = colorResource(id = R.color.texto_general),
+                            fontSize = 16.sp
+                        )
+
+                    }
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+                Column(modifier = Modifier .align(Alignment.CenterHorizontally)) {
+
+                    Row {
+                        Text(text = distanciaRec,
+                            color = colorResource(id = R.color.texto_general),
+                            fontSize = 16.sp,
+                        )
+                        Text(text = distancia,
+                            color = colorResource(id = R.color.menta_importante),
+                            fontSize = 16.sp,
+                        )
+                        Spacer(modifier = Modifier
+                            .width(30.dp)
+                        )
+                        Text(text = tiempo,
+                            color = colorResource(id = R.color.texto_general),
+                            fontSize = 16.sp,
+                        )
+                        Text(text = tiempotardado,
+                            color = colorResource(id = R.color.menta_importante),
+                            fontSize = 16.sp,
+                        )
+                    }
+                    Text(text = "Detalles del Conductor",
+                        color = colorResource(id = R.color.texto_general),
+                        fontSize = 16.sp,
+                        fontFamily = FontFamily(Font(R.font.inter_bold))
+                    )
+                    Spacer(modifier = Modifier
+                        .height(10.dp)
+                    )
+                    Text(text = nomRider,
+                        color = colorResource(id = R.color.texto_general),
+                        fontSize = 16.sp,
+                    )
+                    Text(text = detallesCarro,
+                        color = colorResource(id = R.color.texto_general),
+                        fontSize = 16.sp,
+                    )
+                    Text(text = placa,
+                        color = colorResource(id = R.color.texto_general),
+                        fontSize = 16.sp,
+                    )
+
                 }
                 Spacer(modifier = Modifier
                     .height(20.dp)

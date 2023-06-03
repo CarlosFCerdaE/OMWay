@@ -167,9 +167,8 @@ fun RLoginScreen (navController: NavController){
 
                 CustomButtonG(modifier = Modifier
                     .width(222.dp)
-                    .height(51.dp), text = "LOGIN", fontSize = 20.sp) {
+                    .height(51.dp), text = "LOGIN", fontSize = 20.sp){
                     loginModel.onSummit()
-
                 }
             }
         }
