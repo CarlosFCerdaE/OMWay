@@ -1,4 +1,4 @@
-package com.main.omwayapp.ui.views.map
+package com.main.omwayapp.ui.screens.rider.homeMenu
 
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
