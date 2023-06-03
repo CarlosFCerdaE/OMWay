@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import com.main.omwayapp.ui.screens.driver.navigationDriver.NavigationDriver
 import com.main.omwayapp.ui.screens.driver.menuTabDriver.TabScreen.mytrips.cardMytrips
 import com.main.omwayapp.ui.screens.driver.navigationDriver.NavigationDriver
+import com.main.omwayapp.ui.screens.rider.homeMenu.homemenuRider
 import com.main.omwayapp.ui.screens.rider.misViajesRider.cardMytripsRider
 import com.main.omwayapp.ui.views.rider.ReaderApp
 
@@ -69,14 +70,21 @@ class MainActivity : ComponentActivity() {
                     //FinalizadoRider()
                     //TermsAndConditions()
                     //Ajustes()
-                      ReaderApp()
+                    //  ReaderApp()
                     //cardSolicitudDriver()
                     //listMisCarros()
                     //agregarCarros()
                     //editarCarros()
                     //cardMytrips()
                     //CobroRider()
-                    cardMytripsRider()
+                    //cardMytripsRider()
+                    homemenuRider()
+                    //enCaminoRider()
+                    //LlegadaRider()
+                    // IniciadoRider()
+                    //enCaminoDriver()
+                    //inicioDriver()
+                    //cobrarDriver()
 
                 }
 
