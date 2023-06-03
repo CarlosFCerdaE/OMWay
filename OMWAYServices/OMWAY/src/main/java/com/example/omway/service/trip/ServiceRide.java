@@ -5,6 +5,7 @@ import com.example.omway.model.trip.Ride;
 import com.example.omway.repository.omwUser.IRepositoryDriver;
 import com.example.omway.repository.omwUser.IRepositoryRider;
 import com.example.omway.repository.trip.IRepositoryRide;
+import com.example.omway.repository.vehicle.IRepositoryCar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,8 @@ public class ServiceRide implements IServiceRide {
     private IRepositoryRider repositoryRider;
     @Autowired
     private IRepositoryDriver repositoryDriver;
+    @Autowired
+    private IRepositoryCar repositoryCar;
 
     @Override
     public Ride save(RideDto rideDto) {
@@ -48,6 +51,9 @@ public class ServiceRide implements IServiceRide {
                 );
         r.setDriver(
                 repositoryDriver.findById(rideDto.getDriverId()).get()
+        );
+        r.setCar(
+                repositoryCar.findById(rideDto.getCarId()).get()
         );
 
         return repositoryRide.save(r);

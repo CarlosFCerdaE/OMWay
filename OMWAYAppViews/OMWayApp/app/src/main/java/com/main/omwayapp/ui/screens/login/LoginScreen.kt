@@ -35,7 +35,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.main.omwayapp.R
-import com.main.omwayapp.apirest.viewmodel.LoginModel
+import com.main.omwayapp.apirest.viewmodel.omwayuser.login.LoginViewModel
 import com.main.omwayapp.ui.components.CenteredImage
 import com.main.omwayapp.ui.components.CustomAlertDialog
 import com.main.omwayapp.ui.components.CustomButtonG
@@ -55,7 +55,7 @@ fun Circular(){
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun RLoginScreen (navController: NavController){
-    val loginModel: LoginModel = viewModel()
+    val loginModel: LoginViewModel = viewModel()
     val state by loginModel._state.collectAsState()
     val isLoading = remember {mutableStateOf(false)}
     val isSuccess = remember{ mutableStateOf(false)}
