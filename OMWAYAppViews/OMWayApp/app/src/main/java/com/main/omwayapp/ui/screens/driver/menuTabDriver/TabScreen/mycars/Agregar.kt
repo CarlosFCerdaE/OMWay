@@ -47,7 +47,7 @@ fun agregarCarros(navController: NavController){
             tint = colorResource(id = R.color.texto_general),
             modifier = Modifier
                 .size(35.dp)
-                .clickable { navController.navigate(route= AppScreens.MenuTabApp.route)}
+                //.clickable { navController.navigate(route= AppScreens.MenuTabApp.route)}
         )
         Text(
             text = "Agregá tu carro",
