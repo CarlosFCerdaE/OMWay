@@ -1,8 +1,10 @@
 package com.main.omwayapp.ui.screens.login
 
 import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,6 +28,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.SemanticsActions.OnClick
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -34,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.main.omwayapp.R
 import com.main.omwayapp.apirest.viewmodel.omwayuser.login.LoginViewModel
 import com.main.omwayapp.ui.components.CenteredImage
@@ -41,8 +45,11 @@ import com.main.omwayapp.ui.components.CustomAlertDialog
 import com.main.omwayapp.ui.components.CustomButtonG
 import com.main.omwayapp.ui.components.CustomDivider
 import com.main.omwayapp.ui.components.InputField
+
+import com.main.omwayapp.ui.navigationApp.AppScreens
 import com.main.omwayapp.ui.theme.Fondo
 import com.main.omwayapp.ui.theme.IBMplexSans
+import com.main.omwayapp.ui.theme.MentaImportante40
 import com.main.omwayapp.ui.theme.TextOpacidad
 import com.main.omwayapp.ui.theme.TextoGeneral
 
@@ -63,6 +70,11 @@ fun RLoginScreen (navController: NavController){
     var password = remember {mutableStateOf(loginModel.password)}
     var show by rememberSaveable{mutableStateOf(false)}
     var keyBoardController = LocalSoftwareKeyboardController.current
+
+
+
+
+
 
     LaunchedEffect(state){
         isLoading.value = state._loading
@@ -170,6 +182,43 @@ fun RLoginScreen (navController: NavController){
                     .height(51.dp), text = "LOGIN", fontSize = 20.sp){
                     loginModel.onSummit()
                 }
+
+                Spacer(modifier = Modifier.height(60.dp))
+
+                Row(
+                ) {
+
+                    Text(
+                        modifier = Modifier
+                            .padding(horizontal = 3.dp),
+                        text = "No tienes cuenta?",
+                        color = TextoGeneral,
+                        textAlign = TextAlign.Center,
+                        fontSize = 15.sp,
+                        fontWeight = FontWeight.Normal,
+                        fontFamily = IBMplexSans
+
+
+                    )
+
+                    Text(
+                        modifier = Modifier.clickable(onClick = {navController.navigate(AppScreens.RegisterRider.route)})
+                            .padding(horizontal = 9.dp),
+                        text = "Regístrate",
+                        color = MentaImportante40,
+                        textAlign = TextAlign.Center,
+                        fontSize = 15.sp,
+                        fontWeight = FontWeight.Bold,
+                        fontFamily = IBMplexSans,
+
+
+
+
+
+
+                    )
+                }
+
             }
         }
     }

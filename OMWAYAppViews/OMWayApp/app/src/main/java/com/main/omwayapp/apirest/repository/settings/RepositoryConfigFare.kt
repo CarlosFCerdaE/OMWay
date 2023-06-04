@@ -25,7 +25,7 @@ class RepositoryConfigFare {
     suspend fun update(configFareItem: ConfigFareItem): ConfigFareItem {
         return apiConfigFare.update(configFareItem)
     }
-    suspend fun delete(id:Int):Boolean{
+    suspend fun delete(id:Int){
         return apiConfigFare.delete(id)
     }
 }

@@ -36,7 +36,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.main.omwayapp.R
 import com.main.omwayapp.ui.components.CustomButton
-import com.main.omwayapp.ui.screens.driver.navigationDriver.DriverScreens
 
 @Preview(showSystemUi = true)
 @Composable

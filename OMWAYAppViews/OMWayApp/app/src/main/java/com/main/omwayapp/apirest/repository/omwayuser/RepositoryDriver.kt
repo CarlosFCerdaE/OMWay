@@ -29,7 +29,7 @@ class RepositoryDriver {
     suspend fun update(driverDto: DriverDto): DriverDto {
         return apiDriver.update(driverDto)
     }
-    suspend fun delete(cif:String):Boolean{
+    suspend fun delete(cif:String){
         return apiDriver.delete(cif)
     }
 }

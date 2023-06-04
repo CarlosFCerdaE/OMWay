@@ -20,5 +20,5 @@ interface ApiModel {
     suspend fun update(@Body item: ModelDto): ModelDto
 
     @DELETE("api/model/delete/{id}")
-    suspend fun delete(@Path("id") id:Int) : Boolean
+    suspend fun delete(@Path("id") id:Int)
 }

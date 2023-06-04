@@ -20,5 +20,5 @@ interface ApiConfigFare {
     suspend fun update(@Body item: ConfigFareItem): ConfigFareItem
 
     @DELETE("api/configFare/delete/{id}")
-    suspend fun delete(@Path("id") id:Int) : Boolean
+    suspend fun delete(@Path("id") id:Int)
 }

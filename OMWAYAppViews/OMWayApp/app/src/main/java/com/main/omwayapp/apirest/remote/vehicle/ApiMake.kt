@@ -21,5 +21,5 @@ interface ApiMake {
     suspend fun update(@Body item: MakeDto): MakeDto
 
     @DELETE("api/make/delete/{id}")
-    suspend fun delete(@Path("id") id:Int) : Boolean
+    suspend fun delete(@Path("id") id:Int)
 }

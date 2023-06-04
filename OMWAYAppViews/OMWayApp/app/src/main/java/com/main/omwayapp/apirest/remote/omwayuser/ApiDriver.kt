@@ -22,5 +22,5 @@ interface ApiDriver {
     suspend fun update(@Body item: DriverDto): DriverDto
 
     @DELETE("api/driver/delete/{cif}")
-    suspend fun delete(@Path("cif") cif:String) : Boolean
+    suspend fun delete(@Path("cif") cif:String)
 }

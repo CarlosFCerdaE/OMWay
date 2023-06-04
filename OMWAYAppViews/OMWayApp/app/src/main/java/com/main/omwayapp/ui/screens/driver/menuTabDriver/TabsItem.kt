@@ -5,7 +5,6 @@ import androidx.navigation.NavController
 import com.main.omwayapp.ui.screens.driver.menuTabDriver.TabScreen.Home.HomeDriver
 import com.main.omwayapp.ui.screens.driver.menuTabDriver.TabScreen.mycars.MisCarros
 import com.main.omwayapp.ui.screens.driver.menuTabDriver.TabScreen.mytrips.cardMytrips
-import com.main.omwayapp.ui.screens.driver.navigationDriver.DriverScreens
 
 
 typealias ScreenFun = @Composable () ->Unit

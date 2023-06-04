@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.main.omwayapp.R
 import com.main.omwayapp.ui.components.CustomButton
-import com.main.omwayapp.ui.screens.driver.navigationDriver.DriverScreens
+import com.main.omwayapp.ui.navigationApp.AppScreens
 import com.main.omwayapp.ui.screens.driver.registerdriver.CarYearTextField
 import com.main.omwayapp.ui.screens.driver.registerdriver.ColorTextField
 import com.main.omwayapp.ui.screens.driver.registerdriver.MakeExposedDropdownMenuBox
@@ -47,7 +47,7 @@ fun agregarCarros(navController: NavController){
             tint = colorResource(id = R.color.texto_general),
             modifier = Modifier
                 .size(35.dp)
-                .clickable { navController.navigate(route= DriverScreens.MenuTabDriver.route)}
+                //.clickable { navController.navigate(route= AppScreens.MenuTabApp.route)}
         )
         Text(
             text = "Agregá tu carro",

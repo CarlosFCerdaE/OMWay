@@ -32,11 +32,10 @@ import com.main.omwayapp.ui.components.InputField
 import com.main.omwayapp.ui.theme.OMWayAppTheme
 
 import androidx.compose.ui.unit.sp
-import com.main.omwayapp.ui.screens.driver.navigationDriver.NavigationDriver
-import com.main.omwayapp.ui.screens.driver.menuTabDriver.TabScreen.mytrips.cardMytrips
-import com.main.omwayapp.ui.screens.driver.navigationDriver.NavigationDriver
-import com.main.omwayapp.ui.screens.rider.misViajesRider.cardMytripsRider
-import com.main.omwayapp.ui.views.rider.ReaderApp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.main.omwayapp.ui.navigationApp.NavigationApp
+import com.main.omwayapp.ui.screens.login.RLoginScreen
 
 
 //Hola amigos, bienvenidos a la app del futuro $$$
@@ -45,7 +44,8 @@ import com.main.omwayapp.ui.views.rider.ReaderApp
 //Unique id
 var PERMISSION_ID=25
 class MainActivity : ComponentActivity() {
-    @RequiresApi(Build.VERSION_CODES.O)
+
+    @RequiresApi(Build.VERSION_CODES.Q)
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -58,6 +58,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    NavigationApp()
                     //MyApp()
                     //DriverView()
                     //RiderView()
@@ -69,14 +70,22 @@ class MainActivity : ComponentActivity() {
                     //FinalizadoRider()
                     //TermsAndConditions()
                     //Ajustes()
-                      ReaderApp()
+                    //  ReaderApp()
                     //cardSolicitudDriver()
                     //listMisCarros()
                     //agregarCarros()
                     //editarCarros()
                     //cardMytrips()
                     //CobroRider()
-                    cardMytripsRider()
+                    //cardMytripsRider()
+
+                    //enCaminoRider()
+                    //LlegadaRider(navController)
+                    // IniciadoRider()
+                    //enCaminoDriver()
+                    //inicioDriver()
+                    //cobrarDriver()
+
 
                 }
 

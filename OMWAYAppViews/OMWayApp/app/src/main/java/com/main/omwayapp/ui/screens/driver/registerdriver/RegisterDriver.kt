@@ -55,8 +55,7 @@ import com.main.omwayapp.R
 import com.main.omwayapp.ui.components.CustomButton
 import com.main.omwayapp.ui.components.CustomDivider
 import com.main.omwayapp.ui.components.InputField
-import com.main.omwayapp.ui.navigation.ReaderScreens
-import com.main.omwayapp.ui.screens.driver.navigationDriver.DriverScreens
+
 
 import java.util.Calendar
 
@@ -150,7 +149,7 @@ fun RegisterDriver(navController: NavController){
         ModelTextField()
         CarYearTextField()
         Spacer(modifier = Modifier.padding(25.dp))
-        CustomButton(modifier = Modifier.size(width=222.dp,height=51.dp),text = "Regístrate", fontSize = 20.sp, onClick = {navController.navigate(route= ReaderScreens.TermsAndConditions.name)})
+        CustomButton(modifier = Modifier.size(width=222.dp,height=51.dp),text = "Regístrate", fontSize = 20.sp, onClick = {})
         Spacer(modifier = Modifier.padding(25.dp))
 
 
@@ -228,7 +227,7 @@ fun DlExpiraationDatePicker(){
                     Icon(painter = painterResource(id = R.drawable.calendario),
                         contentDescription = "Calendario",
                         modifier = Modifier
-                          .clickable { mDatePickerDialog.show() }
+                            .clickable { mDatePickerDialog.show() }
                             .size(24.dp))
                 }
             }
@@ -438,6 +437,7 @@ fun CarYearTextField(){
                 (
                 containerColor = colorResource(id = R.color.txt_fields)
             ),
+
             shape = RoundedCornerShape(10.dp)
         )
 
