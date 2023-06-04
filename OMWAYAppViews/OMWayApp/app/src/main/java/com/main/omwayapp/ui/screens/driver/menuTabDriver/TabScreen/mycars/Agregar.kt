@@ -1,7 +1,6 @@
 package com.main.omwayapp.ui.screens.driver.menuTabDriver.TabScreen.mycars
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,7 +23,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.main.omwayapp.R
 import com.main.omwayapp.ui.components.CustomButton
-import com.main.omwayapp.ui.navigationApp.AppScreens
 import com.main.omwayapp.ui.screens.driver.registerdriver.CarYearTextField
 import com.main.omwayapp.ui.screens.driver.registerdriver.ColorTextField
 import com.main.omwayapp.ui.screens.driver.registerdriver.MakeExposedDropdownMenuBox
@@ -70,7 +68,6 @@ fun agregarCarros(navController: NavController){
             .size(width=222.dp,height=51.dp),
             text = "Agregar",
             fontSize = 20.sp) {
-
         }
         Spacer(modifier = Modifier.padding(25.dp))
 

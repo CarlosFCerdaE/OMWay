@@ -9,7 +9,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+//Es para traer datos
+//Utiliza objetos completos
 class DriverViewModel:ViewModel() {
+
     private val repositoryDriver : RepositoryDriver = RepositoryDriver()
 
     private val _driverState = MutableStateFlow<DriverUIState>(DriverUIState())

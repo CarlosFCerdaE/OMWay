@@ -8,8 +8,15 @@ import com.main.omwayapp.apirest.remote.omwayuser.ApiDriver
 import java.lang.Exception
 
 class RepositoryDriver {
+
     private val apiDriver: ApiDriver = ApiAdapter.getInstance()
         .create(ApiDriver::class.java)
+
+    // ApiAdapter.getInstance() devuelve la instancia de retrofit con la URL de la api
+    // create(ApiDriver::class.java) es para crear una implementación de la interfaz ApiDriver en la instancia de retrofit
+    //luego esa instancia del api de driver se asigna a la variable apiDriver
+    // y se puede acceder a los metodos con la ruta de la api que estan definidos en la interfaz
+    //De esta forma obtenemos los datos o enviamos los datos.
 
     suspend fun getAll():List<DriverItem>{
         try {
