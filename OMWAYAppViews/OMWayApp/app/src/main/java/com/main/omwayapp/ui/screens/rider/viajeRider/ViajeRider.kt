@@ -29,7 +29,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
@@ -38,6 +37,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.google.android.gms.maps.model.LatLng
 import com.main.omwayapp.R
 import com.main.omwayapp.ui.model.Location
@@ -45,31 +45,22 @@ import com.main.omwayapp.ui.views.map.OurGoogleMaps
 
 
 lateinit var tbtr:String
-lateinit var tll:String
-@RequiresApi(Build.VERSION_CODES.Q)
-@OptIn(
-    ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class,
-    ExperimentalMaterial3Api::class
-)
-@Composable
-fun enCaminoRider() {
-    tbtr="El driver esta en camino"
-    tll="Tiempo estimado de llegada: 8min "
-    TopBarRider()
-}
-@RequiresApi(Build.VERSION_CODES.Q)
-@Composable
-fun LlegadaRider(){
-    tbtr="El conductor ha llegado"
-    tll=""
-    TopBarRider()
-}
+lateinit var tllr:String
 
 @RequiresApi(Build.VERSION_CODES.Q)
 @Composable
-fun IniciadoRider(){
-    tbtr="Viaje Iniciado"
-    tll="Tiempo estimado de llegada: 8min "
+fun viajeRider(navController: NavHostController) {
+    var estado: String by rememberSaveable { mutableStateOf("") }
+    //Estado barra superior
+    if(estado=="ACCEPTED") tbtr="El conductor viene en camino"
+    else if(estado=="ONMYWAY") tbtr="El conductor ha llegado"
+    else if(estado=="STARTED") tbtr="Viaje iniciado"
+    //Estado tiempo
+    if(estado=="ACCEPTED") tllr="Tiempo estimado de llegada: 8mins"
+    else if(estado=="ONMYWAY") tllr=""
+    else if(estado=="STARTED") tllr="Tiempo estimado de llegada: 8mins"
+
+
     TopBarRider()
 }
 
@@ -78,7 +69,7 @@ fun IniciadoRider(){
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBarRider(){
+fun TopBarRider() {
     Scaffold(topBar = { TopAppBar(
         elevation = 2.dp, backgroundColor = colorResource(id = R.color.fondo)
     ) {
@@ -214,7 +205,7 @@ fun TxtFieldR() {
         }
         Row() {
             Text(
-                text = tll, fontSize = 14.sp,
+                text = tllr, fontSize = 14.sp,
                 fontFamily = FontFamily.SansSerif,
                 color = colorResource(id = R.color.menta_importante),
                 modifier = Modifier.padding(5.dp)

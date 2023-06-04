@@ -8,12 +8,10 @@ import com.main.omwayapp.ui.screens.driver.Ajustes.Ajustes
 import com.main.omwayapp.ui.screens.driver.menuTabDriver.MenuTabDriver
 import com.main.omwayapp.ui.screens.driver.menuTabDriver.TabScreen.mycars.agregarCarros
 import com.main.omwayapp.ui.screens.driver.menuTabDriver.TabScreen.mycars.editarCarros
-import com.main.omwayapp.ui.screens.driver.navigationDriver.DriverScreens
 import com.main.omwayapp.ui.screens.driver.registerdriver.RegisterDriver
 import com.main.omwayapp.ui.screens.driver.termsAndConditions.TermsAndConditions
 import com.main.omwayapp.ui.screens.login.RLoginScreen
 import com.main.omwayapp.ui.screens.splash.RSplashScreen
-import java.io.Reader
 
 @Composable
 fun ReaderNavigation () {

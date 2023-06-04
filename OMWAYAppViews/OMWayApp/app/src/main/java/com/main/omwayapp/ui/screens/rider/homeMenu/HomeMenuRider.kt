@@ -54,10 +54,13 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.google.android.gms.maps.model.LatLng
 import com.main.omwayapp.R
 import com.main.omwayapp.ui.components.CustomButton
 import com.main.omwayapp.ui.model.Location
+import com.main.omwayapp.ui.navigationApp.AppScreens
+
 import com.main.omwayapp.ui.views.map.OurGoogleMaps
 import kotlinx.coroutines.launch
 import java.util.Calendar
@@ -66,7 +69,7 @@ import java.util.Calendar
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "UnusedMaterialScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun homemenuRider (){
+fun homemenuRider(navController: NavHostController) {
 
     val scaffoldState= rememberScaffoldState()
     val scope= rememberCoroutineScope()
@@ -81,11 +84,12 @@ fun homemenuRider (){
             MenuItem(id = "ajustes", title = "Ajustes", contentDescrip = "Go to",R.drawable.ajustes),
             MenuItem(id = "driver", title = "Driver", contentDescrip = "Go to",R.drawable.carro),
         ), onItemClick = {
+
             //Aqui iria lo de Navig
-            println("Clicked")
+
         }, )
     }) {
-        Mapa()
+        Mapa(navController)
     }
 }
 
@@ -167,7 +171,7 @@ fun DrawerBody(items:List<MenuItem>, modifier: Modifier= Modifier
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun Mapa() {
+fun Mapa(navController: NavHostController) {
     val uam = Location(LatLng(12.10877952, -86.2564972), "UAM", "Universidad Americana")
     val sheetState = rememberBottomSheetState(
         initialValue = BottomSheetValue.Collapsed
@@ -345,10 +349,12 @@ fun Mapa() {
                         CustomButton(
                             text = "Pedir Ahora",
                             modifier = Modifier.width(200.dp),
-                            fontSize = 20.sp
-                        ) {
+                            fontSize = 20.sp,
+                            onClick = {navController.navigate(route= AppScreens.ViajeRider.route)}
 
-                        }
+                        )
+
+
                     }
                     //SI SE ABRE
                 } else {
@@ -497,10 +503,11 @@ fun Mapa() {
                         CustomButton(
                             text = "Pedir Ahora",
                             modifier = Modifier.width(200.dp),
-                            fontSize = 20.sp
-                        ) {
+                            fontSize = 20.sp,
+                            onClick = {navController.navigate(route= AppScreens.ViajeRider.route)}
+                        )
 
-                        }
+
                     }
                 }
 

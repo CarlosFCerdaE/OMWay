@@ -18,7 +18,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -26,9 +25,7 @@ import androidx.navigation.NavController
 import com.main.omwayapp.R
 import com.main.omwayapp.ui.components.CustomButton
 import com.main.omwayapp.ui.components.CustomDivider
-import com.main.omwayapp.ui.navigation.ReaderNavigation
 import com.main.omwayapp.ui.navigation.ReaderScreens
-import com.main.omwayapp.ui.screens.driver.navigationDriver.DriverScreens
 import com.main.omwayapp.ui.screens.driver.registerdriver.CenteredImage
 
 @Composable

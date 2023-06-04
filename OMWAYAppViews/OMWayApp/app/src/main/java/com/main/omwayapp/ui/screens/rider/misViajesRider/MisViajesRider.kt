@@ -24,11 +24,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.main.omwayapp.R
-import com.main.omwayapp.ui.components.CustomDivider
 import com.main.omwayapp.ui.components.ExpandableCardTrips
-import com.main.omwayapp.ui.components.ExpandableCardTripsDone
 import com.main.omwayapp.ui.components.ExpandableCardTripsDoneRider
-import com.main.omwayapp.ui.screens.driver.navigationDriver.DriverScreens
 
 
 @OptIn(ExperimentalMaterialApi::class)

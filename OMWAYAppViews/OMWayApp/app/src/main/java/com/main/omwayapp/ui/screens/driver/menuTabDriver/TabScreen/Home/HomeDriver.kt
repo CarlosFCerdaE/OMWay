@@ -44,7 +44,6 @@ import androidx.navigation.NavController
 import com.main.omwayapp.R
 import com.main.omwayapp.ui.components.CustomDivider
 import com.main.omwayapp.ui.navigation.ReaderScreens
-import com.main.omwayapp.ui.screens.driver.navigationDriver.DriverScreens
 
 
 @Composable
