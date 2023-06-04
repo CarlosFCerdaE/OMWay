@@ -29,7 +29,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
@@ -38,44 +37,41 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.google.android.gms.maps.model.LatLng
 import com.main.omwayapp.R
 import com.main.omwayapp.ui.components.CustomButton
 import com.main.omwayapp.ui.model.Location
+import com.main.omwayapp.ui.screens.rider.viajeRider.tbtr
+import com.main.omwayapp.ui.screens.rider.viajeRider.tllr
 import com.main.omwayapp.ui.views.map.OurGoogleMaps
 
-lateinit var tbt:String
-lateinit var bttn:String
+
+
+lateinit var tbtd:String
+lateinit var bttnd:String
 lateinit var tlld:String
 
-@RequiresApi(Build.VERSION_CODES.Q)
-@OptIn(
-    ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class,
-    ExperimentalMaterial3Api::class
-)
-@Composable
-fun enCaminoDriver() {
-    tbt="Usted esta en camino"
-    bttn="Estoy Aqui"
-    tlld="Tiempo estimado de llegada: 8min "
-    TopBarDriver()
-}
-@RequiresApi(Build.VERSION_CODES.Q)
-@Composable
-fun inicioDriver(){
-    tbt="Esta en el punto inicial del viaje"
-    bttn="Iniciar"
-    tlld=""
-    TopBarDriver()
-}
+
 
 @RequiresApi(Build.VERSION_CODES.Q)
 @Composable
-fun cobrarDriver(){
-    tbt="El viaje ha iniciado"
-    bttn="Cobrar"
-    tlld="Tiempo estimado de llegada: 8min "
+fun viajeDriver(navController: NavHostController) {
+    var estado: String by rememberSaveable { mutableStateOf("") }
+    //Estado barra superior
+    if(estado=="ACCEPTED") tbtr ="Usted va en camino"
+    else if(estado=="ONMYWAY") tbtr ="Esta en el punto inicial"
+    else if(estado=="STARTED") tbtr ="El viaje ha iniciado"
+    //Estado Boton
+    if(estado=="ACCEPTED") tbtr ="Estoy aqui"
+    else if(estado=="ONMYWAY") tbtr ="Iniciar"
+    else if(estado=="STARTED") tbtr ="Cobrar"
+    //Estado tiempo
+    if(estado=="ACCEPTED") tllr ="Tiempo estimado de llegada: 8mins"
+    else if(estado=="ONMYWAY") tllr =""
+    else if(estado=="STARTED") tllr ="Tiempo estimado de llegada: 8mins"
     TopBarDriver()
+
 }
 
 
@@ -88,7 +84,7 @@ fun TopBarDriver(){
         elevation = 2.dp, backgroundColor = colorResource(id = R.color.fondo)
     ) {
         Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.SpaceBetween) {
-            Text(text = tbt,color= colorResource(id = R.color.menta_importante), fontSize = 20.sp, fontWeight = FontWeight.Bold )
+            Text(text = tbtd,color= colorResource(id = R.color.menta_importante), fontSize = 20.sp, fontWeight = FontWeight.Bold )
 
         }
 
@@ -170,6 +166,7 @@ fun TxtFieldDname(){
     var DriverName: String by rememberSaveable{ mutableStateOf("") }
     var PointA: String by rememberSaveable{ mutableStateOf("") }
     var PointB: String by rememberSaveable{ mutableStateOf("") }
+
     DriverName="Pedro Pascal"
     PointA="Villa Fontana Norte"
     PointB="Universidad Americana (UAM) "
@@ -228,7 +225,7 @@ fun TxtFieldDname(){
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
-        CustomButton(text = bttn, modifier = Modifier
+        CustomButton(text = bttnd, modifier = Modifier
             .width(100.dp)
             .height(35.dp)
             .padding(5.dp), fontSize = 10.sp) {

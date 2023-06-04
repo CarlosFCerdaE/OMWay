@@ -32,12 +32,7 @@ import com.main.omwayapp.ui.components.InputField
 import com.main.omwayapp.ui.theme.OMWayAppTheme
 
 import androidx.compose.ui.unit.sp
-import com.main.omwayapp.ui.screens.driver.navigationDriver.NavigationDriver
-import com.main.omwayapp.ui.screens.driver.menuTabDriver.TabScreen.mytrips.cardMytrips
-import com.main.omwayapp.ui.screens.driver.navigationDriver.NavigationDriver
-import com.main.omwayapp.ui.screens.rider.homeMenu.homemenuRider
-import com.main.omwayapp.ui.screens.rider.misViajesRider.cardMytripsRider
-import com.main.omwayapp.ui.views.rider.ReaderApp
+import com.main.omwayapp.ui.navigationApp.NavigationApp
 
 
 //Hola amigos, bienvenidos a la app del futuro $$$
@@ -59,6 +54,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    NavigationApp()
                     //MyApp()
                     //DriverView()
                     //RiderView()
@@ -78,9 +74,9 @@ class MainActivity : ComponentActivity() {
                     //cardMytrips()
                     //CobroRider()
                     //cardMytripsRider()
-                    homemenuRider()
+
                     //enCaminoRider()
-                    //LlegadaRider()
+                    //LlegadaRider(navController)
                     // IniciadoRider()
                     //enCaminoDriver()
                     //inicioDriver()
