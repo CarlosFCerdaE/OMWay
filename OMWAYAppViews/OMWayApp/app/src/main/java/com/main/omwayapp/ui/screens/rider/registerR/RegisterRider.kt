@@ -1,8 +1,10 @@
 package com.main.omwayapp.ui.screens.rider.register
 
 import android.widget.ImageButton
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,22 +31,26 @@ import androidx.navigation.NavController
 import com.main.omwayapp.R
 import com.main.omwayapp.ui.components.CustomButtonG
 import com.main.omwayapp.ui.components.InputField
+
+import com.main.omwayapp.ui.navigationApp.AppScreens
 import com.main.omwayapp.ui.theme.Fondo
 import com.main.omwayapp.ui.theme.IBMplexSans
+import com.main.omwayapp.ui.theme.MentaImportante40
 import com.main.omwayapp.ui.theme.TextOpacidad
 import com.main.omwayapp.ui.theme.TextoGeneral
 
-@Preview
+
 @Composable
-fun RegisterRider() {
+fun RegisterRider(navController: NavController ) {
 
     var text = remember {
         mutableStateOf("")
     }
-    
+
     Surface(modifier = Modifier.fillMaxSize(), color = Fondo) {
 
-        Column(horizontalAlignment = Alignment.CenterHorizontally,
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
             Spacer(modifier = Modifier.height(35.dp))
@@ -91,7 +97,7 @@ fun RegisterRider() {
                     enabled = true,
                     isSingleLine = true,
                     keyboardType = KeyboardType.Text,
-                    onAction = KeyboardActions{
+                    onAction = KeyboardActions {
 
                     }
                 )
@@ -108,7 +114,7 @@ fun RegisterRider() {
                     enabled = true,
                     isSingleLine = true,
                     keyboardType = KeyboardType.Text,
-                    onAction = KeyboardActions{
+                    onAction = KeyboardActions {
 
                     }
                 )
@@ -125,7 +131,7 @@ fun RegisterRider() {
                     enabled = true,
                     isSingleLine = true,
                     keyboardType = KeyboardType.Text,
-                    onAction = KeyboardActions{
+                    onAction = KeyboardActions {
 
                     }
                 )
@@ -142,7 +148,7 @@ fun RegisterRider() {
                     enabled = true,
                     isSingleLine = true,
                     keyboardType = KeyboardType.Text,
-                    onAction = KeyboardActions{
+                    onAction = KeyboardActions {
 
                     }
                 )
@@ -160,7 +166,7 @@ fun RegisterRider() {
                     enabled = true,
                     isSingleLine = true,
                     keyboardType = KeyboardType.Text,
-                    onAction = KeyboardActions{
+                    onAction = KeyboardActions {
 
                     }
                 )
@@ -177,7 +183,7 @@ fun RegisterRider() {
                     enabled = true,
                     isSingleLine = true,
                     keyboardType = KeyboardType.Text,
-                    onAction = KeyboardActions{
+                    onAction = KeyboardActions {
 
                     }
                 )
@@ -186,12 +192,48 @@ fun RegisterRider() {
 
             }
 
-            CustomButtonG(modifier = Modifier.width(222.dp).height(51.dp), text = "Regístrate", fontSize = 20.sp) {
+            CustomButtonG(
+                modifier = Modifier.width(222.dp).height(51.dp),
+                text = "Regístrate",
+                fontSize = 20.sp
+            ) {
                 //val loginResponse = loginModel.onSummit(context)
 
             }
 
+            Spacer(modifier = Modifier.height(20.dp))
+
+            Row(
+            ) {
+
+                Text(
+                    modifier = Modifier
+                        .padding(horizontal = 3.dp),
+                    text = "Tienes una cuenta?",
+                    color = TextoGeneral,
+                    textAlign = TextAlign.Center,
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.Normal,
+                    fontFamily = IBMplexSans
+
+
+                )
+
+                Text(
+                    modifier = Modifier.clickable(onClick = { navController.navigate(AppScreens.Login.route) })
+                        .padding(horizontal = 9.dp),
+                    text = "Entra Aquí",
+                    color = MentaImportante40,
+                    textAlign = TextAlign.Center,
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = IBMplexSans,
+
+
+                    )
+
+            }
+
         }
-        
     }
 }

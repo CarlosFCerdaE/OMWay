@@ -55,7 +55,7 @@ import com.main.omwayapp.R
 import com.main.omwayapp.ui.components.CustomButton
 import com.main.omwayapp.ui.components.CustomDivider
 import com.main.omwayapp.ui.components.InputField
-import com.main.omwayapp.ui.navigation.ReaderScreens
+
 
 import java.util.Calendar
 
@@ -149,7 +149,7 @@ fun RegisterDriver(navController: NavController){
         ModelTextField()
         CarYearTextField()
         Spacer(modifier = Modifier.padding(25.dp))
-        CustomButton(modifier = Modifier.size(width=222.dp,height=51.dp),text = "Regístrate", fontSize = 20.sp, onClick = {navController.navigate(route= ReaderScreens.TermsAndConditions.name)})
+        CustomButton(modifier = Modifier.size(width=222.dp,height=51.dp),text = "Regístrate", fontSize = 20.sp, onClick = {})
         Spacer(modifier = Modifier.padding(25.dp))
 
 

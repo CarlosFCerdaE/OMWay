@@ -1,5 +1,7 @@
 package com.main.omwayapp.ui.navigationApp
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -11,15 +13,29 @@ import com.main.omwayapp.ui.screens.driver.menuTabDriver.TabScreen.mycars.editar
 import com.main.omwayapp.ui.screens.driver.registerdriver.RegisterDriver
 import com.main.omwayapp.ui.screens.driver.termsAndConditions.TermsAndConditions
 import com.main.omwayapp.ui.screens.driver.viajeDriver.viajeDriver
+import com.main.omwayapp.ui.screens.login.RLoginScreen
 import com.main.omwayapp.ui.screens.rider.homeMenu.homemenuRider
+import com.main.omwayapp.ui.screens.rider.register.RegisterRider
 import com.main.omwayapp.ui.screens.rider.viajeRider.viajeRider
+import com.main.omwayapp.ui.screens.splash.RSplashScreen
 
+@RequiresApi(Build.VERSION_CODES.Q)
 @Composable
 fun NavigationApp(){
 
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = AppScreens.RegisterDriver.route ){
+    NavHost(navController = navController, startDestination = AppScreens.Login.route ){
+        composable(route= AppScreens.SplashScreen.route){
+            RSplashScreen(navController)
+        }
+        composable(route= AppScreens.Login.route){
+            RLoginScreen(navController)
+        }
+        composable(route= AppScreens.RegisterRider.route){
+            RegisterRider(navController)
+        }
+
         composable(route= AppScreens.RegisterDriver.route){
             RegisterDriver(navController)
         }
@@ -48,6 +64,8 @@ fun NavigationApp(){
         composable(route= AppScreens.ViajeRider.route){
             viajeRider(navController)
         }
+
+
 
     }
 }

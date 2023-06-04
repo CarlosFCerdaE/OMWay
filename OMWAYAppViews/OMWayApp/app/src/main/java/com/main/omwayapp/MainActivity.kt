@@ -32,7 +32,10 @@ import com.main.omwayapp.ui.components.InputField
 import com.main.omwayapp.ui.theme.OMWayAppTheme
 
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.main.omwayapp.ui.navigationApp.NavigationApp
+import com.main.omwayapp.ui.screens.login.RLoginScreen
 
 
 //Hola amigos, bienvenidos a la app del futuro $$$
@@ -41,7 +44,8 @@ import com.main.omwayapp.ui.navigationApp.NavigationApp
 //Unique id
 var PERMISSION_ID=25
 class MainActivity : ComponentActivity() {
-    @RequiresApi(Build.VERSION_CODES.O)
+
+    @RequiresApi(Build.VERSION_CODES.Q)
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -81,6 +85,7 @@ class MainActivity : ComponentActivity() {
                     //enCaminoDriver()
                     //inicioDriver()
                     //cobrarDriver()
+
 
                 }
 

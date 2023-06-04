@@ -18,8 +18,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+
 import com.main.omwayapp.R
-import com.main.omwayapp.ui.navigation.ReaderScreens
+
+import com.main.omwayapp.ui.navigationApp.AppScreens
 import com.main.omwayapp.ui.theme.Fondo
 import kotlinx.coroutines.delay
 
@@ -30,7 +32,7 @@ fun RSplashScreen(navController: NavController /*= NavController(context = Local
 
     LaunchedEffect(key1 = true) {
         delay(5000L)
-        navController.navigate(ReaderScreens.LoginScreen.name)
+        navController.navigate(AppScreens.SplashScreen.route)
     }
     Surface(color = Fondo) {
 

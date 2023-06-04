@@ -25,7 +25,7 @@ import androidx.navigation.NavController
 import com.main.omwayapp.R
 import com.main.omwayapp.ui.components.CustomButton
 import com.main.omwayapp.ui.components.CustomDivider
-import com.main.omwayapp.ui.navigation.ReaderScreens
+
 import com.main.omwayapp.ui.screens.driver.registerdriver.CenteredImage
 
 @Composable
@@ -83,7 +83,7 @@ fun TermsAndConditions(navController: NavController){
 
         Spacer(modifier = Modifier.padding(20.dp))
 
-        CustomButton(modifier = Modifier.size(width=222.dp,height=51.dp),text = "Acepto", fontSize = 20.sp, onClick = {navController.navigate(route= ReaderScreens.MenuTabDriver.name)})
+        CustomButton(modifier = Modifier.size(width=222.dp,height=51.dp),text = "Acepto", fontSize = 20.sp, onClick = {})
 
         Spacer(modifier = Modifier.padding(20.dp))
 

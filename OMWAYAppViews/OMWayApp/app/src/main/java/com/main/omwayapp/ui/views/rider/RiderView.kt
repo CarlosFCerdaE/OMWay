@@ -43,7 +43,7 @@ import com.main.omwayapp.R
 import com.main.omwayapp.ui.components.CustomButton
 import com.main.omwayapp.ui.model.Location
 
-import com.main.omwayapp.ui.navigation.ReaderNavigation
+
 import com.main.omwayapp.ui.views.map.OurGoogleMaps
 
 
@@ -55,9 +55,4 @@ fun RiderView(){
 }
 
 
-@Composable
-fun ReaderApp() {
 
-    ReaderNavigation()
-
-}
