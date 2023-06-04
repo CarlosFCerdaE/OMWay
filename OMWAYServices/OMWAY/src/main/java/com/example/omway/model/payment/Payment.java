@@ -22,7 +22,7 @@ public abstract class Payment {
     private Integer paymentId;
     private double total;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated()
     private PaymentMethod paymentMethod;
 
     @OneToOne(cascade = CascadeType.ALL)

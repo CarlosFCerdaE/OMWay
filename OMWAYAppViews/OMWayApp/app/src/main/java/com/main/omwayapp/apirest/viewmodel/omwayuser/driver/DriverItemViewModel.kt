@@ -9,6 +9,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+//Es para guardar y actualizar
+//Utiliza clases Dto
+
 class DriverItemViewModel:ViewModel() {
     private val repositoryDriver : RepositoryDriver = RepositoryDriver()
 
