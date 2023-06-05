@@ -40,6 +40,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.main.omwayapp.R
 import com.main.omwayapp.apirest.viewmodel.omwayuser.login.LoginViewModel
+import com.main.omwayapp.apirest.viewmodel.omwayuser.rider.RiderViewModel
 import com.main.omwayapp.ui.components.CenteredImage
 import com.main.omwayapp.ui.components.CustomAlertDialog
 import com.main.omwayapp.ui.components.CustomButtonG
@@ -66,15 +67,12 @@ fun RLoginScreen (navController: NavController){
     val state by loginModel._state.collectAsState()
     val isLoading = remember {mutableStateOf(false)}
     val isSuccess = remember{ mutableStateOf(false)}
-    var cif = remember {mutableStateOf(loginModel.cif)}
-    var password = remember {mutableStateOf(loginModel.password)}
-    var show by rememberSaveable{mutableStateOf(false)}
+    //var show by rememberSaveable{mutableStateOf(false)}
     var keyBoardController = LocalSoftwareKeyboardController.current
 
-
-
-
-
+    val riderModel: RiderViewModel = viewModel()
+    val riderState by riderModel._riderState.collectAsState()
+    val isRiderLoading = remember{ mutableStateOf(false)}
 
     LaunchedEffect(state){
         isLoading.value = state._loading
@@ -83,9 +81,19 @@ fun RLoginScreen (navController: NavController){
         Log.d("SUCCESS",isSuccess.toString())
     }
 
+    LaunchedEffect(riderState){
+        isRiderLoading.value = riderState._loading
+        Log.d("STATE",isLoading.toString())
+    }
+
     if(isSuccess.value){
+        riderModel.findRiderByCif(loginModel.cif.value)
         CustomAlertDialog(title = "Bienvenido" , msg = "Bienvenio a OMWay") {
-            //navController.navigate(route = )
+            if(!isRiderLoading.value){
+                Log.d("VALUES","${riderModel.riderState.value.riderItem?.name}")
+                navController.navigate(route = AppScreens.HomeMenuRider.route)
+            }
+
         }
     }
 
@@ -202,7 +210,8 @@ fun RLoginScreen (navController: NavController){
                     )
 
                     Text(
-                        modifier = Modifier.clickable(onClick = {navController.navigate(AppScreens.RegisterRider.route)})
+                        modifier = Modifier
+                            .clickable(onClick = { navController.navigate(AppScreens.RegisterRider.route) })
                             .padding(horizontal = 9.dp),
                         text = "Regístrate",
                         color = MentaImportante40,

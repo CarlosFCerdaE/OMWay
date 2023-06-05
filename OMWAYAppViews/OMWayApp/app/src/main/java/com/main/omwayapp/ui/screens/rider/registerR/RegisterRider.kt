@@ -1,5 +1,6 @@
 package com.main.omwayapp.ui.screens.rider.register
 
+import android.util.Log
 import android.widget.ImageButton
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -16,6 +17,9 @@ import androidx.compose.material.Surface
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -27,8 +31,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.main.omwayapp.R
+import com.main.omwayapp.apirest.dto.omwayuser.RiderDto
+import com.main.omwayapp.apirest.viewmodel.omwayuser.rider.RiderItemViewModel
+import com.main.omwayapp.apirest.viewmodel.omwayuser.rider.RiderViewModel
+import com.main.omwayapp.ui.components.CustomAlertDialog
 import com.main.omwayapp.ui.components.CustomButtonG
 import com.main.omwayapp.ui.components.InputField
 
@@ -43,8 +52,36 @@ import com.main.omwayapp.ui.theme.TextoGeneral
 @Composable
 fun RegisterRider(navController: NavController ) {
 
-    var text = remember {
+    var cif = remember {
         mutableStateOf("")
+    }
+    var name = remember {
+        mutableStateOf("")
+    }
+    var email = remember {
+        mutableStateOf("")
+    }
+    var phone = remember {
+        mutableStateOf("")
+    }
+    var password = remember {
+        mutableStateOf("")
+    }
+    var confirmpass = remember {
+        mutableStateOf("")
+    }
+
+
+    val riderModel: RiderItemViewModel = viewModel()
+    val riderState by riderModel._riderState.collectAsState()
+
+//    LaunchedEffect(riderState){
+//        isRiderLoading.value = riderState
+//        Log.d("STATE",isLoading.toString())
+//    }
+
+    if(riderState){
+        navController.navigate(route = AppScreens.Login.route)
     }
 
     Surface(modifier = Modifier.fillMaxSize(), color = Fondo) {
@@ -91,7 +128,7 @@ fun RegisterRider(navController: NavController ) {
                         .fillMaxWidth()
                         .padding(horizontal = 18.dp, vertical = 4.dp)
                         .align(Alignment.CenterHorizontally),
-                    valueState = text,
+                    valueState = cif,
                     labelId = "CIF",
                     icon = painterResource(id = R.drawable.id),
                     enabled = true,
@@ -108,7 +145,7 @@ fun RegisterRider(navController: NavController ) {
                         .fillMaxWidth()
                         .padding(horizontal = 18.dp, vertical = 4.dp)
                         .align(Alignment.CenterHorizontally),
-                    valueState = text,
+                    valueState = name,
                     labelId = "Nombre",
                     icon = painterResource(id = R.drawable.usuario),
                     enabled = true,
@@ -125,7 +162,7 @@ fun RegisterRider(navController: NavController ) {
                         .fillMaxWidth()
                         .padding(horizontal = 18.dp, vertical = 4.dp)
                         .align(Alignment.CenterHorizontally),
-                    valueState = text,
+                    valueState = email,
                     labelId = "Email",
                     icon = painterResource(id = R.drawable.email),
                     enabled = true,
@@ -142,7 +179,7 @@ fun RegisterRider(navController: NavController ) {
                         .fillMaxWidth()
                         .padding(horizontal = 18.dp, vertical = 4.dp)
                         .align(Alignment.CenterHorizontally),
-                    valueState = text,
+                    valueState = phone,
                     labelId = "Telefono",
                     icon = painterResource(id = R.drawable.telefono),
                     enabled = true,
@@ -160,7 +197,7 @@ fun RegisterRider(navController: NavController ) {
                         .fillMaxWidth()
                         .padding(horizontal = 18.dp, vertical = 4.dp)
                         .align(Alignment.CenterHorizontally),
-                    valueState = text,
+                    valueState = password,
                     labelId = "Contraseña",
                     icon = painterResource(id = R.drawable.password),
                     enabled = true,
@@ -177,7 +214,7 @@ fun RegisterRider(navController: NavController ) {
                         .fillMaxWidth()
                         .padding(horizontal = 18.dp, vertical = 4.dp)
                         .align(Alignment.CenterHorizontally),
-                    valueState = text,
+                    valueState = confirmpass,
                     labelId = "Confirmar Contraseña",
                     icon = painterResource(id = R.drawable.password),
                     enabled = true,
@@ -193,12 +230,18 @@ fun RegisterRider(navController: NavController ) {
             }
 
             CustomButtonG(
-                modifier = Modifier.width(222.dp).height(51.dp),
+                modifier = Modifier
+                    .width(222.dp)
+                    .height(51.dp),
                 text = "Regístrate",
                 fontSize = 20.sp
             ) {
-                //val loginResponse = loginModel.onSummit(context)
-
+                if(password.value == confirmpass.value){
+                    riderModel.saveRider(RiderDto(cif.value,password.value,name.value, phone.value,email.value,state = true))
+                }
+                else{
+                    Log.d("CUSTOMERROR","Mala contraseña")
+                }
             }
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -220,7 +263,8 @@ fun RegisterRider(navController: NavController ) {
                 )
 
                 Text(
-                    modifier = Modifier.clickable(onClick = { navController.navigate(AppScreens.Login.route) })
+                    modifier = Modifier
+                        .clickable(onClick = { navController.navigate(AppScreens.Login.route) })
                         .padding(horizontal = 9.dp),
                     text = "Entra Aquí",
                     color = MentaImportante40,

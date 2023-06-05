@@ -8,8 +8,7 @@ import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 
-@Parcelize
-@Serializable
+
 data class DriverItem(
     val cif: String,
     val password: String,
@@ -17,11 +16,10 @@ data class DriverItem(
     val phone: String,
     val email:String,
     val state: Boolean,
-    @Contextual
     val dlExpirationDate:LocalDate,
     val sumRating:Int,
     val numberRides:Int,
     val driverCars: List<CarItem>,
     val driverRides:List<RideItem>
 
-) : Parcelable
+)

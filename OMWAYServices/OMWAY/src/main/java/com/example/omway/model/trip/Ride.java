@@ -29,13 +29,15 @@ public class Ride {
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Temporal(TemporalType.TIME)
     private Time pickUpTime;
-
+    @Temporal(TemporalType.TIME)
     private Time dropOffTime;
     private String pickUpLocation;
     private String dropOffLocation;
 
     private Double distance;
+    @Temporal(TemporalType.DATE)
     private LocalDate date;
     private String notes;
 

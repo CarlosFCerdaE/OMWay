@@ -5,14 +5,14 @@ import com.main.omwayapp.apirest.model.trip.RideItem
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 
-@Parcelize
-@Serializable
 data class RiderItem(
-    val cif: String,
-    val password: String,
-    val name: String,
-    val phone: String,
-    val email:String,
-    val state: Boolean,
-    val riderRides: List<RideItem>
-) : Parcelable
+    var cif: String,
+    var password: String,
+    var name: String,
+    var phone: String,
+    var email:String,
+    var state: Boolean,
+    var riderRides: List<RideItem>
+){
+    constructor():this(cif = "",password = "",name = "",phone = "",email = "",state = true, riderRides = emptyList())
+}
