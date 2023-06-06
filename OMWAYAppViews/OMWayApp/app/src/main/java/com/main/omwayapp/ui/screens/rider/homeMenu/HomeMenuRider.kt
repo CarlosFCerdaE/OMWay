@@ -3,6 +3,7 @@ package com.main.omwayapp.ui.screens.rider.homeMenu
 import android.annotation.SuppressLint
 import android.app.TimePickerDialog
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -54,9 +55,12 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.google.android.gms.maps.model.LatLng
 import com.main.omwayapp.R
+import com.main.omwayapp.apirest.model.omwayuser.RiderItem
+import com.main.omwayapp.apirest.viewmodel.omwayuser.rider.RiderViewModel
 import com.main.omwayapp.ui.components.CustomButton
 import com.main.omwayapp.ui.model.Location
 import com.main.omwayapp.ui.navigationApp.AppScreens
@@ -66,26 +70,34 @@ import kotlinx.coroutines.launch
 import java.util.Calendar
 
 @RequiresApi(Build.VERSION_CODES.Q)
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "UnusedMaterialScaffoldPaddingParameter")
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "UnusedMaterialScaffoldPaddingParameter",
+    "StateFlowValueCalledInComposition"
+)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun homemenuRider(navController: NavHostController) {
 
     val scaffoldState= rememberScaffoldState()
     val scope= rememberCoroutineScope()
+    val riderViewModel:RiderViewModel = viewModel()
 
     androidx.compose.material.Scaffold(backgroundColor = colorResource(id = R.color.fondo),scaffoldState=scaffoldState,topBar = {
         AppBarMapView (onNavigationIconClick = { scope.launch { scaffoldState.drawerState.open() } })
 
     },drawerGesturesEnabled = scaffoldState.drawerState.isOpen,drawerContent = {
+        Log.d("VALUESINHOME","${riderViewModel.riderState.value.riderItem.name}")
         DrawerHeader()
         DrawerBody(items = listOf(
             MenuItem(id = "misviajes", title = "Mis Viajes", contentDescrip = "Go to", R.drawable.misviajes),
             MenuItem(id = "ajustes", title = "Ajustes", contentDescrip = "Go to",R.drawable.ajustes),
             MenuItem(id = "driver", title = "Driver", contentDescrip = "Go to",R.drawable.carro),
         ), onItemClick = {
+            when(it.id){
+                "misviajes"->navController.navigate(route= AppScreens.TAC.route)
+                "ajustes"->navController.navigate(route= AppScreens.Ajustes.route)
+                //"driver"->navController.navigate(route= AppScreens.ViajeDriver.route)
+            }
 
-            //Aqui iria lo de Navig
 
         }, )
     }) {

@@ -5,8 +5,6 @@ import com.main.omwayapp.apirest.model.omwayuser.DriverItem
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 
-@Parcelize
-@Serializable
 data class CarItem(
     val licensePlate:String,
     val color:String,
@@ -14,4 +12,4 @@ data class CarItem(
     val state:Boolean,
     val driver: DriverItem,
     val model: ModelItem
-) : Parcelable
+)

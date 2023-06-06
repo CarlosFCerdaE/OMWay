@@ -12,13 +12,13 @@ import kotlinx.coroutines.launch
 class RiderViewModel:ViewModel() {
     val repositoryRider : RepositoryRider = RepositoryRider()
 
-    private val _riderState = MutableStateFlow<RiderUIState>(RiderUIState())
+    val _riderState = MutableStateFlow(RiderUIState())
     val riderState: StateFlow<RiderUIState> = _riderState
 
-    private val _riderListState = MutableStateFlow<RiderListUIState>(RiderListUIState())
+    val _riderListState = MutableStateFlow(RiderListUIState())
     val riderListState: StateFlow<RiderListUIState> = _riderListState
 
-    fun findDriverByCif(item:String){
+    fun findRiderByCif(item:String){
         viewModelScope.launch {
             _riderState.update {it.copy(_loading = true)}
             val response = repositoryRider.findByCif(item)
@@ -43,6 +43,6 @@ class RiderViewModel:ViewModel() {
 
     data class RiderUIState(
         val _loading:Boolean = false,
-        val riderItem: RiderItem? = null
+        val riderItem: RiderItem = RiderItem()
     )
 }

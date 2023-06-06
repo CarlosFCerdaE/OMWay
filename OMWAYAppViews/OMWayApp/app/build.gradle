@@ -135,4 +135,8 @@ dependencies {
     //Serialization
     implementation"org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0"
 
+    // Room Database
+    implementation "androidx.room:room-runtime:2.4.0"
+    kapt "androidx.room:room-compiler:2.4.0"
+
 }

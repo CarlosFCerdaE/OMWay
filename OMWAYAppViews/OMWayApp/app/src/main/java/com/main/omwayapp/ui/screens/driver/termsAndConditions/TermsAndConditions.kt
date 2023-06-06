@@ -23,10 +23,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.main.omwayapp.R
+import com.main.omwayapp.ui.components.CenteredImage
 import com.main.omwayapp.ui.components.CustomButton
 import com.main.omwayapp.ui.components.CustomDivider
 
-import com.main.omwayapp.ui.screens.driver.registerdriver.CenteredImage
 
 @Composable
 //@Preview(showSystemUi=true)
