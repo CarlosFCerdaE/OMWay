@@ -38,6 +38,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -62,10 +64,12 @@ import com.main.omwayapp.R
 import com.main.omwayapp.apirest.model.omwayuser.RiderItem
 import com.main.omwayapp.apirest.viewmodel.omwayuser.rider.RiderViewModel
 import com.main.omwayapp.ui.components.CustomButton
+import com.main.omwayapp.ui.configDS.DataStoreManager
 import com.main.omwayapp.ui.model.Location
 import com.main.omwayapp.ui.navigationApp.AppScreens
 
 import com.main.omwayapp.ui.views.map.OurGoogleMaps
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.util.Calendar
 
@@ -76,11 +80,18 @@ import java.util.Calendar
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun homemenuRider(navController: NavHostController) {
-
+    val context = LocalContext.current
+    val dataStore = DataStoreManager(context)
     val scaffoldState= rememberScaffoldState()
     val scope= rememberCoroutineScope()
     val riderViewModel:RiderViewModel = viewModel()
 
+    LaunchedEffect(Unit) {
+        val value = dataStore.getValue.first()
+        if (value != null) {
+            Log.d("CIF ", value)
+        }
+    }
     androidx.compose.material.Scaffold(backgroundColor = colorResource(id = R.color.fondo),scaffoldState=scaffoldState,topBar = {
         AppBarMapView (onNavigationIconClick = { scope.launch { scaffoldState.drawerState.open() } })
 

@@ -21,14 +21,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.semantics.SemanticsActions.OnClick
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -37,7 +35,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import com.main.omwayapp.R
 import com.main.omwayapp.apirest.viewmodel.omwayuser.login.LoginViewModel
 import com.main.omwayapp.apirest.viewmodel.omwayuser.rider.RiderViewModel
@@ -46,13 +43,14 @@ import com.main.omwayapp.ui.components.CustomAlertDialog
 import com.main.omwayapp.ui.components.CustomButtonG
 import com.main.omwayapp.ui.components.CustomDivider
 import com.main.omwayapp.ui.components.InputField
-
+import com.main.omwayapp.ui.configDS.DataStoreManager
 import com.main.omwayapp.ui.navigationApp.AppScreens
 import com.main.omwayapp.ui.theme.Fondo
 import com.main.omwayapp.ui.theme.IBMplexSans
 import com.main.omwayapp.ui.theme.MentaImportante40
 import com.main.omwayapp.ui.theme.TextOpacidad
 import com.main.omwayapp.ui.theme.TextoGeneral
+
 
 
 @Composable
@@ -63,6 +61,10 @@ fun Circular(){
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun RLoginScreen (navController: NavController){
+    //Para guardar el valor del cif con dataSourceManager, se la pasa el contexto de la aplicacion
+    val context = LocalContext.current
+    val dataStoreManager = DataStoreManager(context)
+
     val loginModel: LoginViewModel = viewModel()
     val state by loginModel._state.collectAsState()
     val isLoading = remember {mutableStateOf(false)}
@@ -79,6 +81,10 @@ fun RLoginScreen (navController: NavController){
         Log.d("LOADING",isLoading.toString())
         isSuccess.value = state.loginResponse.success
         Log.d("SUCCESS",isSuccess.toString())
+
+        //guardar el cif con el que esta haciendo login
+        val cif = loginModel.cif.value
+        dataStoreManager.saveValue(cif)
     }
 
     LaunchedEffect(riderState){
