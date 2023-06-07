@@ -2,6 +2,8 @@ package com.example.omway.service.trip;
 
 import com.example.omway.dto.trip.RideDto;
 import com.example.omway.model.omwUser.Driver;
+import com.example.omway.model.payment.Cash;
+import com.example.omway.model.payment.Payment;
 import com.example.omway.model.trip.Ride;
 import com.example.omway.repository.omwUser.IRepositoryDriver;
 import com.example.omway.repository.omwUser.IRepositoryRider;
@@ -10,6 +12,7 @@ import com.example.omway.repository.vehicle.IRepositoryCar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -67,6 +70,29 @@ public class ServiceRide implements IServiceRide {
 
         return repositoryRide.save(r);
     }
+/*
+    @Override
+    public List<Ride> findInProgressRidesByCif(String cif) {
+        return repositoryRide.findInProgressRidesByCif(cif);
+    }
 
+    @Override
+    public List<Ride> findDiscontinuedRideByCif(String cif) {
+        List<Ride> ridesCash = repositoryRide.findDiscontinuedRideByCif(cif);
+        for (Ride ride : ridesCash) {
+            Payment payment = ride.getPayment();
+            if (payment instanceof Cash) {
+                Cash cashPayment = (Cash) payment;
+                ride.setPayment(cashPayment);
+            }
+        }
+        return ridesCash;
+    }
+
+    @Override
+    public List<Ride> getRequestedRides() {
+        return repositoryRide.getRequestedRides();
+    }
+*/
 
 }

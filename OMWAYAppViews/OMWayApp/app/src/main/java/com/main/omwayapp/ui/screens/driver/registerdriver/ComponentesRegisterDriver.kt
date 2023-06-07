@@ -76,8 +76,7 @@ fun PlacaTextField(){
 @Composable
 fun ColorTextField(){
     var text = remember {
-        mutableStateOf("")
-    }
+        mutableStateOf("") }
     var keyBoardController = LocalSoftwareKeyboardController.current
 
     Column(

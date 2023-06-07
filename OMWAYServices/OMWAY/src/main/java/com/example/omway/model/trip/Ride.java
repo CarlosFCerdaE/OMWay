@@ -59,6 +59,7 @@ public class Ride {
     @JsonBackReference
     private Driver driver;
 
+
     @OneToOne(mappedBy = "ride")
     @JsonBackReference
     private Payment payment;
