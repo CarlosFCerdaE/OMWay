@@ -9,4 +9,7 @@ data class ModelItem(
     val name:String,
     val make: MakeItem,
     val modelCars:List<CarItem>
-)
+
+){
+    constructor():this(id = 0,name = "",make = MakeItem(),modelCars=emptyList())
+}
