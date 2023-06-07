@@ -15,6 +15,7 @@ import com.main.omwayapp.ui.screens.driver.termsAndConditions.TermsAndConditions
 import com.main.omwayapp.ui.screens.driver.viajeDriver.viajeDriver
 import com.main.omwayapp.ui.screens.login.RLoginScreen
 import com.main.omwayapp.ui.screens.rider.homeMenu.homemenuRider
+import com.main.omwayapp.ui.screens.rider.misViajesRider.MisViajesRider
 import com.main.omwayapp.ui.screens.rider.register.RegisterRider
 import com.main.omwayapp.ui.screens.rider.viajeRider.viajeRider
 import com.main.omwayapp.ui.screens.splash.RSplashScreen
@@ -25,7 +26,7 @@ fun NavigationApp(){
 
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = AppScreens.Login.route ){
+    NavHost(navController = navController, startDestination = AppScreens.HomeMenuRider.route ){
         composable(route= AppScreens.SplashScreen.route){
             RSplashScreen(navController)
         }
@@ -61,8 +62,8 @@ fun NavigationApp(){
         composable(route= AppScreens.ViajeDriver.route){
             viajeDriver(navController)
         }
-        composable(route= AppScreens.ViajeRider.route){
-            viajeRider(navController)
+        composable(route= AppScreens.MisViajesRider.route){
+            MisViajesRider(navController)
         }
 
 

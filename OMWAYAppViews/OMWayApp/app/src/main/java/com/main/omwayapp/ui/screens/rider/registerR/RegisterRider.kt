@@ -23,7 +23,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -49,6 +51,7 @@ import com.main.omwayapp.ui.theme.TextOpacidad
 import com.main.omwayapp.ui.theme.TextoGeneral
 
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun RegisterRider(navController: NavController ) {
 
@@ -74,6 +77,8 @@ fun RegisterRider(navController: NavController ) {
 
     val riderModel: RiderItemViewModel = viewModel()
     val riderState by riderModel._riderState.collectAsState()
+
+    var keyBoardController = LocalSoftwareKeyboardController.current
 
 //    LaunchedEffect(riderState){
 //        isRiderLoading.value = riderState
@@ -135,7 +140,7 @@ fun RegisterRider(navController: NavController ) {
                     isSingleLine = true,
                     keyboardType = KeyboardType.Text,
                     onAction = KeyboardActions {
-
+                        keyBoardController?.hide()
                     }
                 )
                 Spacer(modifier = Modifier.height(7.dp))
@@ -152,7 +157,7 @@ fun RegisterRider(navController: NavController ) {
                     isSingleLine = true,
                     keyboardType = KeyboardType.Text,
                     onAction = KeyboardActions {
-
+                        keyBoardController?.hide()
                     }
                 )
                 Spacer(modifier = Modifier.height(7.dp))
@@ -186,7 +191,7 @@ fun RegisterRider(navController: NavController ) {
                     isSingleLine = true,
                     keyboardType = KeyboardType.Text,
                     onAction = KeyboardActions {
-
+                        keyBoardController?.hide()
                     }
                 )
 
@@ -204,7 +209,7 @@ fun RegisterRider(navController: NavController ) {
                     isSingleLine = true,
                     keyboardType = KeyboardType.Text,
                     onAction = KeyboardActions {
-
+                        keyBoardController?.hide()
                     }
                 )
                 Spacer(modifier = Modifier.height(7.dp))
@@ -221,7 +226,7 @@ fun RegisterRider(navController: NavController ) {
                     isSingleLine = true,
                     keyboardType = KeyboardType.Text,
                     onAction = KeyboardActions {
-
+                        keyBoardController?.hide()
                     }
                 )
 

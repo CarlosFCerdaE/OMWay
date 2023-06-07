@@ -13,7 +13,10 @@ public class ControllerRide {
     private IServiceRide serviceRide;
 
     @PostMapping("/save")
-    public Ride saveRide(@RequestBody RideDto rideDto){return serviceRide.save(rideDto);}
+    public Ride saveRide(@RequestBody RideDto rideDto){
+        System.out.println(rideDto.getDate());
+        return serviceRide.save(rideDto);
+    }
 
     @PutMapping("/update")
     public Ride updateRide(@RequestBody RideDto rideDto) throws Exception {
