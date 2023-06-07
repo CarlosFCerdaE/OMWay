@@ -70,7 +70,7 @@ public class ServiceRide implements IServiceRide {
 
         return repositoryRide.save(r);
     }
-
+/*
     @Override
     public List<Ride> findInProgressRidesByCif(String cif) {
         return repositoryRide.findInProgressRidesByCif(cif);
@@ -93,6 +93,6 @@ public class ServiceRide implements IServiceRide {
     public List<Ride> getRequestedRides() {
         return repositoryRide.getRequestedRides();
     }
-
+*/
 
 }
