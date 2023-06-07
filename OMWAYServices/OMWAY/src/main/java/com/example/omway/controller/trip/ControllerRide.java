@@ -28,7 +28,7 @@ public class ControllerRide {
         }
         return serviceRide.save(rideDto);
     }
-/*
+
     @GetMapping("/InProgressRides")
     public List<Ride> findInProgressRidesByCif(@Param("cif")String cif){
         return serviceRide.findInProgressRidesByCif(cif);
@@ -43,5 +43,5 @@ public class ControllerRide {
     public List<Ride> getRequestedRides(){
         return serviceRide.getRequestedRides();
     }
-    */
+
 }

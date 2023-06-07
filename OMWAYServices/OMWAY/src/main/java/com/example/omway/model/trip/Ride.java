@@ -1,7 +1,6 @@
 package com.example.omway.model.trip;
 
 import com.example.omway.model.omwUser.Driver;
-import com.example.omway.model.omwUser.OMWayUser;
 import com.example.omway.model.omwUser.Rider;
 import com.example.omway.model.payment.Payment;
 import com.example.omway.model.vehicle.Car;
@@ -61,7 +60,8 @@ public class Ride {
 
 
     @OneToOne(mappedBy = "ride")
-    @JsonBackReference
+   // @JsonBackReference
+    @JsonManagedReference
     private Payment payment;
 
     @OneToOne(cascade = CascadeType.ALL)
