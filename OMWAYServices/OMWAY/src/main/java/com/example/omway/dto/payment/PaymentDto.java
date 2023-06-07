@@ -4,7 +4,7 @@ import com.example.omway.model.payment.PaymentMethod;
 import lombok.Data;
 
 @Data
-public class CashDto {
+public class PaymentDto {
     private Integer paymentId;
     private double total;
     private PaymentMethod paymentMethod;

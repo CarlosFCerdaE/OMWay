@@ -15,21 +15,18 @@ import org.hibernate.engine.internal.Cascade;
 @Entity
 @Data
 @Table(name="Payment",schema = "Payment")
-@Inheritance(strategy = InheritanceType.JOINED)
-//@PrimaryKeyJoinColumn(name = "paymentId")
-public abstract class Payment {
+public class Payment {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Integer paymentId;
     private double total;
-
-    @Enumerated()
+    @Enumerated(EnumType.ORDINAL)
     private PaymentMethod paymentMethod;
-
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "rideId", referencedColumnName = "id")
-    @JsonManagedReference
+    //@JsonManagedReference
+   @JsonBackReference
     private Ride ride;
 
 }
