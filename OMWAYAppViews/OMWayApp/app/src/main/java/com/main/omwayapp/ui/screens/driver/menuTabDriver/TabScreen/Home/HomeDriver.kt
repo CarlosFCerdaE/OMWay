@@ -46,9 +46,12 @@ import com.main.omwayapp.ui.components.CustomDivider
 
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 //@Preview(showSystemUi = true)
 fun HomeDriver(navController: NavController? = null) {
+
+    var text by remember { mutableStateOf("DriverName!") }
 
     Column(modifier =
     Modifier
@@ -64,7 +67,29 @@ fun HomeDriver(navController: NavController? = null) {
         Column(modifier = Modifier.align(Alignment.Start))
         {
             Spacer(modifier = Modifier.padding(4.dp))
-            BienvenidoText()
+            //Welcome Text
+
+            Row(){
+
+                Column(){
+                    Text(
+                        text = "Bienvenido," + text,
+                        fontSize = 20.sp,
+                        fontFamily = FontFamily(Font(R.font.ibmplexsans_semibold)),
+                        color = colorResource(id = R.color.texto_general),
+                        modifier = Modifier
+                            .align(Alignment.Start)
+                            .padding(vertical = 10.dp, horizontal = 16.dp)
+                    )
+                }
+                IconButton(onClick = {/*TODO*/}){
+                    Icon(painter = painterResource(id = R.drawable.usuario_perfil),
+                        contentDescription = "Usuario perfil",
+                        tint = Color.White,
+                        modifier = Modifier
+                            .size(190.dp))
+                }
+            }
             Spacer(modifier = Modifier.padding(8.dp))
             Text(
                 text = "Tú Resumen:",
@@ -84,12 +109,92 @@ fun HomeDriver(navController: NavController? = null) {
                 horizontalArrangement = Arrangement.Center)
             {
 
-                TripSummary()
-                GananciasSummary()
+                Column(
+                    modifier = Modifier
+                        .padding(10.dp)//,
+
+                ) {
+
+                    TextField(value = text, onValueChange = {text=it},
+                        readOnly = true,
+                        modifier = Modifier
+                            .size(width = 155.dp, height = 90.dp)
+                            .clip(RoundedCornerShape(12.dp)),
+                        colors = TextFieldDefaults.textFieldColors
+                            (containerColor = colorResource(id = R.color.menta_importante)
+                        ),
+                        textStyle= TextStyle(fontSize=24.sp,color=colorResource(
+                            id = R.color.fondo),fontFamily = FontFamily(Font(R.font.imbplexsans_medium)),
+                            textAlign = TextAlign.Center
+                        ),
+                        label = {
+                            androidx.compose.material3.Text(
+                                text = "Viajes",
+                                fontSize = 11.sp,
+                                fontFamily = FontFamily(Font(R.font.ibmplexsans_bold)),
+                                color = colorResource(id = R.color.fondo),
+                                textAlign = TextAlign.Start
+                            )
+                        },
+                    )
+                }
+                //Ganancias Summary
+                TextField(value = text, onValueChange = {text=it},
+                    readOnly = true,
+                    modifier = Modifier
+                        .size(width = 155.dp, height = 95.dp)
+                        .clip(RoundedCornerShape(12.dp)),
+                    colors = TextFieldDefaults.textFieldColors
+                        (containerColor = colorResource(id = R.color.menta_importante)
+                    ),
+                    textStyle= TextStyle(fontSize=24.sp,color=colorResource(
+                        id = R.color.fondo),fontFamily = FontFamily(Font(R.font.imbplexsans_medium)),
+                        textAlign = TextAlign.Center
+                    ),
+                    label = {
+                        androidx.compose.material3.Text(
+                            text = "Total C$",
+                            fontSize = 11.sp,
+                            fontFamily = FontFamily(Font(R.font.ibmplexsans_bold)),
+                            color = colorResource(id = R.color.fondo),
+                            textAlign = TextAlign.Start
+                        )
+                    },
+                )
 
             }
 
-            RatingDriver()
+            TextField(value = text, onValueChange = {text=it},
+                readOnly = true,
+                modifier = Modifier
+                    .size(width = 155.dp, height = 95.dp)
+                    .clip(RoundedCornerShape(12.dp)),
+                colors = TextFieldDefaults.textFieldColors
+                    (containerColor = colorResource(id = R.color.menta_importante)
+                ),
+                textStyle= TextStyle(fontSize=24.sp,color=colorResource(
+                    id = R.color.fondo),fontFamily = FontFamily(Font(R.font.imbplexsans_medium)),
+                    textAlign = TextAlign.Center
+                ),
+                label = {
+                    androidx.compose.material3.Text(
+                        text = "Rating",
+                        fontSize = 11.sp,
+                        fontFamily = FontFamily(Font(R.font.ibmplexsans_bold)),
+                        color = colorResource(id = R.color.fondo),
+                        textAlign = TextAlign.Center
+                    )
+                },
+                trailingIcon = {
+                    IconButton(onClick = {/*TODO*/}){
+                        Icon(painter = painterResource(id = R.drawable.favorito),
+                            contentDescription = "Rating",
+                            tint = Color.Yellow,
+                            modifier = Modifier
+                                .size(30.dp))
+                    }
+                }
+            )
 
 
         }
@@ -133,163 +238,6 @@ fun HomeDriver(navController: NavController? = null) {
 
     }
 
-
-}
-
-
-@Composable
-fun BienvenidoText(){
-
-    var text by remember { mutableStateOf("DriverName!") }
-    Row(){
-
-        Column(){
-            Text(
-                text = "Bienvenido," + text,
-                fontSize = 20.sp,
-                fontFamily = FontFamily(Font(R.font.ibmplexsans_semibold)),
-                color = colorResource(id = R.color.texto_general),
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(vertical = 10.dp, horizontal = 16.dp)
-            )
-        }
-        IconButton(onClick = {/*TODO*/}){
-            Icon(painter = painterResource(id = R.drawable.usuario_perfil),
-                contentDescription = "Usuario perfil",
-                tint = Color.White,
-                modifier = Modifier
-                    .size(190.dp))
-        }
-    }
-
-
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun TripSummary(){
-
-    var text by remember { mutableStateOf("30") }
-
-    Column(
-        modifier = Modifier
-            .padding(10.dp)//,
-
-    ) {
-
-      TextField(value = text, onValueChange = {text=it},
-          readOnly = true,
-          modifier = Modifier
-              .size(width = 155.dp, height = 90.dp)
-              .clip(RoundedCornerShape(12.dp)),
-          colors = TextFieldDefaults.textFieldColors
-              (containerColor = colorResource(id = R.color.menta_importante)
-          ),
-          textStyle= TextStyle(fontSize=24.sp,color=colorResource(
-              id = R.color.fondo),fontFamily = FontFamily(Font(R.font.imbplexsans_medium)),
-              textAlign = TextAlign.Center
-          ),
-          label = {
-              androidx.compose.material3.Text(
-                  text = "Viajes",
-                  fontSize = 11.sp,
-                  fontFamily = FontFamily(Font(R.font.ibmplexsans_bold)),
-                  color = colorResource(id = R.color.fondo),
-                  textAlign = TextAlign.Start
-              )
-          },
-      )
-    }
-
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun GananciasSummary(){
-
-
-    var text by remember { mutableStateOf("C$1500") }
-
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(10.dp)//,
-     //   horizontalAlignment = Alignment.Start
-    ) {
-
-        TextField(value = text, onValueChange = {text=it},
-            readOnly = true,
-            modifier = Modifier
-                .size(width = 155.dp, height = 95.dp)
-                .clip(RoundedCornerShape(12.dp)),
-            colors = TextFieldDefaults.textFieldColors
-                (containerColor = colorResource(id = R.color.menta_importante)
-            ),
-            textStyle= TextStyle(fontSize=24.sp,color=colorResource(
-                id = R.color.fondo),fontFamily = FontFamily(Font(R.font.imbplexsans_medium)),
-                textAlign = TextAlign.Center
-            ),
-            label = {
-                androidx.compose.material3.Text(
-                    text = "Total C$",
-                    fontSize = 11.sp,
-                    fontFamily = FontFamily(Font(R.font.ibmplexsans_bold)),
-                    color = colorResource(id = R.color.fondo),
-                    textAlign = TextAlign.Start
-                )
-            },
-        )
-    }
-
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun RatingDriver(){
-
-
-    var text by remember { mutableStateOf("5.0") }
-
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(10.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-
-        TextField(value = text, onValueChange = {text=it},
-            readOnly = true,
-            modifier = Modifier
-                .size(width = 155.dp, height = 95.dp)
-                .clip(RoundedCornerShape(12.dp)),
-            colors = TextFieldDefaults.textFieldColors
-                (containerColor = colorResource(id = R.color.menta_importante)
-            ),
-            textStyle= TextStyle(fontSize=24.sp,color=colorResource(
-                id = R.color.fondo),fontFamily = FontFamily(Font(R.font.imbplexsans_medium)),
-                textAlign = TextAlign.Center
-            ),
-            label = {
-                androidx.compose.material3.Text(
-                    text = "Rating",
-                    fontSize = 11.sp,
-                    fontFamily = FontFamily(Font(R.font.ibmplexsans_bold)),
-                    color = colorResource(id = R.color.fondo),
-                    textAlign = TextAlign.Center
-                )
-            },
-            trailingIcon = {
-                IconButton(onClick = {/*TODO*/}){
-                    Icon(painter = painterResource(id = R.drawable.favorito),
-                        contentDescription = "Rating",
-                        tint = Color.Yellow,
-                        modifier = Modifier
-                            .size(30.dp))
-                }
-            }
-        )
-    }
 
 }
 
@@ -363,8 +311,6 @@ fun AjustesBox(navController: NavController){
 
 @Composable
 fun ModoPasajeroBox(){
-
-    var text by remember { mutableStateOf("5.0") }
 
     Column(
         modifier = Modifier
