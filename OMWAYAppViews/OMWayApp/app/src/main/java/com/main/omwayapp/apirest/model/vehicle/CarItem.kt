@@ -12,4 +12,6 @@ data class CarItem(
     val state:Boolean,
     val driver: DriverItem,
     val model: ModelItem
-)
+){
+    constructor():this(licensePlate = "",color = "",year = "",state = true, driver = DriverItem(),model = ModelItem())
+}

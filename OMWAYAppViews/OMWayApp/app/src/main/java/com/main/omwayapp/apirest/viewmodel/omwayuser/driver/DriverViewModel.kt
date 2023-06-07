@@ -13,12 +13,12 @@ import kotlinx.coroutines.launch
 //Utiliza objetos completos
 class DriverViewModel:ViewModel() {
 
-    private val repositoryDriver : RepositoryDriver = RepositoryDriver()
+    val repositoryDriver : RepositoryDriver = RepositoryDriver()
 
-    private val _driverState = MutableStateFlow<DriverUIState>(DriverUIState())
+    val _driverState = MutableStateFlow<DriverUIState>(DriverUIState())
     val driverState:StateFlow<DriverUIState> = _driverState
 
-    private val _driverListState = MutableStateFlow<DriverListUIState>(DriverListUIState())
+    val _driverListState = MutableStateFlow<DriverListUIState>(DriverListUIState())
     val driverListState:StateFlow<DriverListUIState> = _driverListState
 
     fun findDriverByCif(item:String){
@@ -46,6 +46,6 @@ class DriverViewModel:ViewModel() {
 
     data class DriverUIState(
         val _loading:Boolean = false,
-        val driverItem: DriverItem? = null
+        val driverItem: DriverItem = DriverItem()
     )
 }

@@ -16,10 +16,12 @@ data class DriverItem(
     val phone: String,
     val email:String,
     val state: Boolean,
-    val dlExpirationDate:LocalDate,
+    val dlExpirationDate:LocalDate?,
     val sumRating:Int,
     val numberRides:Int,
     val driverCars: List<CarItem>,
     val driverRides:List<RideItem>
 
-)
+){
+    constructor():this(cif = "",password = "",name = "",phone = "",email = "",state = true,dlExpirationDate = null,sumRating = 0,numberRides = 0, driverCars = emptyList(),driverRides = emptyList())
+}
