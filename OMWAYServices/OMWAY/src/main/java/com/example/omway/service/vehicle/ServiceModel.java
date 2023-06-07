@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -22,6 +21,11 @@ public class ServiceModel implements IServiceModel {
     @Override
     public List<Model> getAll() {
         return repositoryModel.findAll();
+    }
+
+    @Override
+    public List<Model> getModelsByMake(Integer makeId) {
+        return repositoryModel.getModelsByMake(makeId);
     }
 
     @Override

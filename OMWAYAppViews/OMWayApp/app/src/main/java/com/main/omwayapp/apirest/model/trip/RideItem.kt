@@ -1,13 +1,10 @@
 package com.main.omwayapp.apirest.model.trip
 
 import java.time.LocalDate
-import android.os.Parcelable
 import com.main.omwayapp.apirest.model.omwayuser.DriverItem
 import com.main.omwayapp.apirest.model.omwayuser.RiderItem
+import com.main.omwayapp.apirest.model.payment.PaymentItem
 import com.main.omwayapp.apirest.model.vehicle.CarItem
-import kotlinx.parcelize.Parcelize
-import kotlinx.serialization.Contextual
-import kotlinx.serialization.Serializable
 import java.sql.Time
 
 
@@ -26,5 +23,6 @@ data class RideItem(
     val comment:String,
     val rider: RiderItem,
     val driver: DriverItem,
+    val payment: PaymentItem,
     val car: CarItem
 )

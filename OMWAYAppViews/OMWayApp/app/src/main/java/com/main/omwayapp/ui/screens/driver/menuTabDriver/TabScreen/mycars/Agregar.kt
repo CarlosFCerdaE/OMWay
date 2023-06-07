@@ -1,5 +1,6 @@
 package com.main.omwayapp.ui.screens.driver.menuTabDriver.TabScreen.mycars
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -21,6 +22,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,15 +43,24 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.main.omwayapp.R
+import com.main.omwayapp.apirest.dto.omwayuser.DriverDto
+import com.main.omwayapp.apirest.dto.omwayuser.RiderDto
+import com.main.omwayapp.apirest.dto.vehicle.CarDto
+import com.main.omwayapp.apirest.viewmodel.omwayuser.driver.DriverItemViewModel
+import com.main.omwayapp.apirest.viewmodel.omwayuser.driver.DriverViewModel
+import com.main.omwayapp.apirest.viewmodel.vehicle.car.CarItemViewModel
 import com.main.omwayapp.ui.components.CustomButton
 import com.main.omwayapp.ui.components.InputField
+import com.main.omwayapp.ui.configDS.DataStoreManager
 import com.main.omwayapp.ui.screens.driver.registerdriver.CarYearTextField
 import com.main.omwayapp.ui.screens.driver.registerdriver.ColorTextField
 import com.main.omwayapp.ui.screens.driver.registerdriver.MakeExposedDropdownMenuBox
 import com.main.omwayapp.ui.screens.driver.registerdriver.ModelTextField
 import com.main.omwayapp.ui.screens.driver.registerdriver.PlacaTextField
+import kotlinx.coroutines.flow.first
 
 //@Preview(showSystemUi = true)
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
@@ -69,6 +81,33 @@ fun agregarCarros(navController: NavController){
     var model = remember { mutableStateOf("") } // modelo del carro
 
     var yearCar = remember { mutableStateOf("") }  // año del carro
+
+    val carItemModel: CarItemViewModel = viewModel()
+    val carItemState by carItemModel._carState.collectAsState()
+
+    val driverModel: DriverViewModel = viewModel()
+    val driverState by driverModel._driverState.collectAsState()
+    val isDriverLoading = remember { mutableStateOf(false) }
+
+    //Values
+    val cif = remember { mutableStateOf("")}
+    //Storage
+
+    val dataStore = DataStoreManager(context)
+
+    //Get Cif From DataStorage
+    LaunchedEffect(Unit) {
+        val value = dataStore.getValue.first()
+        if (value != null) {
+            cif.value = value
+            driverModel.findDriverByCif(cif.value)
+        }
+    }
+    //Get Driver With Cif
+    LaunchedEffect(driverState) {
+        isDriverLoading.value = driverState._loading
+        Log.d("STATE", isDriverLoading.value.toString())
+    }
 
     Column(
         modifier = Modifier
@@ -246,6 +285,8 @@ fun agregarCarros(navController: NavController){
             .size(width=222.dp,height=51.dp),
             text = "Agregar",
             fontSize = 20.sp) {
+            //carItemModel.saveCar(CarDto(licensePlate.value,color.value,yearCar.value, state = true,cif.value,model.value))
+
         }
         Spacer(modifier = Modifier.padding(25.dp))
 

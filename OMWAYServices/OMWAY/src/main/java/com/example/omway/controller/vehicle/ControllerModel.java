@@ -19,7 +19,8 @@ public class ControllerModel {
         return serviceModel.getAll();
     }
 
-
+    @GetMapping("modelsByMake/{makeId}")
+    public List<Model> getModelsByMake(@PathVariable Integer makeId){return serviceModel.getModelsByMake(makeId);}
     @PostMapping("/save")
     public Model save(@RequestBody ModelDto modelDto){
         return serviceModel.save(modelDto);

@@ -13,9 +13,13 @@ public interface IServiceRide {
     public Ride save(RideDto rideDto);
 
     //Obtener viajes con estado REQUESTED, ACCEPTED,OMWAY,STARTED
-    public List<Ride> findInProgressRidesByCif(String cif);
+    public List<Ride> findInProgressRidesByRiderCif(String cif);
     //Obtener viajes con estado FINISHED, CANCELED BY DRIVER, CANCELED BY RIDER
-    List<Ride> findDiscontinuedRideByCif(String cif);
+    public List<Ride> findDiscontinuedRidesByRiderCif(String cif);
+
+    public List<Ride> findInProgressRidesByDriverCif(String cif);
+    //Obtener viajes con estado FINISHED, CANCELED BY DRIVER, CANCELED BY RIDER
+    public List<Ride> findDiscontinuedRidesByDriverCif(String cif);
 
     //Obtener todos los viajes con estado REQUESTED
     public List<Ride> getRequestedRides();

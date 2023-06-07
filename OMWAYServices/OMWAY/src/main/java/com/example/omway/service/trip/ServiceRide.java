@@ -28,6 +28,53 @@ public class ServiceRide implements IServiceRide {
     private IRepositoryCar repositoryCar;
 
     @Override
+    public List<Ride> findInProgressRidesByRiderCif(String cif) {
+        List<RideState> states = new ArrayList<RideState>();
+        states.add(RideState.REQUESTED);
+        states.add(RideState.ACCEPTED);
+        states.add(RideState.ONMYWAY);
+        states.add(RideState.STARTED);
+        List<Ride> rides = repositoryRide.findRidesByRiderCif(cif,states);
+        return rides;
+    }
+
+    @Override
+    public List<Ride> findDiscontinuedRidesByRiderCif(String cif){
+        List<RideState> states = new ArrayList<RideState>();
+        states.add(RideState.FINISHED);
+        states.add(RideState.CANCELLEDBYDRIVER);
+        states.add(RideState.CANCELLEDBYRIDER);
+        List<Ride> rides = repositoryRide.findRidesByRiderCif(cif,states);
+        return rides;
+    }
+
+    @Override
+    public List<Ride> findInProgressRidesByDriverCif(String cif) {
+        List<RideState> states = new ArrayList<RideState>();
+        states.add(RideState.REQUESTED);
+        states.add(RideState.ACCEPTED);
+        states.add(RideState.ONMYWAY);
+        states.add(RideState.STARTED);
+        List<Ride> rides = repositoryRide.findRidesByDriverCif(cif,states);
+        return rides;
+    }
+
+    @Override
+    public List<Ride> findDiscontinuedRidesByDriverCif(String cif) {
+        List<RideState> states = new ArrayList<RideState>();
+        states.add(RideState.FINISHED);
+        states.add(RideState.CANCELLEDBYDRIVER);
+        states.add(RideState.CANCELLEDBYRIDER);
+        List<Ride> rides = repositoryRide.findRidesByDriverCif(cif,states);
+        return rides;
+    }
+
+    @Override
+    public List<Ride> getRequestedRides() {
+        return repositoryRide.getRequestedRides(RideState.REQUESTED);
+    }
+
+    @Override
     public Ride save(RideDto rideDto) {
 
         Optional<Ride> r1 = repositoryRide.findById(rideDto.getId());
@@ -68,26 +115,6 @@ public class ServiceRide implements IServiceRide {
         }
 
         return repositoryRide.save(r);
-    }
-
-    @Override
-    public List<Ride> findInProgressRidesByCif(String cif) {
-        return repositoryRide.findInProgressRidesByCif(cif);
-    }
-
-    @Override
-    public List<Ride> findDiscontinuedRideByCif(String cif){
-        List<RideState> states = new ArrayList<RideState>();
-        states.add(RideState.FINISHED);
-        states.add(RideState.CANCELLEDBYDRIVER);
-        states.add(RideState.CANCELLEDBYRIDER);
-        List<Ride> ridesCash = repositoryRide.findDiscontinuedRideByCif(cif,states);
-        return ridesCash;
-    }
-
-    @Override
-    public List<Ride> getRequestedRides() {
-        return repositoryRide.getRequestedRides();
     }
 
 

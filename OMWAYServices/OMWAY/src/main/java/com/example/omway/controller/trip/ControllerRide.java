@@ -15,6 +15,30 @@ public class ControllerRide {
     @Autowired
     private IServiceRide serviceRide;
 
+    @GetMapping("/InProgressRidesRider/{cif}")
+    public List<Ride> findInProgressRidesByRiderCif(@PathVariable String cif){
+        return serviceRide.findInProgressRidesByRiderCif(cif);
+    }
+
+    @GetMapping("/DiscontinuedRidesRider/{cif}")
+    public List<Ride> findDiscontinuedRideByRiderCif(@PathVariable String cif){
+        return serviceRide.findDiscontinuedRidesByRiderCif(cif);
+    }
+
+    @GetMapping("/InProgressRidesDriver/{cif}")
+    public List<Ride> findInProgressRidesByDriverCif(@PathVariable String cif){
+        return serviceRide.findInProgressRidesByDriverCif(cif);
+    }
+    @GetMapping("/DiscontinuedRidesDriver/{cif}")
+    public List<Ride> findDiscontinuedRidesByDriverCif(@PathVariable String cif){
+        return serviceRide.findDiscontinuedRidesByDriverCif(cif);
+    }
+
+    @GetMapping("/rideRequested")
+    public List<Ride> getRequestedRides(){
+        return serviceRide.getRequestedRides();
+    }
+
     @PostMapping("/save")
     public Ride saveRide(@RequestBody RideDto rideDto){
         System.out.println(rideDto.getDate());
@@ -27,21 +51,6 @@ public class ControllerRide {
             throw new Exception("Please, send the Id value");
         }
         return serviceRide.save(rideDto);
-    }
-
-    @GetMapping("/InProgressRides")
-    public List<Ride> findInProgressRidesByCif(@Param("cif")String cif){
-        return serviceRide.findInProgressRidesByCif(cif);
-    }
-
-    @GetMapping("/DiscontinuedRides")
-    public List<Ride> findDiscontinuedRideByCif(@Param("cif")String cif){
-        return serviceRide.findDiscontinuedRideByCif(cif);
-    }
-
-    @GetMapping("/rideRequested")
-    public List<Ride> getRequestedRides(){
-        return serviceRide.getRequestedRides();
     }
 
 }

@@ -1,13 +1,14 @@
-package com.main.omwayapp.apirest.model.payment.cash
+package com.main.omwayapp.apirest.dto.payment
 
 import android.os.Parcelable
-import com.main.omwayapp.apirest.model.trip.RideItem
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 
-data class CashItem(
+@Parcelize
+@Serializable
+data class PaymentDto(
     val paymentId: Int,
     val total: Double,
     val paymentMethod: String,
-    val ride: RideItem
-)
+    val rideId:Int
+) : Parcelable

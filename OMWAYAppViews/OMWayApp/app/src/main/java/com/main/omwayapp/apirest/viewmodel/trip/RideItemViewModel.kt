@@ -1,5 +1,7 @@
 package com.main.omwayapp.apirest.viewmodel.trip
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.main.omwayapp.apirest.dto.trip.RideDto
@@ -9,7 +11,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+@RequiresApi(Build.VERSION_CODES.O)
 class RideItemViewModel:ViewModel() {
+    @RequiresApi(Build.VERSION_CODES.O)
     val repositoryRide : RepositoryRide = RepositoryRide()
 
     var _rideState = MutableStateFlow(false)

@@ -65,8 +65,8 @@ public class Ride {
     @JsonManagedReference
     private Payment payment;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "carId", referencedColumnName = "licensePlate")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(foreignKey=@ForeignKey(name="FK_car_ride_carid"))
     @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
     private Car car;
 

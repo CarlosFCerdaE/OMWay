@@ -7,9 +7,9 @@ import kotlinx.serialization.Serializable
 data class ModelItem(
     val id:Int,
     val name:String,
-    val make: MakeItem,
-    val modelCars:List<CarItem>
+    val make: MakeItem/*,
+    val modelCars:List<CarItem>*/
 
 ){
-    constructor():this(id = 0,name = "",make = MakeItem(),modelCars=emptyList())
+    constructor():this(id = 0,name = "",make = MakeItem()/*,modelCars=emptyList()*/)
 }

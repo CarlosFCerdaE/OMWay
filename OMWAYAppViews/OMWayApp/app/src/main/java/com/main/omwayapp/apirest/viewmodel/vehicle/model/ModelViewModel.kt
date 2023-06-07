@@ -1,5 +1,7 @@
 package com.main.omwayapp.apirest.viewmodel.vehicle.model
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.main.omwayapp.apirest.model.vehicle.ModelItem
@@ -9,7 +11,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+@RequiresApi(Build.VERSION_CODES.O)
 class ModelViewModel:ViewModel() {
+
     private val repositoryModel : RepositoryModel = RepositoryModel()
 
     private val _modelState = MutableStateFlow<ModelListUIState>(ModelListUIState())
@@ -20,6 +24,15 @@ class ModelViewModel:ViewModel() {
         viewModelScope.launch {
             _modelState.update {it.copy(_loading = true)}
             val response = repositoryModel.getAll()
+            _modelState.update {it.copy(listModel = response)}
+            _modelState.update {it.copy(_loading = false)}
+        }
+    }
+
+    fun findModelsByMake(makeId:Int){
+        viewModelScope.launch {
+            _modelState.update {it.copy(_loading = true)}
+            val response = repositoryModel.findModelsByMake(makeId)
             _modelState.update {it.copy(listModel = response)}
             _modelState.update {it.copy(_loading = false)}
         }
