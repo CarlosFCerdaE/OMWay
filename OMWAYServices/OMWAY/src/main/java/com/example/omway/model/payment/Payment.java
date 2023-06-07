@@ -15,6 +15,7 @@ import org.hibernate.engine.internal.Cascade;
 @Data
 @Table(name="Payment",schema = "Payment")
 @Inheritance(strategy = InheritanceType.JOINED)
+@PrimaryKeyJoinColumn(name = "paymentId")
 public abstract class Payment {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
