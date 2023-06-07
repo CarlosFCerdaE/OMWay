@@ -32,16 +32,13 @@ fun RSplashScreen(navController: NavController /*= NavController(context = Local
 
     LaunchedEffect(key1 = true) {
         delay(5000L)
-        navController.navigate(AppScreens.SplashScreen.route)
+        navController.navigate(AppScreens.Login.route)
     }
     Surface(color = Fondo) {
-
-
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
-
 
         ) {
 

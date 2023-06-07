@@ -1,9 +1,7 @@
 package com.main.omwayapp.ui.screens.rider.register
 
 import android.util.Log
-import android.widget.ImageButton
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,7 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.Surface
-import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -30,7 +27,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -38,8 +34,6 @@ import androidx.navigation.NavController
 import com.main.omwayapp.R
 import com.main.omwayapp.apirest.dto.omwayuser.RiderDto
 import com.main.omwayapp.apirest.viewmodel.omwayuser.rider.RiderItemViewModel
-import com.main.omwayapp.apirest.viewmodel.omwayuser.rider.RiderViewModel
-import com.main.omwayapp.ui.components.CustomAlertDialog
 import com.main.omwayapp.ui.components.CustomButtonG
 import com.main.omwayapp.ui.components.InputField
 
@@ -75,18 +69,17 @@ fun RegisterRider(navController: NavController ) {
     }
 
 
-    val riderModel: RiderItemViewModel = viewModel()
-    val riderState by riderModel._riderState.collectAsState()
+    val riderItemModel: RiderItemViewModel = viewModel()
+    val riderItemState by riderItemModel._riderState.collectAsState()
 
     var keyBoardController = LocalSoftwareKeyboardController.current
 
-//    LaunchedEffect(riderState){
-//        isRiderLoading.value = riderState
-//        Log.d("STATE",isLoading.toString())
-//    }
 
-    if(riderState){
-        navController.navigate(route = AppScreens.Login.route)
+    if(riderItemState){
+        LaunchedEffect(Unit){
+            navController.navigate(route = AppScreens.Login.route)
+        }
+
     }
 
     Surface(modifier = Modifier.fillMaxSize(), color = Fondo) {
@@ -242,7 +235,7 @@ fun RegisterRider(navController: NavController ) {
                 fontSize = 20.sp
             ) {
                 if(password.value == confirmpass.value){
-                    riderModel.saveRider(RiderDto(cif.value,password.value,name.value, phone.value,email.value,state = true))
+                    riderItemModel.saveRider(RiderDto(cif.value,password.value,name.value, phone.value,email.value,state = true))
                 }
                 else{
                     Log.d("CUSTOMERROR","Mala contraseña")

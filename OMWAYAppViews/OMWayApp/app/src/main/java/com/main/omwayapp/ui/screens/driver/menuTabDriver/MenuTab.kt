@@ -49,10 +49,9 @@ fun MenuTabDriver(navController: NavController){
 
     val tabs = listOf(
         TabsItem.itemHome,
+        TabsItem.itemSolicitudes,
         TabsItem.itemMisViajes,
         TabsItem.itemMisCarros
-
-      //  TabsItem.itemSolicitudes
     )
     val pagerState = rememberPagerState()
 

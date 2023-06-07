@@ -44,6 +44,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -71,6 +72,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.main.omwayapp.R
 import com.main.omwayapp.apirest.dto.trip.RideDto
 import com.main.omwayapp.apirest.model.omwayuser.RiderItem
+import com.main.omwayapp.apirest.viewmodel.omwayuser.rider.RiderItemViewModel
 import com.main.omwayapp.apirest.viewmodel.omwayuser.rider.RiderViewModel
 import com.main.omwayapp.apirest.viewmodel.trip.RideItemViewModel
 import com.main.omwayapp.ui.components.CustomButton
@@ -98,32 +100,81 @@ import java.util.Calendar
 fun homemenuRider(navController: NavHostController) {
     //Context
     val context = LocalContext.current
-    //States
-    val scaffoldState= rememberScaffoldState()
-    val scope= rememberCoroutineScope()
 
-    Scaffold(backgroundColor = colorResource(id = R.color.fondo),
-        scaffoldState=scaffoldState,topBar = {
-            AppBarMapView (onNavigationIconClick = { scope.launch { scaffoldState.drawerState.open() } })
-        },
-        drawerGesturesEnabled = scaffoldState.drawerState.isOpen,drawerContent = {
-            DrawerHeader()
-            DrawerBody(items = listOf(
-                MenuItem(id = "misviajes", title = "Mis Viajes", contentDescrip = "Go to", R.drawable.misviajes),
-                MenuItem(id = "ajustes", title = "Ajustes", contentDescrip = "Go to",R.drawable.ajustes),
-                MenuItem(id = "driver", title = "Driver", contentDescrip = "Go to",R.drawable.carro),
-            ),
-                onItemClick = {
-                    when(it.id){
-                        "misviajes"->navController.navigate(route= AppScreens.MisViajesRider.route)
-                        "ajustes"->navController.navigate(route= AppScreens.Ajustes.route)
-                        //"driver"->navController.navigate(route= AppScreens.ViajeDriver.route)
-                    }
-                },
-            )
+    //ViewModel
+    ///Rider Get ViewModel
+    val riderModel: RiderViewModel = viewModel()
+    val riderState by riderModel._riderState.collectAsState()
+    val isRiderLoading = remember { mutableStateOf(false) }
+
+    //Values
+    val cif = remember { mutableStateOf("") }
+
+
+    //Storage
+
+    val dataStore = DataStoreManager(context)
+
+
+    //Get Cif From DataStorage
+    LaunchedEffect(Unit) {
+        val value = dataStore.getValue.first()
+        if (value != null) {
+            cif.value = value
+            riderModel.findRiderByCif(cif.value)
         }
-    ){
-        Mapa(navController)
+    }
+    //Get Rider With Cif
+    LaunchedEffect(riderState) {
+        isRiderLoading.value = riderState._loading
+        Log.d("STATE", isRiderLoading.value.toString())
+    }
+    //States
+    val scaffoldState = rememberScaffoldState()
+    val scope = rememberCoroutineScope()
+
+    //Print Composables until state is not loading (Rider information is ready)
+    if (!isRiderLoading.value) {
+        val riderName = remember { mutableStateOf(riderModel.riderState.value.riderItem.name)}
+        Scaffold(backgroundColor = colorResource(id = R.color.fondo),
+            scaffoldState = scaffoldState, topBar = {
+                AppBarMapView(onNavigationIconClick = { scope.launch { scaffoldState.drawerState.open() } })
+            },
+            drawerGesturesEnabled = scaffoldState.drawerState.isOpen, drawerContent = {
+                DrawerHeader(riderName)
+                DrawerBody(
+                    items = listOf(
+                        MenuItem(
+                            id = "misviajes",
+                            title = "Mis Viajes",
+                            contentDescrip = "Go to",
+                            R.drawable.misviajes
+                        ),
+                        MenuItem(
+                            id = "ajustes",
+                            title = "Ajustes",
+                            contentDescrip = "Go to",
+                            R.drawable.ajustes
+                        ),
+                        MenuItem(
+                            id = "driver",
+                            title = "Driver",
+                            contentDescrip = "Go to",
+                            R.drawable.carro
+                        ),
+                    ),
+                    onItemClick = {
+                        when (it.id) {
+                            "misviajes" -> navController.navigate(route = AppScreens.MisViajesRider.route)
+                            "ajustes" -> navController.navigate(route = AppScreens.Ajustes.route)
+                            "driver" -> navController.navigate(route = AppScreens.MenuTabDriver.route)
+                        }
+                    },
+                )
+            }
+        ) {
+            Mapa(navController)
+        }
     }
 }
 
@@ -138,14 +189,14 @@ fun AppBarMapView(onNavigationIconClick:()->Unit){
         },
         navigationIcon = {
             IconButton(onClick = onNavigationIconClick ) {
-                Icon(imageVector = Icons.Default.Menu, contentDescription = "Toogle Drawer")
+                Icon(imageVector = Icons.Default.Menu, contentDescription = "Toogle Drawer", tint = Color.White)
             }
         }
     )
 }
 
 @Composable
-fun DrawerHeader(){
+fun DrawerHeader(riderName:MutableState<String>){
     Box(modifier = Modifier
         .fillMaxWidth()
         .height(120.dp)
@@ -167,7 +218,7 @@ fun DrawerHeader(){
                         .width(60.dp)
                         .height(60.dp))
                 Spacer(modifier = Modifier.width(20.dp))
-                Text(text = "Profile", fontSize = 20.sp,color=Color.Black, fontFamily = FontFamily.SansSerif, fontWeight = FontWeight.Bold )
+                Text(text = riderName.value, fontSize = 20.sp,color=Color.Black, fontFamily = FontFamily.SansSerif, fontWeight = FontWeight.Bold )
             }
         }
     }
@@ -238,7 +289,6 @@ fun Mapa(navController: NavHostController) {
         false // Enable 12-hour format
     )
     //ViewModel
-    val riderViewModel:RiderViewModel = viewModel()
     val rideItemViewModel:RideItemViewModel = viewModel()
     val rideState by rideItemViewModel ._rideState.collectAsState()
 
@@ -267,7 +317,10 @@ fun Mapa(navController: NavHostController) {
     //Navigation
 
     if(rideState){
-        navController.navigate(route= AppScreens.MisViajesRider.route)
+        LaunchedEffect(Unit){
+            navController.navigate(route= AppScreens.MisViajesRider.route)
+        }
+
     }
 
     BottomSheetScaffold(

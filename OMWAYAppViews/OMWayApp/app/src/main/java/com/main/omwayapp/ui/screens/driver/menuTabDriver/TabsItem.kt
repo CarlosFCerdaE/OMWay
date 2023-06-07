@@ -1,5 +1,6 @@
 package com.main.omwayapp.ui.screens.driver.menuTabDriver
 
+import SolicitudesDriver
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import com.main.omwayapp.ui.screens.driver.menuTabDriver.TabScreen.Home.HomeDriver
@@ -18,5 +19,5 @@ sealed class TabsItem(
     object itemMisViajes: TabsItem("Mis Viajes",{ cardMytrips()})
     object itemMisCarros: TabsItem("Mis Carros",{navController -> MisCarros(navController)})
 
-    //object itemSolicitudes: TabsItem("Solicitudes",{ Solicitudes() })
+    object itemSolicitudes: TabsItem("Solicitudes",{ navController -> SolicitudesDriver(navController) })
 }
