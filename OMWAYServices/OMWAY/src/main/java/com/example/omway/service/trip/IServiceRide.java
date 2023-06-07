@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public interface IServiceRide {
     public Ride save(RideDto rideDto);
-
+/*
     //Obtener viajes con estado REQUESTED, ACCEPTED,OMWAY,STARTED
     public List<Ride> findInProgressRidesByCif(String cif);
     //Obtener viajes con estado FINISHED, CANCELED BY DRIVER, CANCELED BY RIDER
@@ -18,6 +18,6 @@ public interface IServiceRide {
 
     //Obtener todos los viajes con estado REQUESTED
     public List<Ride> getRequestedRides();
-
+*/
 
 }
