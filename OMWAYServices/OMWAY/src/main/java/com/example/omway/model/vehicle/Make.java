@@ -1,5 +1,6 @@
 package com.example.omway.model.vehicle;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,7 +25,7 @@ public class Make {
 
    @OneToMany(mappedBy = "make",cascade = CascadeType.ALL
             ,fetch = FetchType.LAZY)
-    @JsonManagedReference
+   @JsonIgnore
     private List<Model> makeModels;
 
 }
