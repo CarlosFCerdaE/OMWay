@@ -13,6 +13,9 @@ interface ApiModel {
     @GET("api/model/all")
     suspend fun getAll():List<ModelItem>
 
+    @GET("api/model/modelsByMake/{makeId}")
+    suspend fun findModelsByMake(@Path("makeId")makeId:Int):List<ModelItem>
+
     @POST("api/model/save")
     suspend fun save(@Body item: ModelDto): ModelDto
 

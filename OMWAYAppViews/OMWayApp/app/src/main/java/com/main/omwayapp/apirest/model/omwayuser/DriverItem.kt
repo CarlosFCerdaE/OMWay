@@ -20,8 +20,8 @@ data class DriverItem(
     val sumRating:Int,
     val numberRides:Int,
     val driverCars: List<CarItem>,
-    val driverRides:List<RideItem>
+    /*val driverRides:List<RideItem>*/
 
 ){
-    constructor():this(cif = "",password = "",name = "",phone = "",email = "",state = true,dlExpirationDate = null,sumRating = 0,numberRides = 0, driverCars = emptyList(),driverRides = emptyList())
+    constructor():this(cif = "",password = "",name = "",phone = "",email = "",state = true,dlExpirationDate = null,sumRating = 0,numberRides = 0, driverCars = emptyList()/*,driverRides = emptyList()*/)
 }
