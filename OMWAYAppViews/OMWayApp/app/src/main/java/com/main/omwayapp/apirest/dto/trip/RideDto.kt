@@ -1,6 +1,7 @@
 package com.main.omwayapp.apirest.dto.trip
 
 import android.os.Parcelable
+import com.google.gson.annotations.JsonAdapter
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
@@ -10,22 +11,19 @@ import java.time.LocalDate
 @Parcelize
 @Serializable
 data class RideDto(
-    val id:Int,
-    @Contextual
-    val pickUpTime: Time,
-    @Contextual
-    val dropOffTime: Time,
+    val id:Int?,
+    val pickUpTime: String,
+    val dropOffTime: String?,
     val pickUpLocation:String,
     val dropOffLocation:String,
     val distance:Double,
-    @Contextual
-    val date: LocalDate,
+    val date: String,
     val notes:String,
     val state: String,
     val fare: Double,
-    val rating:Int,
-    val comment:String,
+    val rating:Int?,
+    val comment:String?,
     val riderId: String,
-    val driverId:String,
-    val carId:String
+    val driverId:String?,
+    val carId:String?
 ) : Parcelable

@@ -69,12 +69,7 @@ fun RLoginScreen (navController: NavController){
     val state by loginModel._state.collectAsState()
     val isLoading = remember {mutableStateOf(false)}
     val isSuccess = remember{ mutableStateOf(false)}
-    //var show by rememberSaveable{mutableStateOf(false)}
     var keyBoardController = LocalSoftwareKeyboardController.current
-
-    val riderModel: RiderViewModel = viewModel()
-    val riderState by riderModel._riderState.collectAsState()
-    val isRiderLoading = remember{ mutableStateOf(false)}
 
     LaunchedEffect(state){
         isLoading.value = state._loading
@@ -83,30 +78,21 @@ fun RLoginScreen (navController: NavController){
         Log.d("SUCCESS",isSuccess.toString())
 
         //guardar el cif con el que esta haciendo login
-        val cif = loginModel.cif.value
-        dataStoreManager.saveValue(cif)
+        if(isSuccess.value){
+            val cif = loginModel.cif.value
+            dataStoreManager.saveValue(cif)
+        }
+
     }
 
-    LaunchedEffect(riderState){
-        isRiderLoading.value = riderState._loading
-        Log.d("STATE",isLoading.toString())
-    }
 
     if(isSuccess.value){
-        riderModel.findRiderByCif(loginModel.cif.value)
         CustomAlertDialog(title = "Bienvenido" , msg = "Bienvenio a OMWay") {
-            if(!isRiderLoading.value){
-                Log.d("VALUES","${riderModel.riderState.value.riderItem?.name}")
-                navController.navigate(route = AppScreens.HomeMenuRider.route)
-            }
-
+            navController.navigate(route = AppScreens.HomeMenuRider.route)
         }
     }
 
     Surface(modifier = Modifier.fillMaxSize(), color = Fondo){
-
-
-       
         Column(horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top) {
 
@@ -165,7 +151,7 @@ fun RLoginScreen (navController: NavController){
                     isSingleLine = true,
                     keyboardType = KeyboardType.Text,
                     onAction = KeyboardActions{
-
+                        keyBoardController?.hide()
                     }
                 )
 
@@ -182,7 +168,7 @@ fun RLoginScreen (navController: NavController){
                     isSingleLine = true,
                     keyboardType = KeyboardType.Text,
                     onAction = KeyboardActions{
-
+                        keyBoardController?.hide()
                     }
                 )
                 Spacer(modifier = Modifier.height(25.dp))

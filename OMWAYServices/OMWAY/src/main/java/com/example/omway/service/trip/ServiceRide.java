@@ -36,6 +36,7 @@ public class ServiceRide implements IServiceRide {
             r = r1.get();
             System.out.println("Esta presente, procedemos a actualizar");
         }
+        System.out.println(rideDto.getDate());
 
         r.setPickUpTime(rideDto.getPickUpTime());
         r.setDropOffTime(rideDto.getDropOffTime());

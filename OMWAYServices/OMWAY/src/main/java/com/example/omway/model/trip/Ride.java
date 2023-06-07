@@ -6,6 +6,7 @@ import com.example.omway.model.omwUser.Rider;
 import com.example.omway.model.payment.Payment;
 import com.example.omway.model.vehicle.Car;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -37,7 +38,8 @@ public class Ride {
     private String dropOffLocation;
 
     private Double distance;
-    @Temporal(TemporalType.DATE)
+    //@Temporal(TemporalType.DATE)
+    @JsonFormat(shape=JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd")
     private LocalDate date;
     private String notes;
 

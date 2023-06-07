@@ -18,6 +18,12 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Date
 import java.util.Locale
+import com.google.gson.TypeAdapter
+import com.google.gson.stream.JsonReader
+import com.google.gson.stream.JsonToken
+import com.google.gson.stream.JsonWriter
+import okhttp3.logging.HttpLoggingInterceptor
+import java.io.IOException
 
 object ApiAdapter {
 
@@ -26,21 +32,33 @@ object ApiAdapter {
     fun initialize(context: Context) {
         applicationContext = context.applicationContext
     }
-    val BASE_URL = "http://192.168.100.93:8181"
+    val BASE_URL = "http://192.168.1.6:8181"
 
     @RequiresApi(Build.VERSION_CODES.O)
     private val gson: Gson = GsonBuilder()
         .registerTypeAdapter(Date::class.java, DateDeserializer())
         .registerTypeAdapter(Time::class.java, TimeDeserializer())
         .registerTypeAdapter(LocalDate::class.java, LocalDateDeserializer())
+        //.registerTypeAdapter(LocalDate::class.java, LocalDateTypeAdapter())
         .create()
 
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun getInstance(): Retrofit {
-        return Retrofit.Builder().baseUrl(BASE_URL)
+        // Create an instance of the logging interceptor
+        val loggingInterceptor = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+
+        // Create an OkHttpClient and add the logging interceptor
+        val okHttpClient = OkHttpClient.Builder()
+            .addInterceptor(loggingInterceptor)
+            .build()
+
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
-            .client(OkHttpClient())
+            .client(okHttpClient)  // Set the OkHttpClient with the logging interceptor
             .build()
     }
 
@@ -85,4 +103,30 @@ object ApiAdapter {
             return LocalDate.parse(dateString, dateFormatter)
         }
     }
+    /*
+    class LocalDateTypeAdapter : TypeAdapter<LocalDate>() {
+        @RequiresApi(Build.VERSION_CODES.O)
+        private val formatter = DateTimeFormatter.ISO_LOCAL_DATE
+
+        @RequiresApi(Build.VERSION_CODES.O)
+        @Throws(IOException::class)
+        override fun write(out: JsonWriter, value: LocalDate?) {
+            if (value == null) {
+                out.nullValue()
+            } else {
+                out.value(formatter.format(value))
+            }
+        }
+
+        @RequiresApi(Build.VERSION_CODES.O)
+        @Throws(IOException::class)
+        override fun read(`in`: JsonReader): LocalDate? {
+            if (`in`.peek() == JsonToken.NULL) {
+                `in`.nextNull()
+                return null
+            }
+            val dateString = `in`.nextString()
+            return LocalDate.parse(dateString, formatter)
+        }
+    }*/
 }

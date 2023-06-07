@@ -15,6 +15,5 @@ data class DriverDto(
     val phone: String,
     val email:String,
     val state: Boolean,
-    @Contextual
-    val dlExpirationDate: LocalDate
+    val dlExpirationDate: String
 ) : Parcelable

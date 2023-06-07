@@ -22,15 +22,20 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.BottomSheetScaffold
 import androidx.compose.material.BottomSheetValue
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Scaffold
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.rememberBottomSheetScaffoldState
 import androidx.compose.material.rememberBottomSheetState
 import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardColors
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -46,24 +51,30 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.google.android.gms.maps.model.LatLng
 import com.main.omwayapp.R
+import com.main.omwayapp.apirest.dto.trip.RideDto
 import com.main.omwayapp.apirest.model.omwayuser.RiderItem
 import com.main.omwayapp.apirest.viewmodel.omwayuser.rider.RiderViewModel
+import com.main.omwayapp.apirest.viewmodel.trip.RideItemViewModel
 import com.main.omwayapp.ui.components.CustomButton
+import com.main.omwayapp.ui.components.InputField
 import com.main.omwayapp.ui.configDS.DataStoreManager
 import com.main.omwayapp.ui.model.Location
 import com.main.omwayapp.ui.navigationApp.AppScreens
@@ -71,6 +82,11 @@ import com.main.omwayapp.ui.navigationApp.AppScreens
 import com.main.omwayapp.ui.views.map.OurGoogleMaps
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import java.sql.Time
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
 
 @RequiresApi(Build.VERSION_CODES.Q)
@@ -80,38 +96,33 @@ import java.util.Calendar
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun homemenuRider(navController: NavHostController) {
+    //Context
     val context = LocalContext.current
-    val dataStore = DataStoreManager(context)
+    //States
     val scaffoldState= rememberScaffoldState()
     val scope= rememberCoroutineScope()
-    val riderViewModel:RiderViewModel = viewModel()
 
-    LaunchedEffect(Unit) {
-        val value = dataStore.getValue.first()
-        if (value != null) {
-            Log.d("CIF ", value)
+    Scaffold(backgroundColor = colorResource(id = R.color.fondo),
+        scaffoldState=scaffoldState,topBar = {
+            AppBarMapView (onNavigationIconClick = { scope.launch { scaffoldState.drawerState.open() } })
+        },
+        drawerGesturesEnabled = scaffoldState.drawerState.isOpen,drawerContent = {
+            DrawerHeader()
+            DrawerBody(items = listOf(
+                MenuItem(id = "misviajes", title = "Mis Viajes", contentDescrip = "Go to", R.drawable.misviajes),
+                MenuItem(id = "ajustes", title = "Ajustes", contentDescrip = "Go to",R.drawable.ajustes),
+                MenuItem(id = "driver", title = "Driver", contentDescrip = "Go to",R.drawable.carro),
+            ),
+                onItemClick = {
+                    when(it.id){
+                        "misviajes"->navController.navigate(route= AppScreens.MisViajesRider.route)
+                        "ajustes"->navController.navigate(route= AppScreens.Ajustes.route)
+                        //"driver"->navController.navigate(route= AppScreens.ViajeDriver.route)
+                    }
+                },
+            )
         }
-    }
-    androidx.compose.material.Scaffold(backgroundColor = colorResource(id = R.color.fondo),scaffoldState=scaffoldState,topBar = {
-        AppBarMapView (onNavigationIconClick = { scope.launch { scaffoldState.drawerState.open() } })
-
-    },drawerGesturesEnabled = scaffoldState.drawerState.isOpen,drawerContent = {
-        Log.d("VALUESINHOME","${riderViewModel.riderState.value.riderItem.name}")
-        DrawerHeader()
-        DrawerBody(items = listOf(
-            MenuItem(id = "misviajes", title = "Mis Viajes", contentDescrip = "Go to", R.drawable.misviajes),
-            MenuItem(id = "ajustes", title = "Ajustes", contentDescrip = "Go to",R.drawable.ajustes),
-            MenuItem(id = "driver", title = "Driver", contentDescrip = "Go to",R.drawable.carro),
-        ), onItemClick = {
-            when(it.id){
-                "misviajes"->navController.navigate(route= AppScreens.TAC.route)
-                "ajustes"->navController.navigate(route= AppScreens.Ajustes.route)
-                //"driver"->navController.navigate(route= AppScreens.ViajeDriver.route)
-            }
-
-
-        }, )
-    }) {
+    ){
         Mapa(navController)
     }
 }
@@ -121,20 +132,16 @@ fun homemenuRider(navController: NavHostController) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppBarMapView(onNavigationIconClick:()->Unit){
-
     TopAppBar(backgroundColor = colorResource(id = R.color.fondo), contentColor = Color.White,
         title = {
             Text(text = "")
         },
         navigationIcon = {
-            androidx.compose.material.IconButton(onClick = onNavigationIconClick ) {
+            IconButton(onClick = onNavigationIconClick ) {
                 Icon(imageVector = Icons.Default.Menu, contentDescription = "Toogle Drawer")
-
             }
         }
     )
-
-
 }
 
 @Composable
@@ -163,7 +170,6 @@ fun DrawerHeader(){
                 Text(text = "Profile", fontSize = 20.sp,color=Color.Black, fontFamily = FontFamily.SansSerif, fontWeight = FontWeight.Bold )
             }
         }
-
     }
 }
 
@@ -186,58 +192,94 @@ fun DrawerBody(items:List<MenuItem>, modifier: Modifier= Modifier
                 Spacer(modifier = Modifier.width(16.dp))
                 Text(text = item.title, color = Color.White, fontSize = 20.sp)
             }
-
         }
-
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
+@SuppressLint("SimpleDateFormat")
+@RequiresApi(Build.VERSION_CODES.O)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class,
+    ExperimentalComposeUiApi::class
+)
 @Composable
 fun Mapa(navController: NavHostController) {
-    val uam = Location(LatLng(12.10877952, -86.2564972), "UAM", "Universidad Americana")
-    val sheetState = rememberBottomSheetState(
-        initialValue = BottomSheetValue.Collapsed
-    )
-    val scaffoldState = rememberBottomSheetScaffoldState(
-        bottomSheetState = sheetState
-    )
-    var notes:String by remember { mutableStateOf("Notas") }
-    var location:String by remember { mutableStateOf("¿A donde vas?'") }
 
+    //Context
+    val context = LocalContext.current
+    //Values
+
+    val uam = Location(LatLng(12.10877952, -86.2564972), "UAM", "Universidad Americana")
+    val cif = remember {mutableStateOf("")}
+    val pickUpLocation = remember {mutableStateOf("My Location")}
+    val dropOffLocation = remember {mutableStateOf("")}
+    val distance = remember {mutableStateOf(5.54)}
+    val notes = remember {mutableStateOf("")}
+    val baseFare = remember {mutableStateOf(40)}
+    val perKmFare = remember {mutableStateOf(10)}
+    val fare = remember {mutableStateOf(baseFare.value + (distance.value * perKmFare.value))}
+        ///Values TimePicker
     val mContext = LocalContext.current
     val mCalendar = Calendar.getInstance()
     val mHour = mCalendar[Calendar.HOUR_OF_DAY]
     val mMinute = mCalendar[Calendar.MINUTE]
-
-
-// Value for storing time as a string
-    var mTime:String by remember { mutableStateOf("Tiempo") }
-
-// Creating a TimePicker dialog
+        //// Value for storing time as a string in am pm format
+    var mTime = remember { mutableStateOf("") }
+        ////TimePicker dialog
     val mTimePickerDialog = TimePickerDialog(
         mContext,
         { _, mHour: Int, mMinute: Int ->
             val amPm: String = if (mHour < 12) "AM" else "PM"
             val hour12: Int = if (mHour == 0) 12 else if (mHour > 12) mHour - 12 else mHour
             val minuteFormatted: String = String.format("%02d", mMinute)
-            mTime/*.value*/ = "$hour12:$minuteFormatted $amPm"
+            mTime.value = "$hour12:$minuteFormatted $amPm"
         },
         mHour,
         mMinute,
         false // Enable 12-hour format
     )
+    //ViewModel
+    val riderViewModel:RiderViewModel = viewModel()
+    val rideItemViewModel:RideItemViewModel = viewModel()
+    val rideState by rideItemViewModel ._rideState.collectAsState()
+
+    //States
+
+    val sheetState = rememberBottomSheetState(initialValue = BottomSheetValue.Collapsed)
+    val scaffoldState = rememberBottomSheetScaffoldState(bottomSheetState = sheetState)
+
+    //Controller
+
+    var keyBoardController = LocalSoftwareKeyboardController.current
+
+    //Storage
+
+    val dataStore = DataStoreManager(context)
+
+    //Launched Effect
+
+    LaunchedEffect(Unit) {
+        val value = dataStore.getValue.first()
+        if (value != null) {
+            cif.value = value
+        }
+    }
+
+    //Navigation
+
+    if(rideState){
+        navController.navigate(route= AppScreens.MisViajesRider.route)
+    }
+
     BottomSheetScaffold(
         scaffoldState = scaffoldState,
         sheetContent = {
-
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(375.dp)
             ) {
                 val context = LocalContext.current
-                //SI ESTA CERRADA
+                //IF BOTTOM SHEET CLOSED
                 if (sheetState.isCollapsed) {
                     Column(
                         modifier = Modifier.fillMaxSize(),
@@ -245,136 +287,91 @@ fun Mapa(navController: NavHostController) {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
 
-                        Spacer(modifier = Modifier.height(30.dp))
-                        // A donde vas
-                        TextField(value = location,
-                            onValueChange = { location = it },
-                            singleLine = true,
-                            readOnly = false,
-                            modifier = Modifier
-                                .size(width = 300.dp, height = 60.dp)
-                                .clip(RoundedCornerShape(5.dp)),
-                            colors = TextFieldDefaults.textFieldColors(
-                                containerColor = colorResource(id = R.color.txt_fields),
-                                focusedLabelColor = colorResource(id = R.color.texto_general),
-                                unfocusedLabelColor = colorResource(id = R.color.texto_general)
-                            ),
-                            label = {
-                                Text(
-                                    text = ""/*,
-                    fontSize = 11.sp,
-                    fontFamily = FontFamily(Font(R.font.inter_regular)),
-                    color = colorResource(id = R.color.texto_general)*/
-                                )
-                            },
-                            textStyle = TextStyle(
-                                fontSize = 16.sp, color = colorResource(
-                                    id = R.color.texto_general
-                                )
-                            ),
-                            leadingIcon = {
-                                IconButton(onClick = {/*TODO*/ }) {
-                                    Icon(
-                                        painter = painterResource(id = R.drawable.punto_a),
-                                        contentDescription = "Marca del carro",
-
-                                        modifier = Modifier
-                                            .size(24.dp)
-                                    )
-                                }
-                            })
+                        Spacer(modifier = Modifier.height(20.dp))
+                        // DropOffLocation
+                        InputField(
+                            valueState = dropOffLocation,
+                            labelId = "¿A dónde vas?",
+                            icon = painterResource(id = R.drawable.punto_a),
+                            enabled = true,
+                            isSingleLine = true,
+                            keyboardType = KeyboardType.Text,
+                            onAction = KeyboardActions{
+                                keyBoardController?.hide()
+                            }
+                        )
 
                         Spacer(modifier = Modifier.height(20.dp))
-                        //Tiempo
+                        //Time
 
-                        TextField(value = mTime,
-                            onValueChange = { mTime = it },
-                            singleLine = true,
-                            readOnly = true,
-                            modifier = Modifier
-                                .size(width = 300.dp, height = 60.dp)
-                                .clickable { mTimePickerDialog.show() }
-                                .clip(RoundedCornerShape(5.dp)),
-                            colors = TextFieldDefaults.textFieldColors(
-                                containerColor = colorResource(id = R.color.txt_fields),
-                                focusedLabelColor = colorResource(id = R.color.texto_general),
-                                unfocusedLabelColor = colorResource(id = R.color.texto_general)
-                            ),
-                            label = {
-                                Text(
-                                    text = ""/*,
-                    fontSize = 11.sp,
-                    fontFamily = FontFamily(Font(R.font.inter_regular)),
-                    color = colorResource(id = R.color.texto_general)*/
-                                )
-                            },
-                            textStyle = TextStyle(
-                                fontSize = 16.sp, color = colorResource(
-                                    id = R.color.texto_general
-                                )
-                            ),
-                            leadingIcon = {
-                                IconButton(onClick = {/*TODO*/ }) {
-                                    Icon(
-                                        painter = painterResource(id = R.drawable.reloj),
-                                        contentDescription = "Marca del carro",
-
-                                        modifier = Modifier
-                                            .clickable { mTimePickerDialog.show() }
-                                            .size(24.dp)
-                                    )
-                                }
-                            })
-
-                        Spacer(modifier = Modifier.height(20.dp))
-                        //Notas
-
-                        TextField(value = notes,
-                            onValueChange = { notes = it },
-                            singleLine = true,
-                            readOnly = false,
-                            modifier = Modifier
-                                .size(width = 300.dp, height = 60.dp)
-                                .clip(RoundedCornerShape(5.dp)),
-                            colors = TextFieldDefaults.textFieldColors(
-                                containerColor = colorResource(id = R.color.txt_fields),
-                                focusedLabelColor = colorResource(id = R.color.texto_general),
-                                unfocusedLabelColor = colorResource(id = R.color.texto_general)
-                            ),
-                            label = {
-                                Text(
-                                    text = ""/*,
-                    fontSize = 11.sp,
-                    fontFamily = FontFamily(Font(R.font.inter_regular)),
-                    color = colorResource(id = R.color.texto_general)*/
-                                )
-                            },
-                            textStyle = TextStyle(
-                                fontSize = 16.sp, color = colorResource(
-                                    id = R.color.texto_general
-                                )
-                            ),
-                            leadingIcon = {
-                                IconButton(onClick = {/*TODO*/ }) {
-                                    Icon(
-                                        painter = painterResource(id = R.drawable.notas),
-                                        contentDescription = "Marca del carro",
-
-                                        modifier = Modifier
-                                            .size(24.dp)
-                                    )
-                                }
-                            })
+                        InputField(
+                            modifier = Modifier.clickable { mTimePickerDialog.show() },
+                            valueState = mTime,
+                            labelId = "Tiempo",
+                            icon = painterResource(id = R.drawable.calendario),
+                            enabled = false,
+                            isSingleLine = true,
+                            keyboardType = KeyboardType.Text,
+                            onAction = KeyboardActions{
+                                keyBoardController?.hide()
+                            }
+                        )
 
 
                         Spacer(modifier = Modifier.height(20.dp))
-                        //Boton
+                        //Notes
+                        InputField(
+                            valueState = notes,
+                            labelId = "Notas",
+                            icon = painterResource(id = R.drawable.notas),
+                            enabled = true,
+                            isSingleLine = false,
+                            keyboardType = KeyboardType.Text,
+                            onAction = KeyboardActions{
+                                keyBoardController?.hide()
+                            }
+                        )
+                        Spacer(modifier = Modifier.height(10.dp))
+                        //Fare
+                        Column(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.Start
+                        ) {
+                            Text(
+                                text = "            Precio C$:",
+                                fontSize = 18.sp,
+                                modifier = Modifier.padding(5.dp),
+                                color = Color.White,
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.height(10.dp))
+                        //Request Button
                         CustomButton(
                             text = "Pedir Ahora",
-                            modifier = Modifier.width(200.dp),
+                            modifier = Modifier.width(150.dp),
                             fontSize = 20.sp,
-                            onClick = {navController.navigate(route= AppScreens.ViajeRider.route)}
-
+                            onClick = {
+                                val pickUpTime= convertTimeToFormatted(mTime.value)
+                                Log.d("PICKUPTIME",pickUpTime)
+                                rideItemViewModel.saveRide(RideDto(
+                                    null,
+                                    pickUpTime,
+                                    null,
+                                    pickUpLocation.value,
+                                    dropOffLocation.value,
+                                    distance.value,
+                                    LocalDate.now().toString(),
+                                    notes.value,
+                                    "REQUESTED",
+                                    fare.value,
+                                    null,
+                                    null,
+                                    cif.value,
+                                    null,
+                                    null))
+                            }
                         )
 
 
@@ -388,7 +385,50 @@ fun Mapa(navController: NavHostController) {
                     ) {
 
                         Spacer(modifier = Modifier.height(20.dp))
-                        //Precio
+                        // DropOffLocation
+                        InputField(
+                            valueState = dropOffLocation,
+                            labelId = "¿A dónde vas?",
+                            icon = painterResource(id = R.drawable.punto_a),
+                            enabled = true,
+                            isSingleLine = true,
+                            keyboardType = KeyboardType.Text,
+                            onAction = KeyboardActions{
+                                keyBoardController?.hide()
+                            }
+                        )
+
+                        Spacer(modifier = Modifier.height(20.dp))
+
+                        //Time
+                        InputField(
+                            modifier = Modifier.clickable { mTimePickerDialog.show() },
+                            valueState = mTime,
+                            labelId = "Tiempo",
+                            icon = painterResource(id = R.drawable.calendario),
+                            enabled = false,
+                            isSingleLine = true,
+                            keyboardType = KeyboardType.Text,
+                            onAction = KeyboardActions{
+                                keyBoardController?.hide()
+                            }
+                        )
+
+                        Spacer(modifier = Modifier.height(20.dp))
+                        //Notes
+                        InputField(
+                            valueState = notes,
+                            labelId = "Notas",
+                            icon = painterResource(id = R.drawable.notas),
+                            enabled = true,
+                            isSingleLine = false,
+                            keyboardType = KeyboardType.Text,
+                            onAction = KeyboardActions{
+                                keyBoardController?.hide()
+                            }
+                        )
+                        Spacer(modifier = Modifier.height(10.dp))
+                        //Fare
                         Column(
                             modifier = Modifier.fillMaxWidth(),
                             verticalArrangement = Arrangement.Center,
@@ -401,133 +441,33 @@ fun Mapa(navController: NavHostController) {
                                 color = Color.White,
                             )
                         }
-                        Spacer(modifier = Modifier.height(15.dp))
-                        // A donde vas
-                        TextField(value = location,
-                            onValueChange = { location = it },
-                            singleLine = true,
-                            readOnly = false,
-                            modifier = Modifier
-                                .size(width = 300.dp, height = 60.dp)
-                                .clip(RoundedCornerShape(5.dp)),
-                            colors = TextFieldDefaults.textFieldColors(
-                                containerColor = colorResource(id = R.color.txt_fields),
-                                focusedLabelColor = colorResource(id = R.color.texto_general),
-                                unfocusedLabelColor = colorResource(id = R.color.texto_general)
-                            ),
-                            label = {
-                                Text(
-                                    text = ""/*,
-                    fontSize = 11.sp,
-                    fontFamily = FontFamily(Font(R.font.inter_regular)),
-                    color = colorResource(id = R.color.texto_general)*/
-                                )
-                            },
-                            textStyle = TextStyle(
-                                fontSize = 16.sp, color = colorResource(
-                                    id = R.color.texto_general
-                                )
-                            ),
-                            leadingIcon = {
-                                IconButton(onClick = {/*TODO*/ }) {
-                                    Icon(
-                                        painter = painterResource(id = R.drawable.punto_a),
-                                        contentDescription = "Marca del carro",
 
-                                        modifier = Modifier
-                                            .size(24.dp)
-                                    )
-                                }
-                            })
-
-
-                        Spacer(modifier = Modifier.height(20.dp))
-                        //Tiempo
-                        TextField(value = mTime,
-                            onValueChange = { mTime = it },
-                            singleLine = true,
-                            readOnly = true,
-                            modifier = Modifier
-                                .size(width = 300.dp, height = 60.dp)
-                                .clickable { mTimePickerDialog.show() }
-                                .clip(RoundedCornerShape(5.dp)),
-                            colors = TextFieldDefaults.textFieldColors(
-                                containerColor = colorResource(id = R.color.txt_fields),
-                                focusedLabelColor = colorResource(id = R.color.texto_general),
-                                unfocusedLabelColor = colorResource(id = R.color.texto_general)
-                            ),
-                            label = {
-                                Text(
-                                    text = ""/*,
-                    fontSize = 11.sp,
-                    fontFamily = FontFamily(Font(R.font.inter_regular)),
-                    color = colorResource(id = R.color.texto_general)*/
-                                )
-                            },
-                            textStyle = TextStyle(
-                                fontSize = 16.sp, color = colorResource(
-                                    id = R.color.texto_general
-                                )
-                            ),
-                            leadingIcon = {
-                                IconButton(onClick = {/*TODO*/ }) {
-                                    Icon(
-                                        painter = painterResource(id = R.drawable.reloj),
-                                        contentDescription = "Marca del carro",
-
-                                        modifier = Modifier
-                                            .clickable { mTimePickerDialog.show() }
-                                            .size(24.dp)
-                                    )
-                                }
-                            })
-
-                        Spacer(modifier = Modifier.height(20.dp))
-                        //Notas
-                        TextField(value = notes,
-                            onValueChange = { notes = it },
-                            singleLine = true,
-                            readOnly = false,
-                            modifier = Modifier
-                                .size(width = 300.dp, height = 60.dp)
-                                .clip(RoundedCornerShape(5.dp)),
-                            colors = TextFieldDefaults.textFieldColors(
-                                containerColor = colorResource(id = R.color.txt_fields),
-                                focusedLabelColor = colorResource(id = R.color.texto_general),
-                                unfocusedLabelColor = colorResource(id = R.color.texto_general)
-                            ),
-                            label = {
-                                Text(
-                                    text = ""/*,
-                    fontSize = 11.sp,
-                    fontFamily = FontFamily(Font(R.font.inter_regular)),
-                    color = colorResource(id = R.color.texto_general)*/
-                                )
-                            },
-                            textStyle = TextStyle(
-                                fontSize = 16.sp, color = colorResource(
-                                    id = R.color.texto_general
-                                )
-                            ),
-                            leadingIcon = {
-                                IconButton(onClick = {/*TODO*/ }) {
-                                    Icon(
-                                        painter = painterResource(id = R.drawable.notas),
-                                        contentDescription = "Marca del carro",
-
-                                        modifier = Modifier
-                                            .size(24.dp)
-                                    )
-                                }
-                            })
-
-                        Spacer(modifier = Modifier.height(20.dp))
-                        //Boton
+                        Spacer(modifier = Modifier.height(10.dp))
+                        //Request Button
                         CustomButton(
                             text = "Pedir Ahora",
-                            modifier = Modifier.width(200.dp),
+                            modifier = Modifier.width(150.dp),
                             fontSize = 20.sp,
-                            onClick = {navController.navigate(route= AppScreens.ViajeRider.route)}
+                            onClick = {
+                                val pickUpTime= convertTimeToFormatted(mTime.value)
+                                Log.d("PICKUPTIME",pickUpTime)
+                                rideItemViewModel.saveRide(RideDto(
+                                    0,
+                                    pickUpTime,
+                                    null,
+                                    pickUpLocation.value,
+                                    dropOffLocation.value,
+                                    distance.value,
+                                    LocalDate.now().toString(),
+                                    notes.value,
+                                    "REQUESTED",
+                                    fare.value,
+                                    null,
+                                    null,
+                                    cif.value,
+                                    null,
+                                    null))
+                            }
                         )
 
 
@@ -545,4 +485,10 @@ fun Mapa(navController: NavHostController) {
 
 
     }
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+fun convertTimeToFormatted(time: String): String {
+    val parsedTime = LocalTime.parse(time, DateTimeFormatter.ofPattern("h:mm a"))
+    return parsedTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"))
 }

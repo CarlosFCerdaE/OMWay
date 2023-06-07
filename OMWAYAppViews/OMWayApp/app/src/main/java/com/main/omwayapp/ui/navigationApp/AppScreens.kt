@@ -15,6 +15,6 @@ sealed class AppScreens(val route: String){
     object Login: AppScreens("Login")
     object RegisterRider: AppScreens("RegisterRider")
     object SplashScreen: AppScreens("SplashScreen")
-
+    object MisViajesRider: AppScreens("MisViajesRider")
 
 }

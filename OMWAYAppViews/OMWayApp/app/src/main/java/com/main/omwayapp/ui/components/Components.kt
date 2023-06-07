@@ -27,7 +27,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -48,6 +47,7 @@ import com.main.omwayapp.ui.theme.TxtFields
 @Composable
 fun InputField(
     modifier: Modifier = Modifier,
+    iconModifier: Modifier = Modifier,
     valueState: MutableState<String>,
     labelId: String,
     icon: Painter,
@@ -56,19 +56,23 @@ fun InputField(
     keyboardType: KeyboardType,
     imeAction: ImeAction = ImeAction.Go,
     onAction: KeyboardActions,
-    colorFondo:Color = TxtFields,
-    colorTexto:Color = TextoGeneral
+    backgroundColor:Color = TxtFields,
+    textColor:Color = TextoGeneral,
+    iconDp:Dp = 20.dp,
+    maxLines:Int = 4
 ){
     TextField(value = valueState.value , onValueChange = {valueState.value = it},
         modifier = modifier.padding(5.dp),
         label ={ Text(text = labelId)},
-        leadingIcon = {Icon(painter = icon, contentDescription = "Text Field Icon")},
+        leadingIcon = {Icon(painter = icon, contentDescription = "Text Field Icon",modifier = iconModifier.size(iconDp))},
         singleLine = isSingleLine,
+        maxLines = maxLines,
         textStyle = TextStyle(fontSize = 16.sp, color = Color.White),
         enabled = enabled,
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType, imeAction = imeAction),
         keyboardActions = onAction,
-        colors = TextFieldDefaults.textFieldColors(containerColor = colorFondo, /*textColor = colorTexto,*/ focusedLabelColor = colorTexto, unfocusedLabelColor = colorTexto),
+        colors = TextFieldDefaults.textFieldColors(containerColor = backgroundColor,focusedLabelColor = textColor, unfocusedLabelColor = textColor,
+            disabledTextColor = textColor, disabledLeadingIconColor = Color.Gray, disabledTrailingIconColor = Color.Gray, disabledLabelColor = textColor),
         shape = RoundedCornerShape(10.dp)
     )
 
