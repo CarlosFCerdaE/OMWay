@@ -6,6 +6,7 @@ import com.example.omway.model.payment.Payment;
 import com.example.omway.model.vehicle.Car;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -50,12 +51,12 @@ public class Ride {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(foreignKey=@ForeignKey(name="FK_rider_ride_ridercif"))
-    @JsonBackReference
+    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
     private Rider rider;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(foreignKey=@ForeignKey(name="FK_driver_ride_drivercif"))
-    @JsonBackReference
+    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
     private Driver driver;
 
 
@@ -66,7 +67,7 @@ public class Ride {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "carId", referencedColumnName = "licensePlate")
-    @JsonManagedReference
+    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
     private Car car;
 
 }

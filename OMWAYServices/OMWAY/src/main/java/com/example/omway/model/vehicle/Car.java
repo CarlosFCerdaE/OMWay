@@ -3,6 +3,8 @@ package com.example.omway.model.vehicle;
 import com.example.omway.model.omwUser.Driver;
 import com.example.omway.model.trip.Ride;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,14 +28,14 @@ public class Car {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(foreignKey=@ForeignKey(name="FK_driver_car_drivercif"))
-    @JsonBackReference
+    @JsonIgnore
     private Driver driver;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(foreignKey=@ForeignKey(name="FK_model_car_modelid"))
-    @JsonBackReference
+    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
     private Model model;
 
     @OneToOne(mappedBy = "car")
-    @JsonBackReference
+    @JsonIgnore
     private Ride ride;
 }
