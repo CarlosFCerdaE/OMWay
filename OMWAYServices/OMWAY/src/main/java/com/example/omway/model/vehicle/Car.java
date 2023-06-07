@@ -28,7 +28,6 @@ public class Car {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(foreignKey=@ForeignKey(name="FK_driver_car_drivercif"))
-    @JsonBackReference
     @JsonIgnore
     private Driver driver;
     @ManyToOne(fetch = FetchType.LAZY)
@@ -37,7 +36,6 @@ public class Car {
     private Model model;
 
     @OneToOne(mappedBy = "car")
-    @JsonBackReference
     @JsonIgnore
     private Ride ride;
 }

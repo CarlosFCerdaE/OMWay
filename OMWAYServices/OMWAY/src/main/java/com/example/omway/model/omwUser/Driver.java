@@ -2,6 +2,7 @@ package com.example.omway.model.omwUser;
 
 import com.example.omway.model.trip.Ride;
 import com.example.omway.model.vehicle.Car;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -31,7 +32,7 @@ public class Driver extends OMWayUser {
 
     @OneToMany(mappedBy = "driver",cascade = CascadeType.ALL
             ,fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @JsonIgnore
     private List<Ride> driverRides;
 
 
