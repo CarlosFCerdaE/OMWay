@@ -46,24 +46,8 @@ import com.main.omwayapp.ui.components.CustomButton
 import com.main.omwayapp.ui.components.InputField
 
 //@Preview(showSystemUi = true)
-@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun editarCarros(navController: NavController){
-
-    var keyBoardController = LocalSoftwareKeyboardController.current
-
-    var licensePlate = remember { mutableStateOf("") } //numero de placa carro
-    var color = remember { mutableStateOf("") } //color de carro
-
-    //MakeExposedDropdownMenuBox
-    val context = LocalContext.current
-    var MakeList = listOf("Toyota", "Nissan", "Kia")
-    var expanded by remember { mutableStateOf(false) }
-    var selectedMake by remember { mutableStateOf("") }
-
-    var model = remember { mutableStateOf("") } // modelo del carro
-
-    var yearCar = remember { mutableStateOf("") }  // año del carro
     Column(
         modifier = Modifier
             .background(color = colorResource(id = R.color.fondo))
@@ -88,152 +72,11 @@ fun editarCarros(navController: NavController){
                 .padding(vertical = 30.dp, horizontal = 25.dp)
         )
 
-        //Textfield numero de placa
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ){
-            InputField(
-                modifier = Modifier
-                    .size(width=330.dp,height=70.dp),
-                valueState = licensePlate,
-                labelId = "No.de Placa",
-                icon = painterResource(id = R.drawable.placa),
-                enabled = true,
-                isSingleLine = true,
-                keyboardType = KeyboardType.Text,
-                onAction = KeyboardActions{
-                    keyBoardController?.hide()
-                }
-            )
-        }
-
-        // MakeExposedDropdownMenuBox
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            ExposedDropdownMenuBox(
-                expanded = expanded,
-                onExpandedChange = {
-                    expanded = !expanded
-                }
-            ) {
-                TextField(
-                    value = selectedMake,
-                    onValueChange = {selectedMake = it},
-                    readOnly = true,
-                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-                    modifier = Modifier
-                        .menuAnchor()
-                        .size(width = 330.dp, height = 70.dp)
-                        .clip(RoundedCornerShape(10.dp)),
-                    colors = TextFieldDefaults.textFieldColors
-                        (containerColor = colorResource(id = R.color.txt_fields)
-                    ),
-                    textStyle= TextStyle(fontSize=16.sp,color= colorResource(
-                        id = R.color.texto_general)
-                    ),
-                    label = {
-                        Text(text = "Marca",
-                            color = colorResource(id = R.color.texto_general)
-                        )
-                    },
-                    leadingIcon = {
-                        IconButton(onClick = {/*TODO*/}){
-                            Icon(painter = painterResource(id = R.drawable.carro),
-                                contentDescription = "Marca del carro",
-                                modifier = Modifier
-                                    .size(24.dp))
-                        }
-                    }
-                )
-                ExposedDropdownMenu(
-                    expanded = expanded,
-                    onDismissRequest = { expanded = false }
-                ) {
-                    MakeList.forEach { item ->
-                        DropdownMenuItem(
-                            text = { Text(text = item) },
-                            onClick = {
-                                selectedMake = item
-                                expanded = false
-                            }
-                        )
-                    }
-                }
-            }
-        }
-
-        //Text field modelo del carro
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ){
-            InputField(
-                modifier = Modifier
-                    .size(width=330.dp,height=70.dp),
-                valueState = model,
-                labelId = "Modelo",
-                icon = painterResource(id = R.drawable.carro),
-                enabled = true,
-                isSingleLine = true,
-                keyboardType = KeyboardType.Text,
-                onAction = KeyboardActions{
-                    keyBoardController?.hide()
-                }
-            )
-        }
-
-        //Texfield color de carro
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ){
-            InputField(
-                modifier = Modifier
-                    .size(width=330.dp,height=70.dp),
-                valueState = color,
-                labelId = "Color",
-                icon = painterResource(id = R.drawable.color),
-                enabled = true,
-                isSingleLine = true,
-                keyboardType = KeyboardType.Text,
-                onAction = KeyboardActions{
-                    keyBoardController?.hide()
-                }
-            )
-        }
-        // Text field año modelo
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ){
-            InputField(
-                modifier = Modifier
-                    .size(width=330.dp,height=70.dp),
-                valueState = yearCar,
-                labelId = "Año modelo",
-                icon = painterResource(id = R.drawable.carro),
-                enabled = true,
-                isSingleLine = true,
-                keyboardType = KeyboardType.Number,
-                onAction = KeyboardActions{
-                    keyBoardController?.hide()
-                }
-            )
-        }
-
+        PlacaTextFieldEditar()
+        ColorTextFieldEditar()
+        MakeEditar()
+        ModelEditar()
+        CarYearTextFieldEditar()
         Spacer(modifier = Modifier.padding(25.dp))
         CustomButton(modifier = Modifier
             .align(CenterHorizontally)

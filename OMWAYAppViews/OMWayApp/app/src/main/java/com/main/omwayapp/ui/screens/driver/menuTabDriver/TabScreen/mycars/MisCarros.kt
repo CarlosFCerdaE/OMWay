@@ -1,5 +1,6 @@
 package com.main.omwayapp.ui.screens.driver.menuTabDriver.TabScreen.mycars
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -20,45 +21,96 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.main.omwayapp.R
+import com.main.omwayapp.apirest.viewmodel.omwayuser.driver.DriverViewModel
+import com.main.omwayapp.apirest.viewmodel.omwayuser.rider.RiderViewModel
 import com.main.omwayapp.ui.components.CustomDivider
+import com.main.omwayapp.ui.configDS.DataStoreManager
 import com.main.omwayapp.ui.screens.driver.mycars.MyUI
 import com.main.omwayapp.ui.navigationApp.AppScreens
+import kotlinx.coroutines.flow.first
 
 //@Preview(showSystemUi = true)
 @Composable
-fun MisCarros(navController: NavController? = null){
-    Column(
-        modifier = Modifier
-            .background(color = colorResource(id = R.color.fondo))
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        CustomDivider( modifier = Modifier.height(21.dp),)
-        Spacer(modifier = Modifier.height(15.dp))
+fun MisCarros(navController: NavController){
 
-        if (navController!=null) {
-            AgregarCarroText(navController)
+    val context = LocalContext.current
+    //ViewModel
+    ///Driver Get ViewModel
+    val driverModel: DriverViewModel = viewModel()
+    val driverState by driverModel._driverState.collectAsState()
+    val isDriverLoading = remember { mutableStateOf(false) }
+
+    //Values
+    val cif = remember { mutableStateOf("")}
+    //Storage
+
+    val dataStore = DataStoreManager(context)
+
+    //Get Cif From DataStorage
+    LaunchedEffect(Unit) {
+        val value = dataStore.getValue.first()
+        if (value != null) {
+            cif.value = value
+            driverModel.findDriverByCif(cif.value)
         }
-        Spacer(modifier = Modifier.height(15.dp))
-        if(navController!=null) {
-            MisCarrosOptionMenuBox(
-                navController,
-                marca = "Toyota",
-                modelo = "Hilux",
-                anio = "2020",
-                tonocolor = "Gris",
-                placa = "M 489753"
-            )
+    }
+    //Get Driver With Cif
+    LaunchedEffect(driverState) {
+        isDriverLoading.value = driverState._loading
+        Log.d("STATE", isDriverLoading.value.toString())
+    }
+
+    if (!isDriverLoading.value) {
+
+        val cars= remember { mutableStateOf(driverModel.driverState.value.driverItem.driverCars) }
+        Column(
+            modifier = Modifier
+                .background(color = colorResource(id = R.color.fondo))
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            CustomDivider(modifier = Modifier.height(21.dp),)
+            Spacer(modifier = Modifier.height(15.dp))
+
+
+            AgregarCarroText(navController)
+
+
+
+
+          for(car in cars.value){
+              Log.d("MARCA", car.model.make.name)
+            Spacer(modifier = Modifier.height(15.dp))
+                MisCarrosOptionMenuBox(
+                    navController,
+                    marca = car.model.make.name,
+                    modelo = car.model.name,
+                    anio = car.year,
+                    tonocolor = car.color,
+                    placa = car.licensePlate
+                )
+
+            }
+
+
+
         }
     }
 
