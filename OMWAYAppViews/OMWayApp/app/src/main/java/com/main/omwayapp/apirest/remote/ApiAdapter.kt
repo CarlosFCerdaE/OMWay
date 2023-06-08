@@ -32,7 +32,7 @@ object ApiAdapter {
     fun initialize(context: Context) {
         applicationContext = context.applicationContext
     }
-    val BASE_URL = "http://192.168.100.49:8181"
+    val BASE_URL = "http://192.168.1.10:8181"
 
     @RequiresApi(Build.VERSION_CODES.O)
     private val gson: Gson = GsonBuilder()

@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 class MakeViewModel:ViewModel() {
     private val repositoryMake : RepositoryMake = RepositoryMake()
 
-    private val _makeState = MutableStateFlow<MakeListUIState>(MakeListUIState())
+    val _makeState = MutableStateFlow<MakeListUIState>(MakeListUIState())
     val makeState:StateFlow<MakeListUIState> = _makeState
 
 

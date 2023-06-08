@@ -69,7 +69,7 @@ fun cardMytrips() {
     }
 
     if (!isDriverLoading.value) {
-        val rides= remember { mutableStateOf(driverModel.driverState.value.driverItem.driverRides) }
+        val rides= remember { mutableStateOf(driverModel.driverState.value.driverItem) }
 
         Column(
             modifier = Modifier
@@ -106,7 +106,7 @@ fun cardMytrips() {
                 modifier = Modifier
                     .align(Alignment.Start)
                     .padding(horizontal = 40.dp)
-            )
+            )/*
             for(ride in rides.value) {
                 ExpandableCardTripsDone(
                     nomRider = ride.rider.name,
@@ -120,6 +120,7 @@ fun cardMytrips() {
                     tiempotardado = "10 min."
                 )
             }
+            */
 
         }
 
