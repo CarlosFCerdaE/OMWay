@@ -167,7 +167,7 @@ fun homemenuRider(navController: NavHostController) {
                         when (it.id) {
                             "misviajes" -> navController.navigate(route = AppScreens.MisViajesRider.route)
                             "ajustes" -> navController.navigate(route = AppScreens.Ajustes.route)
-                            "driver" -> navController.navigate(route = AppScreens.MenuTabDriver.route)
+                            "driver" -> navController.navigate(route = AppScreens.RegisterDriver.route)
                         }
                     },
                 )

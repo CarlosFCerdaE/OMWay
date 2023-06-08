@@ -1,13 +1,17 @@
 package com.main.omwayapp.apirest.repository.omwayuser
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import com.main.omwayapp.apirest.dto.omwayuser.DriverDto
 import com.main.omwayapp.apirest.model.omwayuser.DriverItem
 import com.main.omwayapp.apirest.remote.ApiAdapter
 import com.main.omwayapp.apirest.remote.omwayuser.ApiDriver
 import java.lang.Exception
 
+@RequiresApi(Build.VERSION_CODES.O)
 class RepositoryDriver {
+
 
     private val apiDriver: ApiDriver = ApiAdapter.getInstance()
         .create(ApiDriver::class.java)

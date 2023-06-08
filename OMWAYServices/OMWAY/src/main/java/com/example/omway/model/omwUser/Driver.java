@@ -2,6 +2,7 @@ package com.example.omway.model.omwUser;
 
 import com.example.omway.model.trip.Ride;
 import com.example.omway.model.vehicle.Car;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -20,6 +21,7 @@ import java.util.List;
 @Table(name="Driver",schema = "OMWUser")
 
 public class Driver extends OMWayUser {
+    @JsonFormat(shape=JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd")
     private LocalDate dlExpirationDate;
     private int sumRating;
 
