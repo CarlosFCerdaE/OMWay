@@ -26,7 +26,7 @@ fun NavigationApp(){
 
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = AppScreens.SplashScreen.route){
+    NavHost(navController = navController, startDestination = AppScreens.MenuTabDriver.route){
         composable(route= AppScreens.SplashScreen.route){
             RSplashScreen(navController)
         }

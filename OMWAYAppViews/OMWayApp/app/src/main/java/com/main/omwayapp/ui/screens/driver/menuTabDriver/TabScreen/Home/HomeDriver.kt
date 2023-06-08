@@ -1,6 +1,7 @@
 package com.main.omwayapp.ui.screens.driver.menuTabDriver.TabScreen.Home
 
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -9,7 +10,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -24,6 +24,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,6 +34,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -40,96 +43,195 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.main.omwayapp.R
+import com.main.omwayapp.apirest.dto.omwayuser.DriverDto
+import com.main.omwayapp.apirest.dto.vehicle.CarDto
+import com.main.omwayapp.apirest.viewmodel.omwayuser.driver.DriverItemViewModel
+import com.main.omwayapp.apirest.viewmodel.omwayuser.driver.DriverViewModel
 import com.main.omwayapp.ui.components.CustomDivider
-
+import com.main.omwayapp.ui.configDS.DataStoreManager
+import com.main.omwayapp.ui.navigationApp.AppScreens
+import kotlinx.coroutines.flow.first
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 //@Preview(showSystemUi = true)
-fun HomeDriver(navController: NavController? = null) {
+fun HomeDriver(navController: NavController) {
 
-    var text by remember { mutableStateOf("DriverName!") }
+    //Context
+    val context = LocalContext.current
+    //ViewModel
+    ///Rider Get ViewModel
+    val driverModel: DriverViewModel = viewModel()
+    val driverState by driverModel._driverState.collectAsState()
+    val isDriverLoading = remember { mutableStateOf(true) }
 
-    Column(modifier =
-    Modifier
-        .background(color = colorResource(id = R.color.fondo))
-        .fillMaxSize()
-        .verticalScroll(rememberScrollState()),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+    //Values
+    val cif = remember { mutableStateOf("") }
 
-        CustomDivider( modifier = Modifier.height(21.dp),)
+    //Storage
 
-        Spacer(modifier = Modifier.padding(2.dp))
-        Column(modifier = Modifier.align(Alignment.Start))
-        {
-            Spacer(modifier = Modifier.padding(4.dp))
-            //Welcome Text
+    val dataStore = DataStoreManager(context)
 
-            Row(){
 
-                Column(){
-                    Text(
-                        text = "Bienvenido," + text,
-                        fontSize = 20.sp,
-                        fontFamily = FontFamily(Font(R.font.ibmplexsans_semibold)),
-                        color = colorResource(id = R.color.texto_general),
-                        modifier = Modifier
-                            .align(Alignment.Start)
-                            .padding(vertical = 10.dp, horizontal = 16.dp)
-                    )
-                }
-                IconButton(onClick = {/*TODO*/}){
-                    Icon(painter = painterResource(id = R.drawable.usuario_perfil),
-                        contentDescription = "Usuario perfil",
-                        tint = Color.White,
-                        modifier = Modifier
-                            .size(190.dp))
-                }
-            }
-            Spacer(modifier = Modifier.padding(8.dp))
-            Text(
-                text = "Tú Resumen:",
-                fontSize = 20.sp,
-                fontFamily = FontFamily(Font(R.font.ibmplexsans_semibold)),
-                color = colorResource(id = R.color.texto_general),
-                modifier = Modifier
-                    .align(Alignment.Start)
-                    .padding(vertical = 10.dp, horizontal = 16.dp)
-            )
+    //Get Cif From DataStorage
+    LaunchedEffect(Unit) {
+        val value = dataStore.getValue.first()
+        if (value != null) {
+            cif.value = value
+            driverModel.findDriverByCif(cif.value)
+        }
+    }
+    //Get Driver With Cif
+    LaunchedEffect(driverState) {
+        isDriverLoading.value = driverState._loading
+        Log.d("STATE", isDriverLoading.value.toString())
+    }
 
+    //Post Driver Item ViewModel
+    val driverItemModel: DriverItemViewModel = viewModel()
+    val driverItemState by driverItemModel._driverState.collectAsState()
+
+    if(!isDriverLoading.value) {
+        val name = remember { mutableStateOf(driverModel.driverState.value.driverItem.name)}
+        val sumRating = remember { mutableStateOf(driverModel.driverState.value.driverItem.sumRating)}
+        val numberRides = remember { mutableStateOf(driverModel.driverState.value.driverItem.numberRides)}
+        val earnings = remember { mutableStateOf(1200.4)}
+        val state = remember { mutableStateOf(driverModel.driverState.value.driverItem.state)}
+        val password = remember { mutableStateOf(driverModel.driverState.value.driverItem.password)}
+        val phone = remember { mutableStateOf(driverModel.driverState.value.driverItem.phone)}
+        val email = remember { mutableStateOf(driverModel.driverState.value.driverItem.email)}
+        val dlExpirationDate = remember { mutableStateOf(driverModel.driverState.value.driverItem.dlExpirationDate)}
+
+        if(driverItemState) {
+            navController.navigate(AppScreens.HomeMenuRider.route)
         }
 
-        Column(horizontalAlignment = Alignment.CenterHorizontally){
+        Column(
+            modifier =
+            Modifier
+                .background(color = colorResource(id = R.color.fondo))
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
 
-            Row(modifier = Modifier.padding(5.dp),
-                horizontalArrangement = Arrangement.Center)
+            CustomDivider(modifier = Modifier.height(21.dp),)
+
+            Spacer(modifier = Modifier.padding(2.dp))
+            Column(modifier = Modifier.align(Alignment.Start))
             {
+                Spacer(modifier = Modifier.padding(4.dp))
+                //Welcome Text
 
-                Column(
+                Row() {
+
+                    Column() {
+                        Text(
+                            text = "Bienvenido, ${name.value}",
+                            fontSize = 20.sp,
+                            fontFamily = FontFamily(Font(R.font.ibmplexsans_semibold)),
+                            color = colorResource(id = R.color.texto_general),
+                            modifier = Modifier
+                                .align(Alignment.Start)
+                                .padding(vertical = 10.dp, horizontal = 16.dp)
+                        )
+                    }
+                    IconButton(onClick = {/*TODO*/ }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.usuario_perfil),
+                            contentDescription = "Usuario perfil",
+                            tint = Color.White,
+                            modifier = Modifier
+                                .size(190.dp)
+                        )
+                    }
+                }
+                Spacer(modifier = Modifier.padding(8.dp))
+                Text(
+                    text = "Tú Resumen:",
+                    fontSize = 20.sp,
+                    fontFamily = FontFamily(Font(R.font.ibmplexsans_semibold)),
+                    color = colorResource(id = R.color.texto_general),
                     modifier = Modifier
-                        .padding(10.dp)//,
+                        .align(Alignment.Start)
+                        .padding(vertical = 10.dp, horizontal = 16.dp)
+                )
 
-                ) {
+            }
 
-                    TextField(value = text, onValueChange = {text=it},
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+
+                Row(
+                    modifier = Modifier.padding(5.dp),
+                    horizontalArrangement = Arrangement.Center
+                )
+                {
+
+                    Column(
+                        modifier = Modifier
+                            .padding(10.dp)//,
+
+                    ) {
+
+                        TextField(
+                            value = numberRides.value.toString(),
+                            onValueChange = { newValue ->
+                                numberRides.value = newValue.toIntOrNull() ?: 0
+                            },
+                            readOnly = true,
+                            modifier = Modifier
+                                .size(width = 155.dp, height = 90.dp)
+                                .clip(RoundedCornerShape(12.dp)),
+                            colors = TextFieldDefaults.textFieldColors
+                                (
+                                containerColor = colorResource(id = R.color.menta_importante)
+                            ),
+                            textStyle = TextStyle(
+                                fontSize = 24.sp, color = colorResource(
+                                    id = R.color.fondo
+                                ), fontFamily = FontFamily(Font(R.font.imbplexsans_medium)),
+                                textAlign = TextAlign.Center
+                            ),
+                            label = {
+                                androidx.compose.material3.Text(
+                                    text = "Viajes",
+                                    fontSize = 11.sp,
+                                    fontFamily = FontFamily(Font(R.font.ibmplexsans_bold)),
+                                    color = colorResource(id = R.color.fondo),
+                                    textAlign = TextAlign.Start
+                                )
+                            },
+                        )
+                    }
+                    //Ganancias Summary
+                    TextField(
+                        value = earnings.value.toString(),
+                        onValueChange = { newValue ->
+                            earnings.value = newValue.toDoubleOrNull() ?: 0.0
+                        },
                         readOnly = true,
                         modifier = Modifier
-                            .size(width = 155.dp, height = 90.dp)
+                            .size(width = 155.dp, height = 95.dp)
                             .clip(RoundedCornerShape(12.dp)),
                         colors = TextFieldDefaults.textFieldColors
-                            (containerColor = colorResource(id = R.color.menta_importante)
+                            (
+                            containerColor = colorResource(id = R.color.menta_importante)
                         ),
-                        textStyle= TextStyle(fontSize=24.sp,color=colorResource(
-                            id = R.color.fondo),fontFamily = FontFamily(Font(R.font.imbplexsans_medium)),
+                        textStyle = TextStyle(
+                            fontSize = 24.sp, color = colorResource(
+                                id = R.color.fondo
+                            ), fontFamily = FontFamily(Font(R.font.imbplexsans_medium)),
                             textAlign = TextAlign.Center
                         ),
                         label = {
                             androidx.compose.material3.Text(
-                                text = "Viajes",
+                                text = "Total C$",
                                 fontSize = 11.sp,
                                 fontFamily = FontFamily(Font(R.font.ibmplexsans_bold)),
                                 color = colorResource(id = R.color.fondo),
@@ -137,123 +239,106 @@ fun HomeDriver(navController: NavController? = null) {
                             )
                         },
                     )
+
                 }
-                //Ganancias Summary
-                TextField(value = text, onValueChange = {text=it},
+                //Rating
+                TextField(value = sumRating.value.toString(),
+                    onValueChange = { newValue ->
+                        sumRating.value = newValue.toIntOrNull() ?: 0
+                    },
                     readOnly = true,
                     modifier = Modifier
                         .size(width = 155.dp, height = 95.dp)
                         .clip(RoundedCornerShape(12.dp)),
                     colors = TextFieldDefaults.textFieldColors
-                        (containerColor = colorResource(id = R.color.menta_importante)
+                        (
+                        containerColor = colorResource(id = R.color.menta_importante)
                     ),
-                    textStyle= TextStyle(fontSize=24.sp,color=colorResource(
-                        id = R.color.fondo),fontFamily = FontFamily(Font(R.font.imbplexsans_medium)),
+                    textStyle = TextStyle(
+                        fontSize = 24.sp, color = colorResource(
+                            id = R.color.fondo
+                        ), fontFamily = FontFamily(Font(R.font.imbplexsans_medium)),
                         textAlign = TextAlign.Center
                     ),
                     label = {
                         androidx.compose.material3.Text(
-                            text = "Total C$",
+                            text = "Rating",
                             fontSize = 11.sp,
                             fontFamily = FontFamily(Font(R.font.ibmplexsans_bold)),
                             color = colorResource(id = R.color.fondo),
-                            textAlign = TextAlign.Start
+                            textAlign = TextAlign.Center
                         )
                     },
+                    trailingIcon = {
+                        IconButton(onClick = {/*TODO*/ }) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.favorito),
+                                contentDescription = "Rating",
+                                tint = Color.Yellow,
+                                modifier = Modifier
+                                    .size(30.dp)
+                            )
+                        }
+                    }
                 )
 
+
             }
 
-            TextField(value = text, onValueChange = {text=it},
-                readOnly = true,
-                modifier = Modifier
-                    .size(width = 155.dp, height = 95.dp)
-                    .clip(RoundedCornerShape(12.dp)),
-                colors = TextFieldDefaults.textFieldColors
-                    (containerColor = colorResource(id = R.color.menta_importante)
-                ),
-                textStyle= TextStyle(fontSize=24.sp,color=colorResource(
-                    id = R.color.fondo),fontFamily = FontFamily(Font(R.font.imbplexsans_medium)),
-                    textAlign = TextAlign.Center
-                ),
-                label = {
-                    androidx.compose.material3.Text(
-                        text = "Rating",
-                        fontSize = 11.sp,
-                        fontFamily = FontFamily(Font(R.font.ibmplexsans_bold)),
-                        color = colorResource(id = R.color.fondo),
-                        textAlign = TextAlign.Center
-                    )
-                },
-                trailingIcon = {
-                    IconButton(onClick = {/*TODO*/}){
-                        Icon(painter = painterResource(id = R.drawable.favorito),
-                            contentDescription = "Rating",
-                            tint = Color.Yellow,
-                            modifier = Modifier
-                                .size(30.dp))
+            Spacer(modifier = Modifier.padding(12.dp))
+            val decimal = BigDecimal(earnings.value*0.2)
+                .setScale(2, RoundingMode.HALF_EVEN)
+            DepositoText(decimal.toString())
+
+            Spacer(modifier = Modifier.padding(12.dp))
+
+            Column() {
+                Row(
+                    modifier = Modifier
+                        .align(Alignment.Start)
+                        .padding(10.dp)
+                )
+                {
+                    Box(
+                        modifier = Modifier
+                            .height(85.dp)
+                            .width(150.dp)
+                            .padding(4.dp)
+                            .clip(RoundedCornerShape(12.dp))
+                    ) {
+                        AjustesBox(navController){
+                            navController.navigate(AppScreens.Ajustes.route)
+                        }
+                    }
+
+                    Box(
+                        modifier = Modifier
+                            .height(85.dp)
+                            .width(150.dp)
+                            .padding(4.dp)
+                            .clip(RoundedCornerShape(12.dp))
+                    ) {
+                        ModoPasajeroBox(navController){
+                            driverItemModel.updateDriver(DriverDto(cif.value,password.value,name.value,phone.value,email.value,false,dlExpirationDate.value.toString()))
+                        }
                     }
                 }
-            )
+            }
 
 
         }
-
-        Spacer(modifier = Modifier.padding(12.dp))
-
-        DepositoText()
-
-        Spacer(modifier = Modifier.padding(12.dp))
-
-        Column(){
-            Row(modifier = Modifier
-                .align(Alignment.Start)
-                .padding(10.dp))
-            {
-            Box(
-                modifier = Modifier
-                    .height(85.dp)
-                    .width(150.dp)
-                    .padding(4.dp)
-                    .clip(RoundedCornerShape(12.dp))
-            ) {
-                if (navController != null) {
-                    AjustesBox(navController)
-                }
-            }
-
-            Box(
-                modifier = Modifier
-                    .height(85.dp)
-                    .width(150.dp)
-                    .padding(4.dp)
-                    .clip(RoundedCornerShape(12.dp))
-            ) {
-                ModoPasajeroBox()
-                }
-            }
-        }
-
-
-
     }
-
 
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable()
-fun DepositoText() {
-
-    var text by remember { mutableStateOf("240") }
-    var textDeposito by remember { mutableStateOf("Debes depositar: C$") }
-
-    textDeposito = textDeposito+text;
+fun DepositoText(quantityToDeposit:String) {
 
     Column(){
 
         TextField(
-            value = textDeposito, onValueChange = { textDeposito = it },
+            value = "Debes depositar: C$${quantityToDeposit}", onValueChange = {},
             readOnly = true,
             modifier = Modifier
                 .size(width = 311.dp, height = 90.dp),
@@ -278,9 +363,7 @@ fun DepositoText() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AjustesBox(navController: NavController){
-    
-    var text by remember { mutableStateOf("5.0") }
+fun AjustesBox(navController: NavController,onClick:()->Unit){
 
 
     Column(
@@ -288,8 +371,8 @@ fun AjustesBox(navController: NavController){
             .size(width = 150.dp, height = 85.dp)
             .background(colorResource(id = R.color.menta_importante))
             .clip(RoundedCornerShape(12.dp))
-            .padding(10.dp),
-            //.clickable { navController.navigate(route = ReaderScreens.Ajustes.name) },
+            .padding(10.dp)
+            .clickable {onClick},
         horizontalAlignment = Alignment.CenterHorizontally
 
     ) {
@@ -310,14 +393,18 @@ fun AjustesBox(navController: NavController){
 }
 
 @Composable
-fun ModoPasajeroBox(){
+fun ModoPasajeroBox(navController: NavController,onClick:()->Unit){
 
     Column(
         modifier = Modifier
             .size(width = 150.dp, height = 85.dp)
             .background(colorResource(id = R.color.menta_importante))
             .clip(RoundedCornerShape(12.dp))
-            .padding(10.dp),
+            .padding(10.dp)
+            .clickable {
+                       onClick
+            },
+
         horizontalAlignment = Alignment.CenterHorizontally
 
     ) {
