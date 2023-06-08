@@ -2,7 +2,9 @@ package com.main.omwayapp.ui.screens.rider.misViajesRider
 
 
 import android.app.TimePickerDialog
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -41,6 +43,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.main.omwayapp.R
 import com.main.omwayapp.apirest.viewmodel.omwayuser.rider.RiderViewModel
 import com.main.omwayapp.apirest.viewmodel.trip.RideItemViewModel
+import com.main.omwayapp.apirest.viewmodel.trip.RideViewModel
 import com.main.omwayapp.ui.components.ExpandableCardTrips
 import com.main.omwayapp.ui.components.ExpandableCardTripsDoneRider
 import com.main.omwayapp.ui.configDS.DataStoreManager
@@ -49,6 +52,7 @@ import kotlinx.coroutines.flow.first
 import java.util.Calendar
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MisViajesRider(navController: NavController) {
@@ -57,7 +61,6 @@ fun MisViajesRider(navController: NavController) {
     val context = LocalContext.current
     //Values
 
-    val cif = remember { mutableStateOf("") }
     val distance = remember { mutableStateOf(5.54) }
     val notes = remember { mutableStateOf("") }
     val baseFare = remember { mutableStateOf(40) }
@@ -67,27 +70,59 @@ fun MisViajesRider(navController: NavController) {
     //ViewModel
     val riderModel: RiderViewModel = viewModel()
     val riderState by riderModel._riderState.collectAsState()
-    val isRiderLoading = remember { mutableStateOf(false) }
+    val isRiderLoading = remember { mutableStateOf(true) }
+
+    ///Ride Get ViewModel
+    val rideModel: RideViewModel = viewModel()
+    val discontinuedRideState by rideModel._discontinuedRideState.collectAsState()
+    val inProgressRideState by rideModel._inProgressRideState.collectAsState()
+    val isDiscontinuedRideLoading = remember { mutableStateOf(true) }
+    val isInProgressRideLoading = remember { mutableStateOf(true) }
+    //Values
+    val cif = remember { mutableStateOf("") }
+
 
     //Storage
 
     val dataStore = DataStoreManager(context)
 
     //Launched Effect
-
     LaunchedEffect(Unit) {
         val value = dataStore.getValue.first()
         if (value != null) {
             cif.value = value
             riderModel.findRiderByCif(cif.value)
+
         }
     }
+
     LaunchedEffect(riderState) {
         isRiderLoading.value = riderState._loading
         Log.d("STATE", isRiderLoading.value.toString())
+        if(!isRiderLoading.value){
+            rideModel.findDiscontinuedRideByRiderCif(cif.value)
+        }
+
+
+    }
+    LaunchedEffect(discontinuedRideState) {
+        isDiscontinuedRideLoading.value = discontinuedRideState._loading
+        Log.d("STATE", isDiscontinuedRideLoading.value.toString())
+        if(!isDiscontinuedRideLoading.value){
+            rideModel.findInProgressRidesByRiderCif(cif.value)
+        }
+
+
+    }
+    LaunchedEffect(inProgressRideState) {
+        isInProgressRideLoading.value = inProgressRideState._loading
+        Log.d("STATE", isInProgressRideLoading.value.toString())
+
     }
 
-    if (!isRiderLoading.value) {
+    if (!isInProgressRideLoading.value) {
+        val ridesR= remember { mutableStateOf(rideModel.discontinuedRideState.value.listDiscontinuedRides) }
+        val ridesRIP= remember { mutableStateOf(rideModel.inProgressRideState.value.listInProgressRides) }
 
         Column(
             modifier = Modifier
@@ -126,16 +161,17 @@ fun MisViajesRider(navController: NavController) {
             )
             Column() {
 
-
-                ExpandableCardTrips(
-                    nomRider = "Conductor Asignado",
-                    tarifa = "Tarifa Estimada: 60C$",
-                    hora = "3:00 pm",
-                    puntoA = "Villa Fontana",
-                    puntoB = "Universida Americana UAM",
-                    distanciaEst = "Distancia Estimada: 2 Km"
-                )
-                Spacer(modifier = Modifier.height(10.dp))
+                for(rideRIP in ridesRIP.value) {
+                    ExpandableCardTrips(
+                        nomRider = rideRIP.driver.name,
+                        tarifa = rideRIP.fare.toString(),
+                        hora = rideRIP.pickUpTime.toString(),
+                        puntoA = rideRIP.pickUpLocation,
+                        puntoB = rideRIP.dropOffLocation,
+                        distanciaEst = ""
+                    )
+                    Spacer(modifier = Modifier.height(10.dp))
+                }
                 Text(
                     text = "Completados",
                     color = colorResource(id = R.color.menta_importante),
@@ -145,19 +181,22 @@ fun MisViajesRider(navController: NavController) {
                         .align(Alignment.Start)
                         .padding(horizontal = 40.dp)
                 )
-                ExpandableCardTripsDoneRider(
-                    tarifa = "Tarifa Pagada: 80 C$",
-                    hora = "01 de Mayo del 2023, 5:00 pm",
-                    puntoA = "Villa Fontana Norte",
-                    puntoB = "Universidad Americana UAM",
-                    distanciaRec = "Distancia: ",
-                    distancia = "1.5 Km",
-                    tiempo = "Tiempo: ",
-                    tiempotardado = "10 min.",
-                    nomRider = "Jane Doe",
-                    detallesCarro = "Toyota Corolla Azul Oscuro",
-                    placa = "M323845"
-                )
+                for(rideR in ridesR.value) {
+                    Log.d("FARE", rideR.fare.toString())
+                    ExpandableCardTripsDoneRider(
+                        tarifa = rideR.fare.toString(),
+                        hora = rideR.dropOffTime.toString(),
+                        puntoA = rideR.pickUpLocation,
+                        puntoB = rideR.dropOffLocation,
+                        distanciaRec = "Distancia: ",
+                        distancia = rideR.distance.toString(),
+                        tiempo = "Tiempo: ",
+                        tiempotardado = "10 min.",
+                        nomRider = rideR.driver.name,
+                        detallesCarro =rideR.car.model.make.name+" "+rideR.car.model.name+" "+rideR.car.color,
+                        placa =rideR.car.licensePlate
+                    )
+                }
             }
 
         }

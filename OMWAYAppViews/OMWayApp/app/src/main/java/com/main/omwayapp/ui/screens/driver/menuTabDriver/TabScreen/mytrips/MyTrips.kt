@@ -1,7 +1,10 @@
 package com.main.omwayapp.ui.screens.driver.menuTabDriver.TabScreen.mytrips
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -29,6 +32,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.main.omwayapp.R
 import com.main.omwayapp.apirest.viewmodel.omwayuser.driver.DriverViewModel
+import com.main.omwayapp.apirest.viewmodel.trip.RideViewModel
 import com.main.omwayapp.ui.components.CustomDivider
 import com.main.omwayapp.ui.components.ExpandableCardTrips
 import com.main.omwayapp.ui.components.ExpandableCardTripsDone
@@ -36,6 +40,7 @@ import com.main.omwayapp.ui.configDS.DataStoreManager
 import kotlinx.coroutines.flow.first
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterialApi::class)
 @Preview(showSystemUi = true)
 @Composable
@@ -46,10 +51,18 @@ fun cardMytrips() {
     ///Driver Get ViewModel
     val driverModel: DriverViewModel = viewModel()
     val driverState by driverModel._driverState.collectAsState()
-    val isDriverLoading = remember { mutableStateOf(false) }
+    val isDriverLoading = remember { mutableStateOf(true) }
+
+    ///Driver Get ViewModel
+    val rideModel: RideViewModel = viewModel()
+    val discontinuedRideState by rideModel._discontinuedRideState.collectAsState()
+    val inProgressRideState by rideModel._inProgressRideState.collectAsState()
+    val isDiscontinuedRideLoading = remember { mutableStateOf(true) }
+    val isInProgressRideLoading = remember { mutableStateOf(true) }
 
     //Values
     val cif = remember { mutableStateOf("") }
+
     //Storage
 
     val dataStore = DataStoreManager(context)
@@ -66,17 +79,36 @@ fun cardMytrips() {
     LaunchedEffect(driverState) {
         isDriverLoading.value = driverState._loading
         Log.d("STATE", isDriverLoading.value.toString())
+        if(!isDriverLoading.value){
+            rideModel.findDiscontinuedRidesByDriverCif(cif.value)
+        }
     }
+    LaunchedEffect(discontinuedRideState) {
+        isDiscontinuedRideLoading.value = discontinuedRideState._loading
+        Log.d("STATE", isDiscontinuedRideLoading.value.toString())
+        if(!isDiscontinuedRideLoading.value){
+            rideModel.findInProgressRidesByDriverCif(cif.value)
+        }
 
-    if (!isDriverLoading.value) {
-        val rides= remember { mutableStateOf(driverModel.driverState.value.driverItem) }
+
+    }
+    LaunchedEffect(inProgressRideState) {
+        isInProgressRideLoading.value = inProgressRideState._loading
+        Log.d("STATE", isInProgressRideLoading.value.toString())
+
+    }
+    if (!isInProgressRideLoading.value) {
+        //val rides= remember { mutableStateOf(driverModel.driverState.value.driverItem) }
+        val rides = remember { mutableStateOf(rideModel.discontinuedRideState.value.listDiscontinuedRides) }
+        val ridesInP = remember { mutableStateOf(rideModel.inProgressRideState.value.listInProgressRides) }
 
         Column(
             modifier = Modifier
                 .background(color = colorResource(id = R.color.fondo))
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState()),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+
         ) {
             CustomDivider(modifier = Modifier.height(21.dp))
             Spacer(modifier = Modifier.height(15.dp))
@@ -89,14 +121,16 @@ fun cardMytrips() {
                     .align(Alignment.Start)
                     .padding(horizontal = 40.dp)
             )
-            ExpandableCardTrips(
-                nomRider = "Hermenegildo Pancracio",
-                tarifa = "Tarifa Estimada: 60C$",
-                hora = "3:00 pm",
-                puntoA = "Villa Fontana",
-                puntoB = "Universida Americana UAM",
-                distanciaEst = "Distancia Estimada: 2 Km"
-            )
+            for(rideInP in ridesInP.value) {
+                ExpandableCardTrips(
+                    nomRider = rideInP.rider.name,
+                    tarifa = rideInP.fare.toString(),
+                    hora = rideInP.dropOffTime.toString(),
+                    puntoA = rideInP.pickUpLocation,
+                    puntoB = rideInP.dropOffLocation,
+                    distanciaEst = rideInP.distance.toString()
+                )
+            }
             Spacer(modifier = Modifier.height(10.dp))
             Text(
                 text = "Completados",
@@ -106,21 +140,23 @@ fun cardMytrips() {
                 modifier = Modifier
                     .align(Alignment.Start)
                     .padding(horizontal = 40.dp)
-            )/*
+            )
+
             for(ride in rides.value) {
-                ExpandableCardTripsDone(
-                    nomRider = ride.rider.name,
-                    tarifa = ride.fare.toString(),
-                    hora = ride.dropOffTime.toString(),
-                    puntoA = ride.pickUpLocation,
-                    puntoB = ride.dropOffLocation,
-                    distanciaRec = "Distancia: ",
-                    distancia = ride.distance.toString(),
-                    tiempo = "Tiempo: ",
-                    tiempotardado = "10 min."
-                )
+                    ExpandableCardTripsDone(
+                        nomRider = ride.rider.name,
+                        tarifa = ride.fare.toString() ,
+                        hora = ride.dropOffTime.toString(),
+                        puntoA = ride.pickUpLocation,
+                        puntoB = ride.dropOffLocation,
+                        distanciaRec = "Distancia: ",
+                        distancia = ride.distance.toString(),
+                        tiempo = "Tiempo: ",
+                        tiempotardado = "10 min."
+                    )
+
             }
-            */
+
 
         }
 

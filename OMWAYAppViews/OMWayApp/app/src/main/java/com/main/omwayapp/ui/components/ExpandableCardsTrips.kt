@@ -265,17 +265,35 @@ fun ExpandableCardTripsDone(
                         color = colorResource(id = R.color.texto_general),
                         fontSize = 16.sp
                     )
-                    Text(
-                        text = tarifa,
-                        color = colorResource(id = R.color.texto_general),
-                        fontSize = 16.sp
+                    Row() {
 
-                    )
-                    Text(
-                        text = hora,
-                        color = colorResource(id = R.color.texto_general),
-                        fontSize = 16.sp
-                    )
+
+                        Text(
+                            text = "Tarifa: C$",
+                            color = colorResource(id = R.color.texto_general),
+                            fontSize = 16.sp
+
+                        )
+                        Text(
+                            text = tarifa,
+                            color = colorResource(id = R.color.texto_general),
+                            fontSize = 16.sp
+
+                        )
+                    }
+                    Row() {
+                        Text(
+                            text = "Hora Finalizado: ",
+                            color = colorResource(id = R.color.texto_general),
+                            fontSize = 16.sp
+                        )
+                        Text(
+                            text = hora,
+                            color = colorResource(id = R.color.texto_general),
+                            fontSize = 16.sp
+                        )
+
+                    }
                     Spacer(modifier = Modifier.height(8.dp))
 
                 }
