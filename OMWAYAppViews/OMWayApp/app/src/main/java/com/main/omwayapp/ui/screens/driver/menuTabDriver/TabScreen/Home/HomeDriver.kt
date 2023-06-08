@@ -101,7 +101,7 @@ fun HomeDriver(navController: NavController) {
         val name = remember { mutableStateOf(driverModel.driverState.value.driverItem.name)}
         val sumRating = remember { mutableStateOf(driverModel.driverState.value.driverItem.sumRating)}
         val numberRides = remember { mutableStateOf(driverModel.driverState.value.driverItem.numberRides)}
-        val earnings = remember { mutableStateOf(1200.4)}
+        val earnings = remember { mutableStateOf(0.0)}
         val state = remember { mutableStateOf(driverModel.driverState.value.driverItem.state)}
         val password = remember { mutableStateOf(driverModel.driverState.value.driverItem.password)}
         val phone = remember { mutableStateOf(driverModel.driverState.value.driverItem.phone)}
@@ -405,7 +405,7 @@ fun ModoPasajeroBox(navController: NavController,onClick:()->Unit){
             .clip(RoundedCornerShape(12.dp))
             .padding(10.dp)
             .clickable {
-                onClick
+                onClick.invoke()
             },
 
         horizontalAlignment = Alignment.CenterHorizontally

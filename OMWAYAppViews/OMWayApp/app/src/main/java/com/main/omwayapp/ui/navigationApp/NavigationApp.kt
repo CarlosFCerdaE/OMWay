@@ -21,7 +21,6 @@ import com.main.omwayapp.ui.screens.rider.homeMenu.homemenuRider
 import com.main.omwayapp.ui.screens.rider.misViajesRider.MisViajesRider
 import com.main.omwayapp.ui.screens.rider.register.RegisterRider
 import com.main.omwayapp.ui.screens.rider.viajeRider.viajeRider
-import com.main.omwayapp.ui.screens.splash.RSplashScreen
 
 @RequiresApi(Build.VERSION_CODES.Q)
 @Composable

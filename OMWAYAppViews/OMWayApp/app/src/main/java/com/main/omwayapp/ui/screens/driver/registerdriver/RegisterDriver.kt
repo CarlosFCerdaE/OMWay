@@ -56,6 +56,7 @@ import com.main.omwayapp.R
 import com.main.omwayapp.apirest.dto.omwayuser.DriverDto
 import com.main.omwayapp.apirest.dto.vehicle.CarDto
 import com.main.omwayapp.apirest.viewmodel.omwayuser.driver.DriverItemViewModel
+import com.main.omwayapp.apirest.viewmodel.omwayuser.driver.DriverViewModel
 import com.main.omwayapp.apirest.viewmodel.omwayuser.rider.RiderViewModel
 import com.main.omwayapp.apirest.viewmodel.vehicle.car.CarItemViewModel
 import com.main.omwayapp.apirest.viewmodel.vehicle.make.MakeViewModel
@@ -123,6 +124,11 @@ fun RegisterDriver(navController: NavController){
     val riderState by riderModel._riderState.collectAsState()
     val isRiderLoading = remember { mutableStateOf(true) }
 
+    ///Driver Get ViewModel
+    val driverModel: DriverViewModel = viewModel()
+    val driverState by driverModel._driverState.collectAsState()
+    val isDriverLoading = remember { mutableStateOf(true) }
+
     ///Make Get ViewModel
     val makeModel: MakeViewModel = viewModel()
     val makeState by makeModel._makeState.collectAsState()
@@ -143,7 +149,7 @@ fun RegisterDriver(navController: NavController){
 
     //Values
     val cif = remember { mutableStateOf("")}
-
+    val driverCif = remember{ mutableStateOf("")}
     //Storage
     val dataStore = DataStoreManager(context)
 
@@ -155,7 +161,23 @@ fun RegisterDriver(navController: NavController){
         val value = dataStore.getValue.first()
         if (value != null) {
             cif.value = value
+            driverModel.findDriverByCif(cif.value)
+        }
+    }
+    //Get Driver With Cif
+    LaunchedEffect(driverState) {
+        isDriverLoading.value = driverState._loading
+        Log.d("STATEDRIVER", isDriverLoading.value.toString())
+        if(!isDriverLoading.value){
+            driverCif.value = driverModel.driverState.value.driverItem.cif
             riderModel.findRiderByCif(cif.value)
+        }
+    }
+    if(!isDriverLoading.value) {
+        if (driverCif.value == cif.value) {
+            LaunchedEffect(Unit) {
+                navController.navigate(route = AppScreens.MenuTabDriver.route)
+            }
         }
     }
     //Get Rider With Cif
