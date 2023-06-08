@@ -16,7 +16,7 @@ class ModelViewModel:ViewModel() {
 
     private val repositoryModel : RepositoryModel = RepositoryModel()
 
-    private val _modelState = MutableStateFlow<ModelListUIState>(ModelListUIState())
+    val _modelState = MutableStateFlow<ModelListUIState>(ModelListUIState())
     val modelState: StateFlow<ModelListUIState> = _modelState
 
 
