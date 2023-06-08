@@ -62,39 +62,6 @@ import kotlinx.coroutines.launch
 //@Preview(showSystemUi=true)
 fun MenuTabDriver(navController: NavController){
 
-    //Context
-    val context = LocalContext.current
-    //ViewModel
-    ///Rider Get ViewModel
-    val driverModel: DriverViewModel = viewModel()
-    val driverState by driverModel._driverState.collectAsState()
-    val isDriverLoading = remember { mutableStateOf(true) }
-
-    //Values
-    val cif = remember { mutableStateOf("") }
-
-    //Storage
-
-    val dataStore = DataStoreManager(context)
-
-    //Get Cif From DataStorage
-    LaunchedEffect(Unit) {
-        val value = dataStore.getValue.first()
-        if (value != null) {
-            cif.value = value
-            driverModel.findDriverByCif(cif.value)
-        }
-    }
-    //Get Driver With Cif
-    LaunchedEffect(driverState) {
-        isDriverLoading.value = driverState._loading
-        Log.d("STATE", isDriverLoading.value.toString())
-    }
-
-    //Post Driver Item ViewModel
-    val driverItemModel: DriverItemViewModel = viewModel()
-    val driverItemState by driverItemModel._driverState.collectAsState()
-
     val tabs = listOf(
         TabsItem.itemHome,
         TabsItem.itemSolicitudes,
@@ -102,62 +69,42 @@ fun MenuTabDriver(navController: NavController){
         TabsItem.itemMisCarros
     )
     val pagerState = rememberPagerState()
-    if(!isDriverLoading.value) {
-        val name = remember { mutableStateOf(driverModel.driverState.value.driverItem.name) }
-        val sumRating =
-            remember { mutableStateOf(driverModel.driverState.value.driverItem.sumRating) }
-        val numberRides =
-            remember { mutableStateOf(driverModel.driverState.value.driverItem.numberRides) }
-        val earnings = remember { mutableStateOf(1200.4) }
-        val state = remember { mutableStateOf(driverModel.driverState.value.driverItem.state) }
-        val password =
-            remember { mutableStateOf(driverModel.driverState.value.driverItem.password) }
-        val phone = remember { mutableStateOf(driverModel.driverState.value.driverItem.phone) }
-        val email = remember { mutableStateOf(driverModel.driverState.value.driverItem.email) }
-        val dlExpirationDate =
-            remember { mutableStateOf(driverModel.driverState.value.driverItem.dlExpirationDate) }
 
-        if (driverItemState) {
-            navController.navigate(AppScreens.HomeMenuRider.route)
-        }
-
+    Column(
+        modifier =
+        Modifier
+            .background(color = colorResource(id = R.color.fondo))
+    ) {
         Column(
-            modifier =
-            Modifier
-                .background(color = colorResource(id = R.color.fondo))
+            modifier = Modifier
+                .background(color = colorResource(id = R.color.fondo)),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Column(
+            Text(
+                text = "Activo",
+                fontSize = 14.sp,
+                fontFamily = FontFamily(Font(R.font.inter_bold)),
+                color = colorResource(id = R.color.texto_general),
                 modifier = Modifier
-                    .background(color = colorResource(id = R.color.fondo)),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    text = "Activo",
-                    fontSize = 14.sp,
-                    fontFamily = FontFamily(Font(R.font.inter_bold)),
-                    color = colorResource(id = R.color.texto_general),
-                    modifier = Modifier
-                        .padding(vertical = 5.dp, horizontal = 16.dp)
-                )
+                    .padding(vertical = 5.dp, horizontal = 16.dp)
+            )
 
-                val checkedState = remember {
-                    mutableStateOf(state.value)
-                }
-                Switch(
-                    checked = checkedState.value,
-                    onCheckedChange = {
-                        checkedState.value = it
-                        driverItemModel.updateDriver(DriverDto(cif.value,password.value,name.value,phone.value,email.value,checkedState.value,dlExpirationDate.value.toString()))
-                    },
-                    colors = SwitchDefaults.colors(
-                        checkedThumbColor = TxtFields,
-                        checkedTrackColor = MentaImportante40
-                    )
-                )
-
-                Tabs(tabs, pagerState)
-                TabsContent(tabs, pagerState, navController)
+            val checkedState = remember {
+                mutableStateOf(true)
             }
+            Switch(
+                checked = checkedState.value,
+                onCheckedChange = {
+                    checkedState.value = it
+                },
+                colors = SwitchDefaults.colors(
+                    checkedThumbColor = TxtFields,
+                    checkedTrackColor = MentaImportante40
+                )
+            )
+
+            Tabs(tabs, pagerState)
+            TabsContent(tabs, pagerState, navController)
         }
     }
 }

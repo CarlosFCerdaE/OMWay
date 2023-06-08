@@ -109,7 +109,10 @@ fun HomeDriver(navController: NavController) {
         val dlExpirationDate = remember { mutableStateOf(driverModel.driverState.value.driverItem.dlExpirationDate)}
 
         if(driverItemState) {
-            navController.navigate(AppScreens.HomeMenuRider.route)
+            LaunchedEffect(Unit){
+                navController.navigate(AppScreens.HomeMenuRider.route)
+            }
+
         }
 
         Column(
@@ -372,7 +375,7 @@ fun AjustesBox(navController: NavController,onClick:()->Unit){
             .background(colorResource(id = R.color.menta_importante))
             .clip(RoundedCornerShape(12.dp))
             .padding(10.dp)
-            .clickable {onClick},
+            .clickable { onClick },
         horizontalAlignment = Alignment.CenterHorizontally
 
     ) {
@@ -402,7 +405,7 @@ fun ModoPasajeroBox(navController: NavController,onClick:()->Unit){
             .clip(RoundedCornerShape(12.dp))
             .padding(10.dp)
             .clickable {
-                       onClick
+                onClick
             },
 
         horizontalAlignment = Alignment.CenterHorizontally
