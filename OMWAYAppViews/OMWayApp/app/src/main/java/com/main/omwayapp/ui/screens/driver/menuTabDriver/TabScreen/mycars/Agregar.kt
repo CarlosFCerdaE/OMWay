@@ -49,6 +49,7 @@ import com.main.omwayapp.R
 import com.main.omwayapp.apirest.dto.omwayuser.DriverDto
 import com.main.omwayapp.apirest.dto.omwayuser.RiderDto
 import com.main.omwayapp.apirest.dto.vehicle.CarDto
+import com.main.omwayapp.apirest.model.vehicle.CarItem
 import com.main.omwayapp.apirest.viewmodel.omwayuser.driver.DriverItemViewModel
 import com.main.omwayapp.apirest.viewmodel.omwayuser.driver.DriverViewModel
 import com.main.omwayapp.apirest.viewmodel.vehicle.car.CarItemViewModel
@@ -65,22 +66,24 @@ import kotlinx.coroutines.flow.first
 //@Preview(showSystemUi = true)
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun agregarCarros(navController: NavController){
+fun agregarCarros(navController: NavController,carItem:CarItem,oper:String?){
+    val item = remember{ mutableStateOf(carItem)}
+    var detail: CarItemViewModel = viewModel()
 
-    var keyBoardController = LocalSoftwareKeyboardController.current
+    val keyBoardController = LocalSoftwareKeyboardController.current
 
-    var licensePlate = remember { mutableStateOf("") } //numero de placa carro
-    var color = remember { mutableStateOf("") } //color de carro
+    val licensePlate = remember { mutableStateOf("") } //numero de placa carro
+    val color = remember { mutableStateOf("") } //color de carro
 
     //MakeExposedDropdownMenuBox
     val context = LocalContext.current
-    var MakeList = listOf("Toyota", "Nissan", "Kia")
+    val MakeList = listOf("Toyota", "Nissan", "Kia")
     var expanded by remember { mutableStateOf(false) }
     var selectedMake by remember { mutableStateOf("") }
 
-    var model = remember { mutableStateOf("") } // modelo del carro
+    val model = remember { mutableStateOf("") } // modelo del carro
 
-    var yearCar = remember { mutableStateOf("") }  // año del carro
+    val yearCar = remember { mutableStateOf("") }  // año del carro
 
     val carItemModel: CarItemViewModel = viewModel()
     val carItemState by carItemModel._carState.collectAsState()
@@ -282,7 +285,7 @@ fun agregarCarros(navController: NavController){
         Spacer(modifier = Modifier.padding(25.dp))
         CustomButton(modifier = Modifier
             .align(CenterHorizontally)
-            .size(width=222.dp,height=51.dp),
+            .size(width = 222.dp, height = 51.dp),
             text = "Agregar",
             fontSize = 20.sp) {
             //carItemModel.saveCar(CarDto(licensePlate.value,color.value,yearCar.value, state = true,cif.value,model.value))

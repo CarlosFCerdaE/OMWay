@@ -185,7 +185,9 @@ fun AgregarCarroText(navController: NavController){
     ) {
         Text(text = "Agregar Carro",
             modifier = Modifier
-                .clickable { navController.navigate(route = AppScreens.AgregarCarro.route) },
+                .clickable {
+                    navController.navigate(route = AppScreens.AgregarCarro.route)
+                           },
             color = colorResource(id = R.color.menta_importante),
         )
     }

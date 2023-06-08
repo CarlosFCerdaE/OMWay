@@ -322,7 +322,7 @@ fun HomeDriver(navController: NavController) {
                             .clip(RoundedCornerShape(12.dp))
                     ) {
                         ModoPasajeroBox(navController){
-                            driverItemModel.updateDriver(DriverDto(cif.value,password.value,name.value,phone.value,email.value,false,dlExpirationDate.value.toString()))
+                            driverItemModel.updateDriver(DriverDto(cif.value,password.value,name.value,phone.value,email.value,!state.value,dlExpirationDate.value.toString()))
                         }
                     }
                 }
@@ -412,14 +412,14 @@ fun ModoPasajeroBox(navController: NavController,onClick:()->Unit){
 
     ) {
         Column(modifier =  Modifier.align(Alignment.Start)){
-            Text("Modo Pasajero",
+            Text("Cambiar de Modo",
                 fontSize = 16.sp,
                 fontFamily = FontFamily(Font(R.font.ibmplexsans_bold)),
                 color = colorResource(id = R.color.fondo)
             )
         }
         Icon(painter = painterResource(id = R.drawable.carro),
-            contentDescription = "Modo Pasajero",
+            contentDescription = "Cambio de Modo",
             modifier = Modifier
                 .size(35.dp))
     }

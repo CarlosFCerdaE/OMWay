@@ -32,6 +32,7 @@ import com.main.omwayapp.ui.components.InputField
 import com.main.omwayapp.ui.theme.OMWayAppTheme
 
 import androidx.compose.ui.unit.sp
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.main.omwayapp.ui.navigationApp.NavigationApp
@@ -48,45 +49,16 @@ class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.Q)
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
-
+        installSplashScreen()
         super.onCreate(savedInstanceState)
         setContent {
             OMWayAppTheme {
                 // A surface container using the 'background' color from the theme
-
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
                     NavigationApp()
-                    //MyApp()
-                    //DriverView()
-                    //RiderView()
-                    //RegisterDriver()
-                    //BttmSheet()
-                    //TopBarMapView()
-                    //MenuTabDriver()
-                    //NavigationDriver()
-                    //FinalizadoRider()
-                    //TermsAndConditions()
-                    //Ajustes()
-                    //  ReaderApp()
-                    //cardSolicitudDriver()
-                    //listMisCarros()
-                    //agregarCarros()
-                    //editarCarros()
-                    //cardMytrips()
-                    //CobroRider()
-                    //cardMytripsRider()
-
-                    //enCaminoRider()
-                    //LlegadaRider(navController)
-                    // IniciadoRider()
-                    //enCaminoDriver()
-                    //inicioDriver()
-                    //cobrarDriver()
-
-
                 }
 
 

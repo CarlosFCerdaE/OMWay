@@ -3,9 +3,12 @@ package com.main.omwayapp.ui.navigationApp
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
+import com.main.omwayapp.apirest.model.vehicle.CarItem
 import com.main.omwayapp.ui.screens.driver.Ajustes.Ajustes
 import com.main.omwayapp.ui.screens.driver.menuTabDriver.MenuTabDriver
 import com.main.omwayapp.ui.screens.driver.menuTabDriver.TabScreen.mycars.agregarCarros
@@ -26,10 +29,7 @@ fun NavigationApp(){
 
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = AppScreens.MenuTabDriver.route){
-        composable(route= AppScreens.SplashScreen.route){
-            RSplashScreen(navController)
-        }
+    NavHost(navController = navController, startDestination = AppScreens.Login.route){
         composable(route= AppScreens.Login.route){
             RLoginScreen(navController)
         }
@@ -52,8 +52,13 @@ fun NavigationApp(){
         composable(route = AppScreens.EditarCarro.route){
             editarCarros(navController)
         }
-        composable(route = AppScreens.AgregarCarro.route){
-            agregarCarros(navController)
+        composable(route = AppScreens.AgregarCarro.route+"/{operation}",
+            arguments = listOf(navArgument(name = "operation"){type = NavType.StringType})
+            ){
+            val result = navController.previousBackStackEntry?.savedStateHandle?.get<CarItem>("item")
+            if(result!=null) {
+                agregarCarros(navController, result, it.arguments?.getString("oper"))
+            }
         }
 
         composable(route= AppScreens.HomeMenuRider.route){
